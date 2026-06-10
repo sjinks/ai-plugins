@@ -1,0 +1,10 @@
+<type>(<scope>): <subject>
+
+<body paragraph 1>
+
+<body paragraph 2 — bullet list if helpful>
+- Point one
+- Point two
+
+<footer — issue refs, breaking changes>
+Refs: <ISSUE-ID>

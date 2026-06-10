@@ -1,0 +1,22 @@
+{
+    "name": "ai-plugins",
+    "metadata": {
+        "description": "A collection of AI plugins for various tasks."
+    },
+    "owner": {
+        "name": "Volodymyr Kolesnykov",
+        "email": "volodymyr@wildwolf.name"
+    },
+    "plugins": [
+        {
+            "name": "planning-forge",
+            "description": "Planning workflow agents for turning rough tasks into implementation-ready specifications, architecture designs, test plans, prototype findings, and saved planning documents.",
+            "source": "./planning-forge"
+        },
+        {
+            "name": "shell-safety",
+            "description": "Catalog of dangerous shell command patterns and safe rewrites for AI agents.",
+            "source": "./shell-safety"
+        }
+    ]
+}

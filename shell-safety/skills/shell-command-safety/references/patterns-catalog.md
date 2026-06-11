@@ -300,6 +300,14 @@ Why it fails: `rm` parses `-file` as an option (`-f -i -l -e`), not a filename.
 
 Rewrite: see Q10.
 
+### Q11 — History expansion in Bash double quotes
+
+Example: `echo "deploy!"`
+
+Why it fails: In interactive Bash with history expansion enabled, `!` inside double quotes can trigger history expansion. The shell may error with `event not found` or substitute previous history unexpectedly.
+
+Rewrite: see Q11.
+
 ## 5. Command substitution & pipes
 
 ### CS1 — Backticks for substitution

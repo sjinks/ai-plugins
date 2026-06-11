@@ -87,6 +87,7 @@ One-line summaries grouped by category. Pattern IDs reference [patterns-catalog.
 - `Q8` Mixed quoting → verify intent.
 - `Q9` `'a\nb'` (backslash literal in single quotes) → `printf '%s\n%s\n' a b`.
 - `Q10` Filename starting with `-` (`rm -file`) → `rm -- -file`.
+- `Q11` `!` inside Bash double quotes with history expansion enabled → use single quotes, disable history expansion, or avoid interactive history expansion context.
 
 ### Command substitution & pipes
 

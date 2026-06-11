@@ -15,6 +15,7 @@ Reference for bash and zsh quoting and expansion. Use this when the [patterns ca
 - Preserve literal value of everything **except** `$`, `` ` ``, `\`, and (when history expansion is on) `!`.
 - Variable expansion, command substitution, and arithmetic expansion still happen.
 - A backslash inside double quotes only escapes `$`, `` ` ``, `"`, `\`, and newline.
+- In interactive Bash, `!` inside double quotes may still trigger history expansion. Prefer single quotes for literal `!`, or run `set +H` before using double quotes that contain literal `!`.
 
 ### Backslash `\`
 

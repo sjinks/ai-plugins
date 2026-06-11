@@ -343,6 +343,20 @@ printf '%s\n%s\n' a b
 rm -- -file
 ```
 
+### Q11 — History expansion in Bash double quotes
+
+```sh
+# Bad in interactive Bash when history expansion is enabled
+echo "deploy!"
+
+# Good — no expansion inside single quotes
+echo 'deploy!'
+
+# Good — disable history expansion before using double quotes with literal !
+set +H
+echo "deploy!"
+```
+
 ## 5. Command substitution & pipes
 
 ### CS1 — Use `$(...)`

@@ -14,6 +14,11 @@
             "source": "./planning-forge"
         },
         {
+            "name": "review-skills",
+            "description": "Review workflow skills for scoping pull requests, improving review findings, planning fixes, and gatekeeping merge readiness.",
+            "source": "./review-skills"
+        },
+        {
             "name": "shell-safety",
             "description": "Catalog of dangerous shell command patterns and safe rewrites for AI agents.",
             "source": "./shell-safety"

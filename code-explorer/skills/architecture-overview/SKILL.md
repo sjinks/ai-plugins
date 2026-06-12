@@ -9,7 +9,7 @@ user-invocable: true
 
 Produce a system-level architecture model grounded in evidence. This is Phase 3 of the Code Explorer workflow; it builds on the repository map (Phase 1) and build/runtime model (Phase 2).
 
-Follow the evidence, confidence, and inference-label rules in the plugin's `shared/exploration-protocol.md`. Output contract: `03_ARCHITECTURE_OVERVIEW.md` in `shared/output-contracts.md`. Both files live at the plugin root, sibling of `skills/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence, confidence, and inference-label rules in the plugin's `shared/exploration-protocol.md`. Output contract: `03_ARCHITECTURE_OVERVIEW.md` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Tasks
 

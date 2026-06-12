@@ -9,7 +9,7 @@ user-invocable: true
 
 Map tests to behavior, not only to files. This is a semantic coverage map: line coverage is one input, never the conclusion. Phase 9 of the Code Explorer workflow; the entrypoints (Phase 4), flows (Phase 6), and Tier 1 symbols (Phase 7) define which behaviors matter.
 
-Follow the evidence and safety rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `09_TEST_COVERAGE_MAP.md` and `test_map.json` in `shared/output-contracts.md`. Both files live at the plugin root, sibling of `skills/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence and safety rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `09_TEST_COVERAGE_MAP.md` and `test_map.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Tasks
 

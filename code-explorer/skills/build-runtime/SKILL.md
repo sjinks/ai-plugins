@@ -9,7 +9,7 @@ user-invocable: true
 
 Understand how the system is built, tested, run, and deployed. This is Phase 2 of the Code Explorer workflow; it requires the repository map from Phase 1 (or equivalent knowledge of manifests and tooling).
 
-Follow the evidence, confidence, safety, and provenance rules in the plugin's `shared/exploration-protocol.md`. Output contract: `02_BUILD_AND_RUNTIME.md` in `shared/output-contracts.md`. Both files live at the plugin root, sibling of `skills/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence, confidence, safety, and provenance rules in the plugin's `shared/exploration-protocol.md`. Output contract: `02_BUILD_AND_RUNTIME.md` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Tasks
 

@@ -9,7 +9,7 @@ user-invocable: true
 
 Create a structured inventory of functions, methods, classes, and modules that supports navigation and risk analysis. This is Phase 7 of the Code Explorer workflow. In the orchestrated workflow, do not run it before entrypoints (Phase 4) and architecture (Phase 3) — tier assignment depends on them. When run standalone without those artifacts, derive tier signals from exports, entrypoint patterns, and fan-in/fan-out heuristics, and record the lowered confidence under `Limitations`.
 
-Follow the evidence, budget, and prioritization rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `07_FUNCTION_AND_SYMBOL_INVENTORY.md`, `symbol_index.json`, and `important_functions.json` in `shared/output-contracts.md`. Both files live at the plugin root, sibling of `skills/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence, budget, and prioritization rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `07_FUNCTION_AND_SYMBOL_INVENTORY.md`, `symbol_index.json`, and `important_functions.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Tier Classification
 

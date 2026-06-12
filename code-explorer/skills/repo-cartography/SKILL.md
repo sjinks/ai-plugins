@@ -9,7 +9,7 @@ user-invocable: true
 
 Create a high-level map of the repository: what it is made of, how it is organized, and what to ignore. This is Phase 1 of the Code Explorer workflow and the foundation for every later phase.
 
-Follow the evidence, confidence, safety, and provenance rules in the plugin's `shared/exploration-protocol.md`. Output contracts are in `shared/output-contracts.md` (`01_REPOSITORY_MAP.md`, `repository_index.json`). Both files live at the plugin root, sibling of `skills/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence, confidence, safety, and provenance rules in the plugin's `shared/exploration-protocol.md`. Output contracts are in `shared/output-contracts.md` (`01_REPOSITORY_MAP.md`, `repository_index.json`). Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Tasks
 
@@ -55,4 +55,4 @@ Also read `.gitignore` and check for the presence of `vendor/`, `node_modules/`,
 
 ## Output
 
-Write `01_REPOSITORY_MAP.md` and `machine-readable/repository_index.json` per `shared/output-contracts.md`, with provenance stamps. Record anything you could not determine under a `Limitations` note in the markdown artifact.
+Write `01_REPOSITORY_MAP.md` and `machine-readable/repository_index.json` per `shared/output-contracts.md`, with provenance stamps. Record anything you could not determine under the `## Limitations` section of the markdown artifact.

@@ -9,7 +9,7 @@ user-invocable: true
 
 Find all meaningful ways execution enters the system and trace the highest-risk ones. This is Phase 4 of the Code Explorer workflow; it requires the architecture overview (Phase 3) so traces land in known components.
 
-Follow the evidence, budget, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `04_ENTRYPOINTS.md` and `entrypoints.json` in `shared/output-contracts.md`. Both files live at the plugin root, sibling of `skills/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence, budget, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `04_ENTRYPOINTS.md` and `entrypoints.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Entrypoint Categories
 

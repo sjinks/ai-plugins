@@ -9,6 +9,11 @@
     },
     "plugins": [
         {
+            "name": "code-explorer",
+            "description": "Deep codebase exploration agent and phase skills for building evidence-based maps of unfamiliar repositories.",
+            "source": "./code-explorer"
+        },
+        {
             "name": "planning-forge",
             "description": "Planning workflow agents for turning rough tasks into implementation-ready specifications, architecture designs, test plans, prototype findings, and saved planning documents.",
             "source": "./planning-forge"

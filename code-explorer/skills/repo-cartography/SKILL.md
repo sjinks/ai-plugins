@@ -44,7 +44,7 @@ jest.config.*, vitest.config.*, phpunit.xml, psalm.xml, phpstan.neon,
 openapi.*, swagger.*
 ```
 
-Also read `.gitignore` and any `vendor/`, `node_modules/`, `dist/`, `build/`, `generated/` directories to populate the ignore list.
+Also read `.gitignore` and check for the presence of `vendor/`, `node_modules/`, `dist/`, `build/`, `generated/` directories to populate the ignore list. Do not traverse or read the contents of these directories; existence checks are enough.
 
 ## Rules
 

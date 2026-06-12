@@ -2,7 +2,24 @@
 
 This reference defines the artifact layout, Markdown templates, and JSON shapes for all Code Explorer phases. It is a local reference, not an invocable skill. Phase skills must follow these contracts exactly so artifacts stay diffable across refreshes.
 
-All artifacts carry the provenance stamp defined in `shared/exploration-protocol.md`. All JSON files include the `_meta` object with `schemaVersion: 1`. JSON payloads live under a `data` key next to `_meta`.
+All artifacts carry the provenance stamp defined in `shared/exploration-protocol.md`:
+
+- Markdown artifacts: place the stamp blockquote immediately after the H1 title. The templates below omit it for brevity; always include it.
+- JSON artifacts: `"_meta": {}` in the shapes below is shorthand for the full provenance object, which is required in every JSON file:
+
+```json
+{
+  "_meta": {
+    "schemaVersion": 1,
+    "generatedAt": "2026-06-12T14:00:00Z",
+    "commit": "8c4d3ac",
+    "scope": ".",
+    "mode": "full"
+  }
+}
+```
+
+JSON payloads live under a `data` key next to `_meta`.
 
 Markdown labels (`High`, `Critical`, ...) are capitalized; JSON enum values are lowercase. Every numbered markdown artifact (01-13) ends with a `## Limitations` section, shown in each template; keep it brief when there is nothing to record.
 

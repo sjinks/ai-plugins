@@ -9,7 +9,7 @@ user-invocable: true
 
 Find all meaningful ways execution enters the system and trace the highest-risk ones. This is Phase 4 of the Code Explorer workflow; it requires the architecture overview (Phase 3) so traces land in known components.
 
-Follow the evidence, budget, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `04_ENTRYPOINTS.md` and `entrypoints.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence, budget, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `04_ENTRYPOINTS.md` and `machine-readable/entrypoints.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Entrypoint Categories
 
@@ -29,6 +29,7 @@ Search for: HTTP routes/controllers/handlers; GraphQL resolvers; RPC methods; CL
 - Entrypoints beyond the trace budget stay in the summary table; note the sampling decision under the `## Limitations` section.
 - Test-only entrypoints are listed but never deep-traced unless the user asks.
 - Set `traced` in the JSON for every entry. Set confidence from evidence as normal; do not use confidence to mark trace status.
+- For non-network entrypoints (library calls, CLI commands), set both JSON `auth` fields to `"n/a"` per the output contract; do not leave them empty or invent auth descriptions.
 - Security-relevant findings (missing auth, unvalidated input reaching a sink) forward to the data-flow phase (Phase 6) and risk register (Phase 10).
 
 ## Output

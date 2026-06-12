@@ -9,7 +9,7 @@ user-invocable: true
 
 Understand coupling, dependency structure, and architectural hotspots. This is Phase 8 of the Code Explorer workflow; architecture layers (Phase 3) define what counts as a cross-layer violation.
 
-Follow the evidence and safety rules in the plugin's `shared/exploration-protocol.md` — in particular: use only already-installed tools. Output contracts: `08_DEPENDENCY_GRAPH.md` and `dependency_graph.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence and safety rules in the plugin's `shared/exploration-protocol.md` — in particular: use only already-installed tools. Output contracts: `08_DEPENDENCY_GRAPH.md` and `machine-readable/dependency_graph.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Tasks
 

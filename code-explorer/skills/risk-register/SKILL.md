@@ -9,7 +9,7 @@ user-invocable: true
 
 Convert exploration findings into a practical risk register for engineering work. This is Phase 10 of the Code Explorer workflow; its primary input is the candidate risks collected by Phases 3-9. Do not produce generic warnings — every risk must have evidence.
 
-Follow the evidence, confidence, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `10_RISK_REGISTER.md` and `risks.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
+Follow the evidence, confidence, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `10_RISK_REGISTER.md` and `machine-readable/risks.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
 ## Procedure
 

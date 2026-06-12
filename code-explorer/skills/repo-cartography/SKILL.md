@@ -25,12 +25,12 @@ Follow the evidence, confidence, safety, and provenance rules in the plugin's `s
 
 ## Useful Commands
 
-Read-only inspection only. These are examples; if `rg` is unavailable, substitute `git ls-files` or `find`:
+Read-only inspection only. Prefer `git ls-files` and `rg --files` (both respect `.gitignore` and skip dependency/build directories); when using `find`, prune ignored directories explicitly so the command never descends into them:
 
 ```text
-find . -maxdepth 3 -type d | sed 's#^\./##' | sort
-rg --files | head -200
+git ls-files | head -200
 rg --files | sed 's#.*\.##' | sort | uniq -c | sort -rn | head -20
+find . -maxdepth 3 -type d \( -name node_modules -o -name vendor -o -name dist -o -name build -o -name .git \) -prune -o -type d -print | sed 's#^\./##' | sort
 ```
 
 Look for marker files such as:

@@ -50,19 +50,19 @@ Run the phases in this order. Each phase has a skill that defines its tasks and 
 
 | # | Phase | Skill | Artifacts |
 |---|---|---|---|
-| 1 | Repository cartography | `repo-cartography` | `01_REPOSITORY_MAP.md`, `repository_index.json` |
+| 1 | Repository cartography | `repo-cartography` | `01_REPOSITORY_MAP.md`, `machine-readable/repository_index.json` |
 | 2 | Build and runtime | `build-runtime` | `02_BUILD_AND_RUNTIME.md` |
 | 3 | Architecture overview | `architecture-overview` | `03_ARCHITECTURE_OVERVIEW.md` |
-| 4 | Entrypoint tracing | `entrypoint-tracing` | `04_ENTRYPOINTS.md`, `entrypoints.json` |
+| 4 | Entrypoint tracing | `entrypoint-tracing` | `04_ENTRYPOINTS.md`, `machine-readable/entrypoints.json` |
 | 5 | Domain model | `domain-model` | `05_DOMAIN_MODEL.md` |
-| 6 | Data flows and trust boundaries | `dataflow-trust-boundaries` | `06_DATAFLOWS_AND_TRUST_BOUNDARIES.md`, `dataflows.json` |
-| 7 | Symbol inventory | `symbol-inventory` | `07_FUNCTION_AND_SYMBOL_INVENTORY.md`, `symbol_index.json`, `important_functions.json` |
-| 8 | Dependency graph | `dependency-graph` | `08_DEPENDENCY_GRAPH.md`, `dependency_graph.json` |
-| 9 | Test coverage map | `test-coverage-map` | `09_TEST_COVERAGE_MAP.md`, `test_map.json` |
-| 10 | Risk register | `risk-register` | `10_RISK_REGISTER.md`, `risks.json` |
+| 6 | Data flows and trust boundaries | `dataflow-trust-boundaries` | `06_DATAFLOWS_AND_TRUST_BOUNDARIES.md`, `machine-readable/dataflows.json` |
+| 7 | Symbol inventory | `symbol-inventory` | `07_FUNCTION_AND_SYMBOL_INVENTORY.md`, `machine-readable/symbol_index.json`, `machine-readable/important_functions.json` |
+| 8 | Dependency graph | `dependency-graph` | `08_DEPENDENCY_GRAPH.md`, `machine-readable/dependency_graph.json` |
+| 9 | Test coverage map | `test-coverage-map` | `09_TEST_COVERAGE_MAP.md`, `machine-readable/test_map.json` |
+| 10 | Risk register | `risk-register` | `10_RISK_REGISTER.md`, `machine-readable/risks.json` |
 | 11 | Change impact guide | `change-impact` | `11_CHANGE_IMPACT_GUIDE.md` |
 
-All `.json` artifacts live under `machine-readable/`.
+All paths are relative to the output directory (`docs/codebase-exploration/`).
 
 After Phase 1 produces the ignore list, check the source file count against the repository-size budget in the protocol. If it is exceeded, stop and propose a narrowed scope before starting entrypoint tracing.
 

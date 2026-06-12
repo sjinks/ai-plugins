@@ -41,7 +41,7 @@ This list summarizes the protocol's Safety Rules; the protocol is the single sou
    - If it does not exist, ask the user to confirm creating it before writing anything. If the user declines, do not write files; perform the requested exploration and report findings in chat only.
 4. Ask the user once whether running the test suite and build is approved for this session. Record the answer; do not ask again per phase.
 5. Probe available tooling with read-only commands (`which`, `--version`). Record missing tools as limitations.
-6. Create or update `00_EXECUTIVE_SUMMARY.md` as a stub: Scope, Repository status, Tooling available, Important limitations. Leave findings/risks/next-steps sections empty until final assembly.
+6. Only after the user confirmed output-directory creation in step 3 (or refresh mode is active): create or update `00_EXECUTIVE_SUMMARY.md` as a stub: Scope, Repository status, Tooling available, Important limitations. Leave findings/risks/next-steps sections empty until final assembly. If the user declined in step 3, keep this content for the chat-only report instead.
 
 ## Phase Sequence
 

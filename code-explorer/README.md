@@ -23,7 +23,7 @@ It is not a summarization tool. Every important claim carries evidence and a con
 
 ## Artifacts
 
-The agent writes to `docs/codebase-exploration/` (adapted to the repository's docs convention when one exists): fourteen numbered Markdown artifacts (`00_EXECUTIVE_SUMMARY.md` through `13_AGENT_NAVIGATION_GUIDE.md`) plus a `machine-readable/` directory with JSON indexes for the repository, symbols, entrypoints, data flows, risks, tests, and the dependency graph. Every artifact carries a provenance stamp (date, commit, scope, mode) so refreshes are meaningful.
+The agent writes to `docs/codebase-exploration/` (adapted to the repository's docs convention when one exists): fourteen numbered Markdown artifacts (`00_EXECUTIVE_SUMMARY.md` through `13_AGENT_NAVIGATION_GUIDE.md`) plus a `machine-readable/` directory with eight JSON indexes: the repository, two symbol indexes (the full `symbol_index.json` and the Tier 1-only `important_functions.json`), entrypoints, data flows, risks, tests, and the dependency graph. Every artifact carries a provenance stamp (date, commit, scope, mode) so refreshes are meaningful.
 
 ## Workflow
 

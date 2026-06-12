@@ -1,6 +1,6 @@
 # code-explorer
 
-Code Explorer is a deep codebase exploration plugin for building a reliable, evidence-based understanding of an unfamiliar repository. It produces a durable, updateable set of exploration artifacts that tell an engineer or a future agent what the system does, how it is structured, where execution enters, how data flows, which symbols matter, what is tested, and what is dangerous to change.
+Code Explorer is a deep codebase exploration plugin for building a reliable, evidence-based understanding of an unfamiliar repository. It produces a durable, updatable set of exploration artifacts that tell an engineer or a future agent what the system does, how it is structured, where execution enters, how data flows, which symbols matter, what is tested, and what is dangerous to change.
 
 It is not a summarization tool. Every important claim carries evidence and a confidence level, inferences are labeled, budgets keep large repositories tractable, and unknowns become open questions instead of guesses.
 

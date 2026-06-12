@@ -21,7 +21,11 @@ Follow the evidence, confidence, and risk-label rules in the plugin's `shared/ex
 
 ## Categories
 
-security; correctness; reliability; performance; scalability; maintainability; observability; data-integrity; migration; API compatibility; concurrency; async behavior; error handling; configuration; deployment; testing; hidden coupling. In both the markdown `Category:` field and the JSON, use the closest category from the JSON enum in the output contract; map fine-grained categories to it and keep the precise wording in the title. Example: a race condition maps to `concurrency` → enum `reliability`, title "Race condition in session refresh".
+Allowed category values — use only these, in both the markdown `Category:` field and the JSON:
+
+`security` | `correctness` | `reliability` | `performance` | `maintainability` | `observability` | `data-integrity` | `configuration` | `deployment` | `testing` | `other`
+
+Fine-grained labels to map FROM (never write these as the category): scalability → `performance`; migration → `data-integrity` or `deployment`; API compatibility → `correctness`; concurrency and async behavior → `reliability`; error handling → `correctness` or `reliability`; hidden coupling → `maintainability`. Keep the fine-grained wording in the risk title. Example: a race condition maps to enum `reliability`, title "Race condition in session refresh".
 
 ## Rules
 

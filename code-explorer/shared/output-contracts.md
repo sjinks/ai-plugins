@@ -107,14 +107,14 @@ Created as a stub in Phase 0 (Scope, Repository status, Tooling available, Impor
 {
   "_meta": {},
   "data": {
-    "languages": [],
-    "frameworks": [],
-    "packageManagers": [],
-    "buildSystems": [],
-    "testFrameworks": [],
-    "topLevelDirectories": [],
-    "ignoredPaths": [],
-    "importantConfigFiles": []
+    "languages": [{ "name": "", "evidence": "" }],
+    "frameworks": [{ "name": "", "evidence": "", "confidence": "low|medium|high" }],
+    "packageManagers": [{ "name": "", "evidence": "" }],
+    "buildSystems": [{ "name": "", "evidence": "" }],
+    "testFrameworks": [{ "name": "", "evidence": "" }],
+    "topLevelDirectories": [{ "path": "", "purpose": "", "confidence": "low|medium|high", "evidence": "" }],
+    "ignoredPaths": [""],
+    "importantConfigFiles": [{ "path": "", "purpose": "" }]
   }
 }
 ```
@@ -473,15 +473,17 @@ flowchart TD
 {
   "_meta": {},
   "data": {
-    "nodes": [],
+    "nodes": [{ "id": "", "path": "" }],
     "edges": [{ "from": "", "to": "", "evidence": "" }],
     "cycles": [{ "members": [], "closingImport": "", "risk": "low|medium|high|critical" }],
     "highFanIn": [{ "module": "", "usedBy": [], "whyItMatters": "" }],
-    "highFanOut": [{ "module": "", "dependsOn": [], "risk": "" }],
+    "highFanOut": [{ "module": "", "dependsOn": [], "risk": "low|medium|high|critical" }],
     "hotspots": [{ "module": "", "signals": [], "verdict": "" }]
   }
 }
 ```
+
+A node `id` is the module identifier used in `edges` (`from`/`to` reference node `id` values); `path` is the directory or file the module corresponds to. `cycles[].members` and `highFanIn[].usedBy` / `highFanOut[].dependsOn` are arrays of node `id` strings; `hotspots[].signals` is an array of strings naming the contributing signals (for example `"fan-in: 12"`, `"churn: 40 commits"`, `"no tests"`).
 
 ## 09_TEST_COVERAGE_MAP.md
 
@@ -524,10 +526,12 @@ flowchart TD
     "testFiles": [{ "file": "", "targetArea": "", "type": "unit|integration|e2e|other" }],
     "behaviorsCovered": [{ "behavior": "", "evidence": [], "confidence": "low|medium|high" }],
     "gaps": [{ "gap": "", "area": "", "risk": "low|medium|high|critical", "suggestedTest": "" }],
-    "skippedOrFlaky": []
+    "skippedOrFlaky": [{ "test": "", "file": "", "status": "skipped|disabled|flaky", "reason": "" }]
   }
 }
 ```
+
+In `skippedOrFlaky`, `reason` is the stated or inferred cause when discoverable, otherwise `"unknown"`.
 
 ## 10_RISK_REGISTER.md
 

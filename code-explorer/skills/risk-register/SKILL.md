@@ -13,7 +13,7 @@ Follow the evidence, confidence, and risk-label rules in the plugin's `shared/ex
 
 ## Procedure
 
-1. Gather candidate risks from earlier phase artifacts: architecture smells, entrypoint risks, data-flow security findings, symbol-level problems, dependency cycles and hotspots, test gaps. When standalone, gather from the findings the user supplies; if the user supplies only a repository scope and no findings, perform a light risk-focused scan of that scope (entrypoints, security-relevant sinks, test presence) and label the register as scan-based under `Limitations`.
+1. Gather candidate risks from earlier phase artifacts: architecture smells, entrypoint risks, data-flow security findings, symbol-level problems, dependency cycles and hotspots, test gaps. When standalone, gather from the findings the user supplies; if the user supplies only a repository scope and no findings, perform a light risk-focused scan of that scope (entrypoints, security-relevant sinks, test presence) and label the register as scan-based under the `## Limitations` section.
 2. Deduplicate: one risk per root cause, with all affected areas listed, not one risk per symptom.
 3. For each risk record every required field: title; category; affected area; severity; confidence; evidence; why it matters; suggested verification; suggested mitigation; related tests or missing tests.
 4. Assign severity and confidence per the protocol scales. Severity reflects plausible impact, not code ugliness.

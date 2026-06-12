@@ -26,7 +26,7 @@ Search for: HTTP routes/controllers/handlers; GraphQL resolvers; RPC methods; CL
 
 - Every call chain step must be backed by an actual call you located. If a chain segment cannot be verified, end the chain there and write `-> unknown`.
 - "No validation found" and "no auth found" are reportable findings — state where you looked.
-- Entrypoints beyond the trace budget stay in the summary table; note the sampling decision under `Limitations`.
+- Entrypoints beyond the trace budget stay in the summary table; note the sampling decision under the `## Limitations` section.
 - Test-only entrypoints are listed but never deep-traced unless the user asks.
 - Set `traced` in the JSON for every entry. Set confidence from evidence as normal; do not use confidence to mark trace status.
 - Security-relevant findings (missing auth, unvalidated input reaching a sink) forward to the data-flow phase (Phase 6) and risk register (Phase 10).

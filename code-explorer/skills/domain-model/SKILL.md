@@ -9,7 +9,7 @@ user-invocable: true
 
 Understand the concepts the system is built around. This is Phase 5 of the Code Explorer workflow; entrypoint inputs/outputs (Phase 4) are a primary source of domain nouns.
 
-Follow the evidence and confidence rules in the plugin's `shared/exploration-protocol.md`. Output contract: `05_DOMAIN_MODEL.md` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it. When Phase 4 artifacts are unavailable, derive domain nouns directly from schemas, migrations, and type definitions, and note the missing input under `Limitations`.
+Follow the evidence and confidence rules in the plugin's `shared/exploration-protocol.md`. Output contract: `05_DOMAIN_MODEL.md` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it. When Phase 4 artifacts are unavailable, derive domain nouns directly from schemas, migrations, and type definitions, and note the missing input under the `## Limitations` section.
 
 ## Tasks
 

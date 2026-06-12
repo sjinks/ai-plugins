@@ -82,9 +82,9 @@ Defaults for keeping the exploration bounded. The user may override any of them.
 
 - Tier 1 deep symbol analysis: at most 40 symbols (tiers are defined in the `symbol-inventory` skill). Select by risk and fan-in/fan-out, not by file order.
 - Full entrypoint traces: at most 10 entrypoints, selected by risk. List all remaining entrypoints in the summary table without deep traces.
-- Full data-flow traces: at most 5 flows, selected by risk and business importance. If the repository has fewer meaningful flows or entrypoints than a budget allows, trace what exists and note the count under `Limitations`; budgets are caps, not quotas.
+- Full data-flow traces: at most 5 flows, selected by risk and business importance. If the repository has fewer meaningful flows or entrypoints than a budget allows, trace what exists and note the count under the `## Limitations` section; budgets are caps, not quotas.
 - If the repository contains more than roughly 5,000 source files after exclusions, stop and propose a narrowed scope (subdirectory, package, or service) before starting entrypoint tracing.
-- When a budget forces sampling, record the sampling decision and what was skipped under `Limitations` in the affected artifact.
+- When a budget forces sampling, record the sampling decision and what was skipped under the `## Limitations` section of the affected artifact.
 
 ## Safety Rules
 

@@ -522,7 +522,7 @@ A node `id` is the module identifier used in `edges` (`from`/`to` reference node
 {
   "_meta": {},
   "data": {
-    "testFrameworks": [],
+    "testFrameworks": [{ "name": "", "evidence": "" }],
     "testFiles": [{ "file": "", "targetArea": "", "type": "unit|integration|e2e|other" }],
     "behaviorsCovered": [{ "behavior": "", "evidence": [], "confidence": "low|medium|high" }],
     "gaps": [{ "gap": "", "area": "", "risk": "low|medium|high|critical", "suggestedTest": "" }],

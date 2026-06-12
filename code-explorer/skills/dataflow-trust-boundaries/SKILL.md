@@ -9,7 +9,7 @@ user-invocable: true
 
 Understand how data moves through the system and where trust changes. This is Phase 6 of the Code Explorer workflow; it starts from the traced entrypoints (Phase 4).
 
-Follow the evidence, budget, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `06_DATAFLOWS_AND_TRUST_BOUNDARIES.md` and `dataflows.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it. When no traced entrypoints exist, identify candidate flows directly from visible entrypoints/handlers and record the missing prerequisite under `Limitations`.
+Follow the evidence, budget, and risk-label rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `06_DATAFLOWS_AND_TRUST_BOUNDARIES.md` and `dataflows.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it. When no traced entrypoints exist, identify candidate flows directly from visible entrypoints/handlers and record the missing prerequisite under the `## Limitations` section.
 
 ## Procedure
 

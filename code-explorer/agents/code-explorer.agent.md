@@ -85,9 +85,9 @@ After the phase skills complete:
 - Spot-check file references in the markdown artifacts: the files exist at the cited paths.
 - Every artifact has a provenance stamp.
 - Inferences are labeled; no section presents speculation as fact.
-- Budget-forced sampling decisions are recorded under `Limitations`.
+- Budget-forced sampling decisions are recorded under the `## Limitations` section.
 
-Fix failures before reporting completion. If something cannot be fixed (for example a tool limitation), record it under `Limitations`.
+Fix failures before reporting completion. If something cannot be fixed (for example a tool limitation), record it under the `## Limitations` section.
 
 ## Completion Criteria
 

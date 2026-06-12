@@ -31,4 +31,4 @@ Follow the evidence, confidence, safety, and provenance rules in the plugin's `s
 
 ## Output
 
-Write `02_BUILD_AND_RUNTIME.md` per `shared/output-contracts.md`, with a provenance stamp. Document everything you could not verify under `Limitations`.
+Write `02_BUILD_AND_RUNTIME.md` per `shared/output-contracts.md`, with a provenance stamp. Document everything you could not verify under the `## Limitations` section.

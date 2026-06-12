@@ -17,9 +17,9 @@ Follow the evidence and safety rules in the plugin's `shared/exploration-protoco
 2. Identify high fan-in modules (many dependents — risky to change).
 3. Identify high fan-out modules (many dependencies — unstable).
 4. Identify dependency cycles.
-5. Identify cross-layer imports that violate the layering from the architecture overview. When no architecture overview exists (standalone use), skip this and record it under `Limitations`.
+5. Identify cross-layer imports that violate the layering from the architecture overview. When no architecture overview exists (standalone use), skip this and record it under the `## Limitations` section.
 6. Identify modules likely dangerous to change (high fan-in plus complexity plus weak tests); record verdicts under `Hotspots`.
-7. Identify dead or unused code if feasible with available tools; record findings under `Hotspots`, otherwise skip and note it under `Limitations`.
+7. Identify dead or unused code if feasible with available tools; record findings under `Hotspots`, otherwise skip and note it under the `## Limitations` section.
 8. If git history is available, compute churn hotspots: most frequently changed files crossed with fan-in. `git log --pretty=format: --name-only | sort | uniq -c | sort -rn | head -20` is sufficient.
 
 ## Tooling by Language
@@ -32,7 +32,7 @@ Use only if already installed; verify with `which`/`--version` first:
 - Go: `go list -deps`, `go vet`.
 - Rust: `cargo metadata`, `cargo clippy` (only with session test/build approval, since clippy compiles).
 
-If no tool is available, build the graph with best-effort import searches (`rg "^import|^use|require\("` patterns adapted to the language) and state the method and its blind spots under `Limitations`.
+If no tool is available, build the graph with best-effort import searches (`rg "^import|^use|require\("` patterns adapted to the language) and state the method and its blind spots under the `## Limitations` section.
 
 ## Rules
 

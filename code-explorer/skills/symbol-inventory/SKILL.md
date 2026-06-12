@@ -7,7 +7,7 @@ user-invocable: true
 
 # Function and Symbol Inventory
 
-Create a structured inventory of functions, methods, classes, and modules that supports navigation and risk analysis. This is Phase 7 of the Code Explorer workflow. In the orchestrated workflow, do not run it before entrypoints (Phase 4) and architecture (Phase 3) — tier assignment depends on them. When run standalone without those artifacts, derive tier signals from exports, entrypoint patterns, and fan-in/fan-out heuristics, and record the lowered confidence under `Limitations`.
+Create a structured inventory of functions, methods, classes, and modules that supports navigation and risk analysis. This is Phase 7 of the Code Explorer workflow. In the orchestrated workflow, do not run it before entrypoints (Phase 4) and architecture (Phase 3) — tier assignment depends on them. When run standalone without those artifacts, derive tier signals from exports, entrypoint patterns, and fan-in/fan-out heuristics, and record the lowered confidence under the `## Limitations` section.
 
 Follow the evidence, budget, and prioritization rules in the plugin's `shared/exploration-protocol.md`. Output contracts: `07_FUNCTION_AND_SYMBOL_INVENTORY.md`, `symbol_index.json`, and `important_functions.json` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it.
 
@@ -21,9 +21,9 @@ Follow the evidence, budget, and prioritization rules in the plugin's `shared/ex
 
 ## Procedure
 
-1. Build the symbol index using available static tools (LSP, compiler API, ctags, language-aware search). Record which method was used under `Limitations`.
+1. Build the symbol index using available static tools (LSP, compiler API, ctags, language-aware search). Record which method was used under the `## Limitations` section.
 2. Mark exported/public symbols.
-3. Assign tiers. Example: an exported DB-write function with 12 callers is Tier 1; a private date-format helper is Tier 2; a generated getter is Tier 3. When Tier 1 candidates exceed the budget, rank by risk and fan-in/fan-out, keep the top entries, demote the rest to Tier 2, and record the cut under `Limitations`.
+3. Assign tiers. Example: an exported DB-write function with 12 callers is Tier 1; a private date-format helper is Tier 2; a generated getter is Tier 3. When Tier 1 candidates exceed the budget, rank by risk and fan-in/fan-out, keep the top entries, demote the rest to Tier 2, and record the cut under the `## Limitations` section.
 4. For each Tier 1 symbol document: purpose; inputs; outputs; callers; callees (only from actual call sites you located — otherwise `unknown`, never guessed); side effects; error behavior; invariants; security assumptions; tests; potential problems; confidence.
 
 ## Performance and Error-Handling Checklist

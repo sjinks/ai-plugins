@@ -9,7 +9,7 @@ user-invocable: true
 
 Help future engineers and agents understand what may break when changing important areas. This is Phase 11 of the Code Explorer workflow; it synthesizes the architecture (Phase 3), entrypoints (Phase 4), flows (Phase 6), dependency graph (Phase 8), test map (Phase 9), and risk register (Phase 10).
 
-Follow the evidence and confidence rules in the plugin's `shared/exploration-protocol.md`. Output contract: `11_CHANGE_IMPACT_GUIDE.md` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it. When prior phase artifacts are absent (standalone use), derive dependencies and tests from direct code inspection, label them inferred, and note the missing inputs under `Limitations`.
+Follow the evidence and confidence rules in the plugin's `shared/exploration-protocol.md`. Output contract: `11_CHANGE_IMPACT_GUIDE.md` in `shared/output-contracts.md`. Both reference files (`shared/exploration-protocol.md` and `shared/output-contracts.md`) live at the plugin root, sibling of `skills/`; output artifacts go under the explored repository's `docs/codebase-exploration/`. When run standalone, those rules still apply; if either reference is unavailable, stop and report it. When prior phase artifacts are absent (standalone use), derive dependencies and tests from direct code inspection, label them inferred, and note the missing inputs under the `## Limitations` section.
 
 ## Procedure
 

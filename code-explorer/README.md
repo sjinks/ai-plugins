@@ -61,8 +61,8 @@ Defined in `shared/execution-modes.md`. The default is conservative: if no mode 
 Written to `docs/codebase-exploration/` (adapted to the repo's docs convention when one exists).
 
 - Required markdown `00`–`13`: executive summary, repository map, build/runtime, architecture, entrypoints, domain model, data flows, symbol inventory, dependency graph, test coverage, risk register, change impact, open questions, agent navigation guide.
-- Additive markdown `14`–`17`: API & contracts, config surface, observability map, security-sensitive code.
-- `machine-readable/` JSON indexes (required: `repository_index`, `entrypoints`, `dataflows`, `symbol_index`, `important_functions`, `dependency_graph`, `test_map`, `risks`; additive: `open_questions`, `evidence_index`, `contracts`, `config_surface`, `observability_map`, `security_sensitive_code`).
+- Additive markdown `14`–`18`: API & contracts, config surface, observability map, security-sensitive code, performance & scalability.
+- `machine-readable/` JSON indexes (required: `repository_index`, `entrypoints`, `dataflows`, `symbol_index`, `important_functions`, `dependency_graph`, `test_map`, `risks`; additive: `open_questions`, `evidence_index`, `contracts`, `config_surface`, `observability_map`, `security_sensitive_code`, `performance_findings`).
 
 Every artifact carries a provenance stamp (`schema`, `schemaVersion`, `generatedAt`, `commit`, `scope`, `mode`, `confidence`, `limitations`). Logical items carry stable IDs (`RISK-001`, `ENTRYPOINT-001`, ...) per `shared/stable-id-policy.md`, preserved across refreshes. Shared evidence lives in `evidence_index.json` and is referenced by `EVIDENCE-*` ID.
 

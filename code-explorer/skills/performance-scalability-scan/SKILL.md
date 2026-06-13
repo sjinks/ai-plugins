@@ -23,7 +23,7 @@ Unbounded loops over external input; N+1 queries; missing pagination; large in-m
 
 ## Output
 
-By default, integrate findings into `10_RISK_REGISTER.md` (category `performance`). Optionally, when the user asks for a dedicated artifact, write `18_PERFORMANCE_AND_SCALABILITY.md` and `machine-readable/performance_findings.json`; if you add that artifact, also add a schema under `shared/schemas/` and register it in the validator before relying on it.
+By default, integrate findings into `10_RISK_REGISTER.md` (category `performance`). When the user asks for a dedicated artifact, also write `18_PERFORMANCE_AND_SCALABILITY.md` and `machine-readable/performance_findings.json` per `shared/output-contracts.md`, with provenance stamps. Each finding carries a stable `PERF-*` ID (see `shared/stable-id-policy.md`); the schema (`shared/schemas/performance_findings.schema.json`) is already registered in the validator. When a finding is also recorded as a risk, cross-reference the `PERF-*` and `RISK-*` items.
 
 ## Rules
 

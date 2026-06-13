@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/performance_findings.schema.json",
+  "title": "performance_findings.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "file", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "category": {
+            "type": "string",
+            "enum": ["unbounded-loop", "n-plus-one", "missing-pagination", "large-buffer", "blocking-io", "expensive-serialization", "regex-hazard", "retry-storm", "unbounded-concurrency", "missing-backpressure", "cache-misuse", "startup-cost", "other"]
+          },
+          "file": { "$ref": "common.schema.json#/$defs/fileRef" },
+          "symbol": { "$ref": "common.schema.json#/$defs/symbolRef" },
+          "description": { "type": "string" },
+          "whyItMatters": { "type": "string" },
+          "scale": { "type": "string" },
+          "suggestedBenchmark": { "type": "string" },
+          "risk": { "$ref": "common.schema.json#/$defs/severity" },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "status": { "$ref": "common.schema.json#/$defs/status" }
+        }
+      }
+    }
+  }
+}

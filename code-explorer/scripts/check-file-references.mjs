@@ -40,7 +40,10 @@ function parseArgs(argv) {
   return args;
 }
 
-const FILE_REF_RE = /(?<![\w./-])((?:[\w.-]+\/)+[\w.-]+\.[a-zA-Z0-9]{1,6})/g;
+// A leading boundary (start-of-string or a non-path character) is matched in a
+// non-capturing group rather than a lookbehind, so the pattern works on every
+// Node.js runtime, not only those that support lookbehind.
+const FILE_REF_RE = /(?:^|[^\w./-])((?:[\w.-]+\/)+[\w.-]+\.[a-zA-Z0-9]{1,6})/g;
 
 function extractFileRefs(text) {
   const refs = new Set();

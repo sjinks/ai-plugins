@@ -10,6 +10,9 @@
 
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { parseArgs } from './lib/cli.mjs';
+
+const ARG_SPEC = { positionals: [{ name: 'dir', required: true }], flags: {} };
 
 function loadJson(p) {
   try {
@@ -29,12 +32,13 @@ function countBy(arr, key) {
 }
 
 function main() {
-  const dirArg = process.argv[2];
-  if (!dirArg) {
+  const { values: args, error } = parseArgs(process.argv.slice(2), ARG_SPEC);
+  if (error) {
+    process.stderr.write(`Error: ${error}\n`);
     process.stderr.write('Usage: summarize-artifacts.mjs <artifact-dir>\n');
     process.exit(2);
   }
-  const dir = resolve(dirArg);
+  const dir = resolve(args.dir);
   if (!existsSync(dir) || !statSync(dir).isDirectory()) {
     process.stderr.write(`Error: artifact directory not found: ${dir}\n`);
     process.exit(2);

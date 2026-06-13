@@ -10,6 +10,9 @@
 
 import { existsSync, readdirSync, statSync } from 'node:fs';
 import { basename, extname, join, relative, resolve } from 'node:path';
+import { parseArgs } from './lib/cli.mjs';
+
+const ARG_SPEC = { positionals: [{ name: 'root', required: false }], flags: {} };
 
 const IGNORE_DIRS = new Set([
   '.git', 'node_modules', 'vendor', 'dist', 'build', 'coverage',
@@ -121,7 +124,13 @@ function walk(root) {
 }
 
 function main() {
-  const rootArg = process.argv[2] || '.';
+  const { values: args, error } = parseArgs(process.argv.slice(2), ARG_SPEC);
+  if (error) {
+    process.stderr.write(`Error: ${error}\n`);
+    process.stderr.write('Usage: collect-repo-index.mjs [root]\n');
+    process.exit(2);
+  }
+  const rootArg = args.root || '.';
   const root = resolve(rootArg);
   if (!existsSync(root) || !statSync(root).isDirectory()) {
     process.stderr.write(`Error: not a directory: ${root}\n`);

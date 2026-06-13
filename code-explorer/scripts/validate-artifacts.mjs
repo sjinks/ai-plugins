@@ -18,6 +18,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadSchema, validate } from './lib/json-schema.mjs';
+import { parseArgs } from './lib/cli.mjs';
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const SCHEMA_DIR = resolve(SCRIPT_DIR, '..', 'shared', 'schemas');
@@ -71,32 +72,13 @@ const REQUIRED_SECTIONS = {
   '12_OPEN_QUESTIONS.md': ['# Open Questions'],
 };
 
-function parseArgs(argv) {
-  const args = { dir: null, strict: false, repoRoot: process.cwd(), error: null };
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    if (a === '--strict') {
-      args.strict = true;
-    } else if (a === '--repo-root') {
-      const value = argv[i + 1];
-      if (value === undefined || value.startsWith('--')) {
-        args.error = '--repo-root requires a value';
-        break;
-      }
-      args.repoRoot = value;
-      i++;
-    } else if (a.startsWith('--')) {
-      args.error = `unknown flag: ${a}`;
-      break;
-    } else if (args.dir === null) {
-      args.dir = a;
-    } else {
-      args.error = `unexpected argument: ${a}`;
-      break;
-    }
-  }
-  return args;
-}
+const ARG_SPEC = {
+  positionals: [{ name: 'dir', required: true }],
+  flags: {
+    '--strict': { type: 'boolean' },
+    '--repo-root': { type: 'value', default: process.cwd() },
+  },
+};
 
 function collectIds(node, into) {
   if (node === null || typeof node !== 'object') return;
@@ -130,15 +112,11 @@ function extractFileRefs(text) {
 }
 
 function main() {
-  const args = parseArgs(process.argv.slice(2));
+  const { values: args, error } = parseArgs(process.argv.slice(2), ARG_SPEC);
   const report = { ok: [], warnings: [], errors: [] };
 
-  if (args.error) {
-    process.stderr.write(`Error: ${args.error}\n`);
-    process.stderr.write('Usage: validate-artifacts.mjs <artifact-dir> [--strict] [--repo-root <path>]\n');
-    process.exit(2);
-  }
-  if (!args.dir) {
+  if (error) {
+    process.stderr.write(`Error: ${error}\n`);
     process.stderr.write('Usage: validate-artifacts.mjs <artifact-dir> [--strict] [--repo-root <path>]\n');
     process.exit(2);
   }

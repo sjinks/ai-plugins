@@ -25,7 +25,7 @@ const SCHEMA_DIR = resolve(SCRIPT_DIR, '..', 'shared', 'schemas');
 
 const ID_PREFIXES = [
   'COMPONENT', 'ENTRYPOINT', 'FLOW', 'SYMBOL', 'CONTRACT', 'CONFIG',
-  'OBS', 'SEC', 'RISK', 'GAP', 'QUESTION', 'EVIDENCE',
+  'OBS', 'SEC', 'PERF', 'RISK', 'GAP', 'QUESTION', 'EVIDENCE',
 ];
 const ID_RE = new RegExp(`^(${ID_PREFIXES.join('|')})-[0-9]{3,}$`);
 
@@ -38,11 +38,12 @@ const REQUIRED_MARKDOWN = [
   '11_CHANGE_IMPACT_GUIDE.md', '12_OPEN_QUESTIONS.md', '13_AGENT_NAVIGATION_GUIDE.md',
 ];
 
-// Additive markdown artifacts (14-17). Validated (non-empty) only when present;
+// Additive markdown artifacts (14-18). Validated (non-empty) only when present;
 // their absence is not an error.
 const ADDITIVE_MARKDOWN = [
   '14_API_AND_CONTRACTS.md', '15_CONFIG_SURFACE.md',
   '16_OBSERVABILITY_MAP.md', '17_SECURITY_SENSITIVE_CODE.md',
+  '18_PERFORMANCE_AND_SCALABILITY.md',
 ];
 
 // JSON artifact -> schema filename. Required ones must exist; additive ones
@@ -62,6 +63,7 @@ const JSON_ARTIFACTS = [
   { file: 'config_surface.json', schema: 'config_surface.schema.json', required: false },
   { file: 'observability_map.json', schema: 'observability_map.schema.json', required: false },
   { file: 'security_sensitive_code.json', schema: 'security_sensitive_code.schema.json', required: false },
+  { file: 'performance_findings.json', schema: 'performance_findings.schema.json', required: false },
 ];
 
 // Required top-level sections per key markdown artifact.

@@ -76,6 +76,9 @@ function main() {
   const sec = loadJson(join(mr, 'security_sensitive_code.json'));
   if (sec && Array.isArray(sec.data)) lines.push(`Security-sensitive sites: ${sec.data.length}`);
 
+  const perf = loadJson(join(mr, 'performance_findings.json'));
+  if (perf && Array.isArray(perf.data)) lines.push(`Performance findings: ${perf.data.length}`);
+
   const evidence = loadJson(join(mr, 'evidence_index.json'));
   if (evidence && Array.isArray(evidence.data)) lines.push(`Evidence records: ${evidence.data.length}`);
 

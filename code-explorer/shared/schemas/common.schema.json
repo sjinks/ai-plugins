@@ -34,7 +34,7 @@
     },
     "stableId": {
       "type": "string",
-      "pattern": "^(COMPONENT|ENTRYPOINT|FLOW|SYMBOL|CONTRACT|CONFIG|OBS|SEC|RISK|GAP|QUESTION|EVIDENCE)-[0-9]{3,}$"
+      "pattern": "^(COMPONENT|ENTRYPOINT|FLOW|SYMBOL|CONTRACT|CONFIG|OBS|SEC|PERF|RISK|GAP|QUESTION|EVIDENCE)-[0-9]{3,}$"
     },
     "evidenceRef": {
       "type": "string",

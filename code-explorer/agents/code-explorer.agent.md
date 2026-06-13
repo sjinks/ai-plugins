@@ -74,7 +74,7 @@ Run these additive skills when their concern is relevant to the repository or th
 | `config-surface-map` | `15_CONFIG_SURFACE.md`, `machine-readable/config_surface.json` |
 | `observability-map` | `16_OBSERVABILITY_MAP.md`, `machine-readable/observability_map.json` |
 | `security-sensitive-code-scan` | `17_SECURITY_SENSITIVE_CODE.md`, `machine-readable/security_sensitive_code.json` |
-| `performance-scalability-scan` | findings into `10_RISK_REGISTER.md` |
+| `performance-scalability-scan` | findings into `10_RISK_REGISTER.md`, or `18_PERFORMANCE_AND_SCALABILITY.md` + `machine-readable/performance_findings.json` on request |
 | `error-observability-audit` | findings into `10_RISK_REGISTER.md` and `16_OBSERVABILITY_MAP.md` |
 
 When you record evidence that multiple artifacts cite, prefer a shared `EVIDENCE-*` record in `machine-readable/evidence_index.json` and reference its ID, per `shared/output-contracts.md`. Assign all stable IDs per `shared/stable-id-policy.md`, and in `refresh` mode reuse existing IDs for items that still exist.

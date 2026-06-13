@@ -16,6 +16,7 @@ Each logical item kind uses a fixed prefix followed by a zero-padded number of a
 | `CONFIG-001` | Config surface item | `config_surface.json` |
 | `OBS-001` | Observability signal | `observability_map.json` |
 | `SEC-001` | Security-sensitive site | `security_sensitive_code.json` |
+| `PERF-001` | Performance/scalability finding | `performance_findings.json` |
 | `RISK-001` | Risk | `risks.json` |
 | `GAP-001` | Test gap | `test_map.json` (`gaps[]`) |
 | `QUESTION-001` | Open question | `open_questions.json` |
@@ -37,6 +38,7 @@ Each logical item kind uses a fixed prefix followed by a zero-padded number of a
    - config: config key or variable name;
    - observability: area plus signal name;
    - security sites: file plus symbol plus category;
+   - performance findings: file plus symbol plus category;
    - risks: risk title plus affected area;
    - gaps: behavior plus area;
    - questions: the question subject.

@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "schema": "performance_findings",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "medium",
+    "limitations": ["Single-route fixture; findings are illustrative."]
+  },
+  "data": [
+    {
+      "id": "PERF-001",
+      "category": "large-buffer",
+      "file": "src/routes.js",
+      "symbol": "handleGreeting",
+      "description": "The name query parameter is reflected into the response with no length bound, so response size is attacker-controlled.",
+      "whyItMatters": "A very long name produces a proportionally large response and allocation.",
+      "scale": "Per-request, unbounded by input length.",
+      "suggestedBenchmark": "Measure response time and memory for name lengths of 1KB, 1MB, and 10MB.",
+      "risk": "medium",
+      "evidence": ["EVIDENCE-001"],
+      "confidence": "medium"
+    }
+  ]
+}

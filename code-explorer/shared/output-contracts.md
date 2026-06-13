@@ -30,7 +30,7 @@ All artifacts carry the provenance stamp defined in `shared/exploration-protocol
 
 Every `data` item that represents a logical thing carries a stable `id` (`RISK-001`, `ENTRYPOINT-001`, ...) per `shared/stable-id-policy.md`. The exception is `dependency_graph.json`, whose node `id` values are graph-local identifiers, not stable IDs.
 
-Markdown labels (`High`, `Critical`, ...) are capitalized; JSON enum values are lowercase. Every numbered markdown artifact (01-17) ends with a `## Limitations` section, shown in each template; keep it brief when there is nothing to record.
+Markdown labels (`High`, `Critical`, ...) are capitalized; JSON enum values are lowercase. Every numbered markdown artifact (01-18) ends with a `## Limitations` section, shown in each template; keep it brief when there is nothing to record.
 
 ## Directory Layout
 
@@ -54,6 +54,7 @@ docs/codebase-exploration/
   15_CONFIG_SURFACE.md
   16_OBSERVABILITY_MAP.md
   17_SECURITY_SENSITIVE_CODE.md
+  18_PERFORMANCE_AND_SCALABILITY.md
   machine-readable/
     repository_index.json
     symbol_index.json
@@ -69,9 +70,10 @@ docs/codebase-exploration/
     config_surface.json
     observability_map.json
     security_sensitive_code.json
+    performance_findings.json
 ```
 
-Artifacts `00`–`13` (and their JSON: `repository_index`, `entrypoints`, `dataflows`, `symbol_index`, `important_functions`, `dependency_graph`, `test_map`, `risks`) are the required base set. Artifacts `14`–`17` and their JSON, plus `open_questions.json` and `evidence_index.json`, are additive: produce them when the matching skill runs, and their absence is not a validation error.
+Artifacts `00`–`13` (and their JSON: `repository_index`, `entrypoints`, `dataflows`, `symbol_index`, `important_functions`, `dependency_graph`, `test_map`, `risks`) are the required base set. Artifacts `14`–`18` and their JSON, plus `open_questions.json` and `evidence_index.json`, are additive: produce them when the matching skill runs, and their absence is not a validation error.
 
 If the repository already has a documentation convention (for example `doc/` or a docs site source tree), adapt the base path accordingly but preserve the file names and structure.
 
@@ -897,6 +899,44 @@ A reusable evidence database. Other artifacts reference these `EVIDENCE-*` IDs i
       "tests": [],
       "evidence": [],
       "confidence": "high"
+    }
+  ]
+}
+```
+
+## 18_PERFORMANCE_AND_SCALABILITY.md and performance_findings.json
+
+Optional artifact produced by `performance-scalability-scan` when the user asks for a dedicated artifact (otherwise findings go to the risk register).
+
+```markdown
+# Performance and Scalability
+
+## Summary
+
+| ID | Category | File | Risk | Confidence |
+|---|---|---|---|---:|
+
+## Findings
+
+## Limitations
+```
+
+```json
+{
+  "_meta": {},
+  "data": [
+    {
+      "id": "PERF-001",
+      "category": "unbounded-loop|n-plus-one|missing-pagination|large-buffer|blocking-io|expensive-serialization|regex-hazard|retry-storm|unbounded-concurrency|missing-backpressure|cache-misuse|startup-cost|other",
+      "file": "",
+      "symbol": "",
+      "description": "",
+      "whyItMatters": "",
+      "scale": "",
+      "suggestedBenchmark": "",
+      "risk": "low|medium|high|critical",
+      "evidence": [],
+      "confidence": "medium"
     }
   ]
 }

@@ -10,7 +10,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "category", "confidence"],
+        "required": ["id", "category", "file", "confidence"],
         "properties": {
           "id": { "$ref": "common.schema.json#/$defs/stableId" },
           "category": {

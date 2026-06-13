@@ -17,11 +17,25 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve, relative } from 'node:path';
 
 function parseArgs(argv) {
-  const args = { dir: null, repoRoot: process.cwd() };
+  const args = { dir: null, repoRoot: process.cwd(), error: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a === '--repo-root') args.repoRoot = argv[++i];
-    else if (!a.startsWith('--') && args.dir === null) args.dir = a;
+    if (a === '--repo-root') {
+      const value = argv[++i];
+      if (value === undefined) {
+        args.error = '--repo-root requires a value';
+        break;
+      }
+      args.repoRoot = value;
+    } else if (a.startsWith('--')) {
+      args.error = `unknown flag: ${a}`;
+      break;
+    } else if (args.dir === null) {
+      args.dir = a;
+    } else {
+      args.error = `unexpected argument: ${a}`;
+      break;
+    }
   }
   return args;
 }
@@ -56,6 +70,11 @@ function collectArtifactFiles(dir) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
+  if (args.error) {
+    process.stderr.write(`Error: ${args.error}\n`);
+    process.stderr.write('Usage: check-file-references.mjs <artifact-dir> [--repo-root <path>]\n');
+    process.exit(2);
+  }
   if (!args.dir) {
     process.stderr.write('Usage: check-file-references.mjs <artifact-dir> [--repo-root <path>]\n');
     process.exit(2);

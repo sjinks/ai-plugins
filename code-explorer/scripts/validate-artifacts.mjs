@@ -28,14 +28,20 @@ const ID_PREFIXES = [
 ];
 const ID_RE = new RegExp(`^(${ID_PREFIXES.join('|')})-[0-9]{3,}$`);
 
-// Required markdown artifacts (00-13 are the base set; 14-17 are additive and
-// only checked when present, except that their absence is not an error).
+// Required markdown artifacts (00-13 are the base set).
 const REQUIRED_MARKDOWN = [
   '00_EXECUTIVE_SUMMARY.md', '01_REPOSITORY_MAP.md', '02_BUILD_AND_RUNTIME.md',
   '03_ARCHITECTURE_OVERVIEW.md', '04_ENTRYPOINTS.md', '05_DOMAIN_MODEL.md',
   '06_DATAFLOWS_AND_TRUST_BOUNDARIES.md', '07_FUNCTION_AND_SYMBOL_INVENTORY.md',
   '08_DEPENDENCY_GRAPH.md', '09_TEST_COVERAGE_MAP.md', '10_RISK_REGISTER.md',
   '11_CHANGE_IMPACT_GUIDE.md', '12_OPEN_QUESTIONS.md', '13_AGENT_NAVIGATION_GUIDE.md',
+];
+
+// Additive markdown artifacts (14-17). Validated (non-empty) only when present;
+// their absence is not an error.
+const ADDITIVE_MARKDOWN = [
+  '14_API_AND_CONTRACTS.md', '15_CONFIG_SURFACE.md',
+  '16_OBSERVABILITY_MAP.md', '17_SECURITY_SENSITIVE_CODE.md',
 ];
 
 // JSON artifact -> schema filename. Required ones must exist; additive ones
@@ -66,12 +72,27 @@ const REQUIRED_SECTIONS = {
 };
 
 function parseArgs(argv) {
-  const args = { dir: null, strict: false, repoRoot: process.cwd() };
+  const args = { dir: null, strict: false, repoRoot: process.cwd(), error: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a === '--strict') args.strict = true;
-    else if (a === '--repo-root') args.repoRoot = argv[++i];
-    else if (!a.startsWith('--') && args.dir === null) args.dir = a;
+    if (a === '--strict') {
+      args.strict = true;
+    } else if (a === '--repo-root') {
+      const value = argv[++i];
+      if (value === undefined) {
+        args.error = '--repo-root requires a value';
+        break;
+      }
+      args.repoRoot = value;
+    } else if (a.startsWith('--')) {
+      args.error = `unknown flag: ${a}`;
+      break;
+    } else if (args.dir === null) {
+      args.dir = a;
+    } else {
+      args.error = `unexpected argument: ${a}`;
+      break;
+    }
   }
   return args;
 }
@@ -108,6 +129,11 @@ function main() {
   const args = parseArgs(process.argv.slice(2));
   const report = { ok: [], warnings: [], errors: [] };
 
+  if (args.error) {
+    process.stderr.write(`Error: ${args.error}\n`);
+    process.stderr.write('Usage: validate-artifacts.mjs <artifact-dir> [--strict] [--repo-root <path>]\n');
+    process.exit(2);
+  }
   if (!args.dir) {
     process.stderr.write('Usage: validate-artifacts.mjs <artifact-dir> [--strict] [--repo-root <path>]\n');
     process.exit(2);
@@ -143,6 +169,18 @@ function main() {
   }
   const mdFound = REQUIRED_MARKDOWN.filter((m) => existsSync(join(artifactDir, m))).length;
   report.ok.push(`${mdFound}/${REQUIRED_MARKDOWN.length} required markdown artifacts found`);
+
+  // Additive markdown artifacts (14-17): validated (non-empty) only when present.
+  let additiveFound = 0;
+  for (const md of ADDITIVE_MARKDOWN) {
+    const p = join(artifactDir, md);
+    if (!existsSync(p)) continue;
+    additiveFound++;
+    if (readFileSync(p, 'utf8').trim().length === 0) {
+      report.errors.push(`additive markdown artifact is empty: ${md}`);
+    }
+  }
+  if (additiveFound > 0) report.ok.push(`${additiveFound} additive markdown artifact(s) present`);
 
   // Gather evidence IDs across artifacts for cross-reference checks.
   const evidenceIds = new Set();
@@ -214,7 +252,6 @@ function main() {
     // Evidence references resolve to evidence_index records, when present.
     if (evidenceIds.size > 0) {
       const evRefs = [];
-      collectIds(parsed.data, []); // no-op; explicit usedBy scan below
       const scanUsedBy = (node) => {
         if (node === null || typeof node !== 'object') return;
         if (Array.isArray(node)) { node.forEach(scanUsedBy); return; }

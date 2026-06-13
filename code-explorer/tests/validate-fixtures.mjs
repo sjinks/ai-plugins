@@ -19,7 +19,6 @@ import { spawnSync } from 'node:child_process';
 const TESTS_DIR = dirname(fileURLToPath(import.meta.url));
 const PLUGIN_DIR = resolve(TESTS_DIR, '..');
 const FIXTURES_DIR = join(PLUGIN_DIR, 'fixtures');
-const REPO_ROOT = resolve(PLUGIN_DIR, '..');
 const VALIDATOR = join(PLUGIN_DIR, 'scripts', 'validate-artifacts.mjs');
 
 function findExpectedDirs() {
@@ -52,7 +51,15 @@ function main() {
     );
     process.stdout.write(res.stdout || '');
     if (res.stderr) process.stderr.write(res.stderr);
-    if (res.status !== 0) {
+    if (res.error) {
+      // The validator process could not be spawned at all.
+      failures++;
+      process.stdout.write(`Fixture ${fixture}: FAIL (could not run validator: ${res.error.message})\n`);
+    } else if (res.signal) {
+      // The validator was terminated by a signal (status is null in this case).
+      failures++;
+      process.stdout.write(`Fixture ${fixture}: FAIL (validator terminated by signal ${res.signal})\n`);
+    } else if (res.status !== 0) {
       failures++;
       process.stdout.write(`Fixture ${fixture}: FAIL (exit ${res.status})\n`);
     } else {

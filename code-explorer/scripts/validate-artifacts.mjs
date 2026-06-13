@@ -292,7 +292,7 @@ function main() {
   // 11. File references in markdown + JSON point to existing files where possible.
   let unverified = 0;
   const allArtifactFiles = [];
-  for (const md of REQUIRED_MARKDOWN) {
+  for (const md of [...REQUIRED_MARKDOWN, ...ADDITIVE_MARKDOWN]) {
     const p = join(artifactDir, md);
     if (existsSync(p)) allArtifactFiles.push(p);
   }

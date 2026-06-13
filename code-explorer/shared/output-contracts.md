@@ -2,26 +2,35 @@
 
 This reference defines the artifact layout, Markdown templates, and JSON shapes for all Code Explorer phases. It is a local reference, not an invocable skill. Phase skills must follow these contracts exactly so artifacts stay diffable across refreshes.
 
+The authoritative machine-readable contract is the set of JSON Schemas in `shared/schemas/`. The shapes below are human-readable summaries; when they disagree with a schema, the schema wins. Validate artifacts with `scripts/validate-artifacts.mjs`.
+
 All artifacts carry the provenance stamp defined in `shared/exploration-protocol.md`:
 
 - Markdown artifacts: place the stamp blockquote immediately after the H1 title. The templates below omit it for brevity; always include it.
-- JSON artifacts: `"_meta": {}` in the shapes below is shorthand for the full provenance object, which is required in every JSON file:
+- JSON artifacts: `"_meta": {}` in the shapes below is shorthand for the full provenance object (`shared/schemas/common.schema.json#/$defs/artifactMeta`), which is required in every JSON file:
 
 ```json
 {
   "_meta": {
-    "schemaVersion": 1,
+    "schema": "risks",
+    "schemaVersion": "1",
     "generatedAt": "2026-06-12T14:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": ".",
     "commit": "8c4d3ac",
     "scope": ".",
-    "mode": "full"
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
   }
 }
 ```
 
-JSON payloads live under a `data` key next to `_meta`.
+`_meta.schema` and `_meta.schemaVersion` are strings and are required. `_meta.mode` is one of `initial|refresh|partial|validation`. JSON payloads live under a `data` key next to `_meta`.
 
-Markdown labels (`High`, `Critical`, ...) are capitalized; JSON enum values are lowercase. Every numbered markdown artifact (01-13) ends with a `## Limitations` section, shown in each template; keep it brief when there is nothing to record.
+Every `data` item that represents a logical thing carries a stable `id` (`RISK-001`, `ENTRYPOINT-001`, ...) per `shared/stable-id-policy.md`. The exception is `dependency_graph.json`, whose node `id` values are graph-local identifiers, not stable IDs.
+
+Markdown labels (`High`, `Critical`, ...) are capitalized; JSON enum values are lowercase. Every numbered markdown artifact (01-17) ends with a `## Limitations` section, shown in each template; keep it brief when there is nothing to record.
 
 ## Directory Layout
 
@@ -41,6 +50,10 @@ docs/codebase-exploration/
   11_CHANGE_IMPACT_GUIDE.md
   12_OPEN_QUESTIONS.md
   13_AGENT_NAVIGATION_GUIDE.md
+  14_API_AND_CONTRACTS.md
+  15_CONFIG_SURFACE.md
+  16_OBSERVABILITY_MAP.md
+  17_SECURITY_SENSITIVE_CODE.md
   machine-readable/
     repository_index.json
     symbol_index.json
@@ -50,7 +63,15 @@ docs/codebase-exploration/
     risks.json
     test_map.json
     dependency_graph.json
+    open_questions.json
+    evidence_index.json
+    contracts.json
+    config_surface.json
+    observability_map.json
+    security_sensitive_code.json
 ```
+
+Artifacts `00`–`13` (and their JSON: `repository_index`, `entrypoints`, `dataflows`, `symbol_index`, `important_functions`, `dependency_graph`, `test_map`, `risks`) are the required base set. Artifacts `14`–`17` and their JSON, plus `open_questions.json` and `evidence_index.json`, are additive: produce them when the matching skill runs, and their absence is not a validation error.
 
 If the repository already has a documentation convention (for example `doc/` or a docs site source tree), adapt the base path accordingly but preserve the file names and structure.
 
@@ -672,4 +693,211 @@ Suggested resolution:
 ## Recommended workflow for future changes
 
 ## Limitations
+```
+
+## Stable IDs in existing JSON artifacts
+
+The base JSON artifacts now carry stable IDs on their logical items (in addition to the fields shown earlier in this file):
+
+- `entrypoints.json` entries: `id` (`ENTRYPOINT-001`).
+- `dataflows.json` entries: `id` (`FLOW-001`).
+- `symbol_index.json` / `important_functions.json` entries: `id` (`SYMBOL-001`).
+- `risks.json` entries: `id` (`RISK-001`).
+- `test_map.json` `gaps[]` entries: `id` (`GAP-001`).
+
+Each may also carry an optional `status` (`active|removed`) and an `evidence` array of `EVIDENCE-*` references. See `shared/schemas/` for the authoritative shapes.
+
+## open_questions.json
+
+```json
+{
+  "_meta": {},
+  "data": [
+    {
+      "id": "QUESTION-001",
+      "question": "",
+      "whyItMatters": "",
+      "area": "",
+      "evidence": [],
+      "suggestedResolution": ""
+    }
+  ]
+}
+```
+
+## evidence_index.json
+
+A reusable evidence database. Other artifacts reference these `EVIDENCE-*` IDs in their `evidence` arrays.
+
+```json
+{
+  "_meta": {},
+  "data": [
+    {
+      "id": "EVIDENCE-001",
+      "kind": "file|symbol|test|config|command-output|documentation|inference|other",
+      "file": "src/example.ts",
+      "symbol": "ExampleService.run",
+      "lineStart": null,
+      "lineEnd": null,
+      "claim": "Registers POST /example endpoint.",
+      "confidence": "high",
+      "usedBy": ["ENTRYPOINT-001", "FLOW-001", "RISK-001"]
+    }
+  ]
+}
+```
+
+## 14_API_AND_CONTRACTS.md and contracts.json
+
+````markdown
+# API and Contracts
+
+## Summary
+
+| ID | Kind | Name | Method/Path | Compatibility concerns | Confidence |
+|---|---|---|---|---|---:|
+
+## Contract: <id> <name>
+
+### Location
+
+### Inputs
+
+### Outputs
+
+### Compatibility concerns
+
+### Tests
+
+### Evidence
+
+## Limitations
+````
+
+```json
+{
+  "_meta": {},
+  "data": [
+    {
+      "id": "CONTRACT-001",
+      "kind": "http-route|cli|graphql|rpc|event|db-schema|config|library-api|webhook|other",
+      "name": "",
+      "location": "",
+      "method": "",
+      "path": "",
+      "inputs": [],
+      "outputs": [],
+      "compatibilityConcerns": [],
+      "tests": [],
+      "evidence": [],
+      "confidence": "high"
+    }
+  ]
+}
+```
+
+## 15_CONFIG_SURFACE.md and config_surface.json
+
+```markdown
+# Config Surface
+
+## Summary
+
+| ID | Name | Kind | Required | Default | Risk | Confidence |
+|---|---|---|---|---|---|---:|
+
+## Dangerous defaults / missing validation
+
+## Limitations
+```
+
+```json
+{
+  "_meta": {},
+  "data": [
+    {
+      "id": "CONFIG-001",
+      "name": "DATABASE_URL",
+      "kind": "env|file|flag|secret|feature-flag|runtime-option|other",
+      "required": true,
+      "defaultValue": null,
+      "usedBy": [],
+      "validation": "",
+      "risk": "",
+      "evidence": [],
+      "confidence": "high"
+    }
+  ]
+}
+```
+
+## 16_OBSERVABILITY_MAP.md and observability_map.json
+
+```markdown
+# Observability Map
+
+## Signals
+
+| ID | Area | Signal type | Signal name | What it shows | Confidence |
+|---|---|---|---|---|---:|
+
+## Visibility gaps
+
+## Limitations
+```
+
+```json
+{
+  "_meta": {},
+  "data": [
+    {
+      "id": "OBS-001",
+      "area": "",
+      "signalType": "log|metric|trace|healthcheck|alert|dashboard|error-report|audit-log|other",
+      "location": "",
+      "signalName": "",
+      "whatItShows": "",
+      "gaps": [],
+      "risks": [],
+      "evidence": [],
+      "confidence": "medium"
+    }
+  ]
+}
+```
+
+## 17_SECURITY_SENSITIVE_CODE.md and security_sensitive_code.json
+
+```markdown
+# Security-Sensitive Code
+
+## Summary
+
+| ID | Category | File | Symbol | Recommended review | Confidence |
+|---|---|---|---|---|---:|
+
+## Sites
+
+## Limitations
+```
+
+```json
+{
+  "_meta": {},
+  "data": [
+    {
+      "id": "SEC-001",
+      "category": "auth|authz|input-validation|sql|shell|filesystem|network|template|deserialization|crypto|secret|logging|other",
+      "file": "",
+      "symbol": "",
+      "description": "",
+      "risk": "",
+      "recommendedReview": "",
+      "tests": [],
+      "evidence": [],
+      "confidence": "high"
+    }
+  ]
+}
 ```

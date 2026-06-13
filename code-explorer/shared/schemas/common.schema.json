@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/common.schema.json",
+  "title": "Code Explorer common definitions",
+  "description": "Reusable definitions shared by every Code Explorer machine-readable artifact schema.",
+  "$defs": {
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "riskCategory": {
+      "type": "string",
+      "enum": [
+        "security",
+        "correctness",
+        "reliability",
+        "performance",
+        "maintainability",
+        "observability",
+        "data-integrity",
+        "configuration",
+        "deployment",
+        "testing",
+        "other"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["initial", "refresh", "partial", "validation"]
+    },
+    "stableId": {
+      "type": "string",
+      "pattern": "^(COMPONENT|ENTRYPOINT|FLOW|SYMBOL|CONTRACT|CONFIG|OBS|SEC|RISK|GAP|QUESTION|EVIDENCE)-[0-9]{3,}$"
+    },
+    "evidenceRef": {
+      "type": "string",
+      "pattern": "^EVIDENCE-[0-9]{3,}$"
+    },
+    "fileRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "symbolRef": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "removed"]
+    },
+    "artifactMeta": {
+      "type": "object",
+      "required": ["schema", "schemaVersion", "generatedAt", "mode"],
+      "properties": {
+        "schema": { "type": "string", "minLength": 1 },
+        "schemaVersion": { "type": "string", "minLength": 1 },
+        "generatedAt": { "type": "string", "minLength": 1 },
+        "generator": { "type": "string" },
+        "repositoryRoot": { "type": "string" },
+        "commit": { "type": ["string", "null"] },
+        "scope": { "type": "string" },
+        "mode": { "$ref": "common.schema.json#/$defs/mode" },
+        "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+        "limitations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

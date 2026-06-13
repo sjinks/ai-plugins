@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/test_map.schema.json",
+  "title": "test_map.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "object",
+      "required": ["testFrameworks", "testFiles", "behaviorsCovered", "gaps", "skippedOrFlaky"],
+      "properties": {
+        "testFrameworks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "evidence"],
+            "properties": {
+              "name": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "testFiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["file", "targetArea", "type"],
+            "properties": {
+              "file": { "$ref": "common.schema.json#/$defs/fileRef" },
+              "targetArea": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": ["unit", "integration", "e2e", "other"]
+              }
+            }
+          }
+        },
+        "behaviorsCovered": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["behavior", "confidence"],
+            "properties": {
+              "behavior": { "type": "string" },
+              "evidence": { "type": "array", "items": { "type": "string" } },
+              "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+            }
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "gap", "area", "risk"],
+            "properties": {
+              "id": { "$ref": "common.schema.json#/$defs/stableId" },
+              "gap": { "type": "string" },
+              "area": { "type": "string" },
+              "risk": { "$ref": "common.schema.json#/$defs/severity" },
+              "suggestedTest": { "type": "string" }
+            }
+          }
+        },
+        "skippedOrFlaky": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["test", "file", "status"],
+            "properties": {
+              "test": { "type": "string" },
+              "file": { "$ref": "common.schema.json#/$defs/fileRef" },
+              "status": {
+                "type": "string",
+                "enum": ["skipped", "disabled", "flaky"]
+              },
+              "reason": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/security_sensitive_code.schema.json",
+  "title": "security_sensitive_code.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "file", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "category": {
+            "type": "string",
+            "enum": ["auth", "authz", "input-validation", "sql", "shell", "filesystem", "network", "template", "deserialization", "crypto", "secret", "logging", "other"]
+          },
+          "file": { "$ref": "common.schema.json#/$defs/fileRef" },
+          "symbol": { "$ref": "common.schema.json#/$defs/symbolRef" },
+          "description": { "type": "string" },
+          "risk": { "type": "string" },
+          "recommendedReview": { "type": "string" },
+          "tests": { "type": "array", "items": { "type": "string" } },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "status": { "$ref": "common.schema.json#/$defs/status" }
+        }
+      }
+    }
+  }
+}

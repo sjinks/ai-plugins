@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/contracts.schema.json",
+  "title": "contracts.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "name", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "kind": {
+            "type": "string",
+            "enum": ["http-route", "cli", "graphql", "rpc", "event", "db-schema", "config", "library-api", "webhook", "other"]
+          },
+          "name": { "type": "string" },
+          "location": { "type": "string" },
+          "method": { "type": "string" },
+          "path": { "type": "string" },
+          "inputs": { "type": "array", "items": { "type": "string" } },
+          "outputs": { "type": "array", "items": { "type": "string" } },
+          "compatibilityConcerns": { "type": "array", "items": { "type": "string" } },
+          "tests": { "type": "array", "items": { "type": "string" } },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "status": { "$ref": "common.schema.json#/$defs/status" }
+        }
+      }
+    }
+  }
+}

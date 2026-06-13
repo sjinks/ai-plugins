@@ -1,0 +1,10 @@
+{
+  "name": "tiny-node-api",
+  "version": "1.0.0",
+  "description": "Fixture: a minimal HTTP API used to exercise Code Explorer expectations.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  }
+}

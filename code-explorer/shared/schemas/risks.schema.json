@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/risks.schema.json",
+  "title": "risks.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "category", "severity", "confidence", "area"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "title": { "type": "string" },
+          "category": { "$ref": "common.schema.json#/$defs/riskCategory" },
+          "severity": { "$ref": "common.schema.json#/$defs/severity" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "area": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "whyItMatters": { "type": "string" },
+          "suggestedVerification": { "type": "string" },
+          "suggestedMitigation": { "type": "string" },
+          "relatedTests": { "type": "array", "items": { "type": "string" } },
+          "status": { "$ref": "common.schema.json#/$defs/status" }
+        }
+      }
+    }
+  }
+}

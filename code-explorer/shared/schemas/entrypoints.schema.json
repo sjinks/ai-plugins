@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/entrypoints.schema.json",
+  "title": "entrypoints.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "file", "traced", "risk", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "name": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["http", "cli", "worker", "cron", "webhook", "library", "other"]
+          },
+          "file": { "$ref": "common.schema.json#/$defs/fileRef" },
+          "symbol": { "$ref": "common.schema.json#/$defs/symbolRef" },
+          "traced": { "type": "boolean" },
+          "trigger": { "type": "string" },
+          "inputs": { "type": "array", "items": { "type": "string" } },
+          "validation": { "type": "array", "items": { "type": "string" } },
+          "auth": {
+            "type": "object",
+            "properties": {
+              "authentication": { "type": "string" },
+              "authorization": { "type": "string" }
+            }
+          },
+          "callChain": { "type": "array", "items": { "type": "string" } },
+          "sideEffects": { "type": "array", "items": { "type": "string" } },
+          "tests": { "type": "array", "items": { "type": "string" } },
+          "risk": { "$ref": "common.schema.json#/$defs/severity" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "status": { "$ref": "common.schema.json#/$defs/status" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

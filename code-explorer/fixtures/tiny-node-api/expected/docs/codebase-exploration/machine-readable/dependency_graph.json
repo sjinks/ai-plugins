@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "schema": "dependency_graph",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": {
+    "nodes": [
+      { "id": "server", "path": "src/server.js" },
+      { "id": "routes", "path": "src/routes.js" },
+      { "id": "service", "path": "src/service.js" },
+      { "id": "config", "path": "src/config.js" }
+    ],
+    "edges": [
+      { "from": "server", "to": "routes", "evidence": "import { route }" },
+      { "from": "server", "to": "config", "evidence": "import { loadConfig }" },
+      { "from": "routes", "to": "service", "evidence": "import { buildGreeting }" },
+      { "from": "service", "to": "config", "evidence": "import { loadConfig }" }
+    ],
+    "cycles": [],
+    "highFanIn": [
+      { "module": "config", "usedBy": ["server", "service"], "whyItMatters": "central config source" }
+    ],
+    "highFanOut": [
+      { "module": "server", "dependsOn": ["routes", "config"], "risk": "low" }
+    ],
+    "hotspots": []
+  }
+}

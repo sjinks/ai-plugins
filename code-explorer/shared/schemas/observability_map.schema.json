@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/observability_map.schema.json",
+  "title": "observability_map.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "area", "signalType", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "area": { "type": "string" },
+          "signalType": {
+            "type": "string",
+            "enum": ["log", "metric", "trace", "healthcheck", "alert", "dashboard", "error-report", "audit-log", "other"]
+          },
+          "location": { "type": "string" },
+          "signalName": { "type": "string" },
+          "whatItShows": { "type": "string" },
+          "gaps": { "type": "array", "items": { "type": "string" } },
+          "risks": { "type": "array", "items": { "type": "string" } },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "status": { "$ref": "common.schema.json#/$defs/status" }
+        }
+      }
+    }
+  }
+}

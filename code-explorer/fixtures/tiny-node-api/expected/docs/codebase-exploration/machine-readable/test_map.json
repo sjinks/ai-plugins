@@ -1,0 +1,30 @@
+{
+  "_meta": {
+    "schema": "test_map",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": {
+    "testFrameworks": [
+      { "name": "node:test", "evidence": "test/service.test.js imports node:test" }
+    ],
+    "testFiles": [
+      { "file": "test/service.test.js", "targetArea": "service", "type": "unit" }
+    ],
+    "behaviorsCovered": [
+      { "behavior": "greeting uses provided name", "evidence": ["EVIDENCE-002"], "confidence": "high" },
+      { "behavior": "empty name falls back to world", "evidence": ["EVIDENCE-002"], "confidence": "high" }
+    ],
+    "gaps": [
+      { "id": "GAP-001", "gap": "No HTTP-layer test for /greeting", "area": "routes", "risk": "medium", "suggestedTest": "Integration test hitting GET /greeting" }
+    ],
+    "skippedOrFlaky": []
+  }
+}

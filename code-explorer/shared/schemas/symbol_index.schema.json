@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/symbol_index.schema.json",
+  "title": "symbol_index.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind", "file", "tier", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "name": { "type": "string" },
+          "kind": {
+            "type": "string",
+            "enum": ["function", "method", "class", "module", "constant", "type", "interface", "other"]
+          },
+          "file": { "$ref": "common.schema.json#/$defs/fileRef" },
+          "signature": { "type": "string" },
+          "exported": { "type": "boolean" },
+          "tier": { "type": "integer", "enum": [1, 2, 3] },
+          "purpose": { "type": "string" },
+          "inputs": { "type": "array", "items": { "type": "string" } },
+          "outputs": { "type": "array", "items": { "type": "string" } },
+          "callers": { "type": "array", "items": { "type": "string" } },
+          "callees": { "type": "array", "items": { "type": "string" } },
+          "sideEffects": { "type": "array", "items": { "type": "string" } },
+          "errors": { "type": "array", "items": { "type": "string" } },
+          "invariants": { "type": "array", "items": { "type": "string" } },
+          "securityAssumptions": { "type": "array", "items": { "type": "string" } },
+          "tests": { "type": "array", "items": { "type": "string" } },
+          "risks": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "status": { "$ref": "common.schema.json#/$defs/status" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

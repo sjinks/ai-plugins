@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/evidence_index.schema.json",
+  "title": "evidence_index.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "claim", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/evidenceRef" },
+          "kind": {
+            "type": "string",
+            "enum": ["file", "symbol", "test", "config", "command-output", "documentation", "inference", "other"]
+          },
+          "file": { "$ref": "common.schema.json#/$defs/fileRef" },
+          "symbol": { "$ref": "common.schema.json#/$defs/symbolRef" },
+          "lineStart": { "type": ["integer", "null"] },
+          "lineEnd": { "type": ["integer", "null"] },
+          "claim": { "type": "string" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "usedBy": {
+            "type": "array",
+            "items": { "$ref": "common.schema.json#/$defs/stableId" }
+          },
+          "status": { "$ref": "common.schema.json#/$defs/status" }
+        }
+      }
+    }
+  }
+}

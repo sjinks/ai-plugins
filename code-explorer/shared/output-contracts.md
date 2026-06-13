@@ -266,7 +266,7 @@ External trigger
     {
       "name": "",
       "type": "http|cli|worker|cron|webhook|library|other",
-      "file": "",
+      "file": "src/example.ts",
       "symbol": "",
       "traced": false,
       "trigger": "",
@@ -434,7 +434,7 @@ flowchart TD
     {
       "name": "",
       "kind": "function|method|class|module|constant|type|interface|other",
-      "file": "",
+      "file": "src/example.ts",
       "signature": "",
       "exported": false,
       "tier": 1,
@@ -546,10 +546,10 @@ A node `id` is the module identifier used in `edges` (`from`/`to` reference node
   "_meta": {},
   "data": {
     "testFrameworks": [{ "name": "", "evidence": "" }],
-    "testFiles": [{ "file": "", "targetArea": "", "type": "unit|integration|e2e|other" }],
+    "testFiles": [{ "file": "test/example.test.ts", "targetArea": "", "type": "unit|integration|e2e|other" }],
     "behaviorsCovered": [{ "behavior": "", "evidence": [], "confidence": "low|medium|high" }],
     "gaps": [{ "gap": "", "area": "", "risk": "low|medium|high|critical", "suggestedTest": "" }],
-    "skippedOrFlaky": [{ "test": "", "file": "", "status": "skipped|disabled|flaky", "reason": "" }]
+    "skippedOrFlaky": [{ "test": "", "file": "test/example.test.ts", "status": "skipped|disabled|flaky", "reason": "" }]
   }
 }
 ```
@@ -891,7 +891,7 @@ A reusable evidence database. Other artifacts reference these `EVIDENCE-*` IDs i
     {
       "id": "SEC-001",
       "category": "auth|authz|input-validation|sql|shell|filesystem|network|template|deserialization|crypto|secret|logging|other",
-      "file": "",
+      "file": "src/example.ts",
       "symbol": "",
       "description": "",
       "risk": "",

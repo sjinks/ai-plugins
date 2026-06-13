@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "schema": "evidence_index",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": [
+    {
+      "id": "EVIDENCE-001",
+      "kind": "symbol",
+      "file": "src/routes.js",
+      "symbol": "handleGreeting",
+      "lineStart": null,
+      "lineEnd": null,
+      "claim": "Reads name from the query string and reflects it via buildGreeting without validation.",
+      "confidence": "high",
+      "usedBy": ["ENTRYPOINT-001", "FLOW-001", "RISK-001", "QUESTION-001", "SYMBOL-001"]
+    },
+    {
+      "id": "EVIDENCE-002",
+      "kind": "test",
+      "file": "test/service.test.js",
+      "symbol": "buildGreeting",
+      "lineStart": null,
+      "lineEnd": null,
+      "claim": "Covers buildGreeting for provided and empty names.",
+      "confidence": "high",
+      "usedBy": ["SYMBOL-002"]
+    }
+  ]
+}

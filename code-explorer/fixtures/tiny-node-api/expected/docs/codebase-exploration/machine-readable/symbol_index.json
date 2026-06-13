@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "schema": "symbol_index",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": [
+    {
+      "id": "SYMBOL-001",
+      "name": "handleGreeting",
+      "kind": "function",
+      "file": "src/routes.js",
+      "exported": true,
+      "tier": 1,
+      "purpose": "Handle GET /greeting and write the greeting response",
+      "callers": ["route"],
+      "callees": ["buildGreeting"],
+      "sideEffects": ["writes HTTP response"],
+      "tests": [],
+      "risks": ["RISK-001"],
+      "confidence": "high",
+      "evidence": ["EVIDENCE-001"]
+    },
+    {
+      "id": "SYMBOL-002",
+      "name": "buildGreeting",
+      "kind": "function",
+      "file": "src/service.js",
+      "exported": true,
+      "tier": 1,
+      "purpose": "Build the greeting string",
+      "callers": ["handleGreeting"],
+      "callees": ["loadConfig"],
+      "sideEffects": [],
+      "tests": ["test/service.test.js"],
+      "confidence": "high"
+    },
+    {
+      "id": "SYMBOL-003",
+      "name": "route",
+      "kind": "function",
+      "file": "src/routes.js",
+      "exported": true,
+      "tier": 2,
+      "purpose": "Dispatch incoming requests",
+      "confidence": "high"
+    },
+    {
+      "id": "SYMBOL-004",
+      "name": "loadConfig",
+      "kind": "function",
+      "file": "src/config.js",
+      "exported": true,
+      "tier": 2,
+      "purpose": "Load environment configuration",
+      "confidence": "high"
+    },
+    {
+      "id": "SYMBOL-005",
+      "name": "createApp",
+      "kind": "function",
+      "file": "src/server.js",
+      "exported": true,
+      "tier": 3,
+      "purpose": "Create the HTTP server",
+      "confidence": "high"
+    }
+  ]
+}

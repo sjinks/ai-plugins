@@ -1,0 +1,60 @@
+{
+  "_meta": {
+    "schema": "important_functions",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": [
+    {
+      "id": "SYMBOL-001",
+      "name": "handleGreeting",
+      "kind": "function",
+      "file": "src/routes.js",
+      "signature": "handleGreeting(req, res)",
+      "exported": true,
+      "tier": 1,
+      "purpose": "Handle GET /greeting and write the greeting response",
+      "inputs": ["req", "res"],
+      "outputs": ["HTTP response"],
+      "callers": ["route"],
+      "callees": ["buildGreeting"],
+      "sideEffects": ["writes HTTP response"],
+      "errors": [],
+      "invariants": [],
+      "securityAssumptions": ["assumes name is safe to reflect"],
+      "tests": [],
+      "risks": ["RISK-001"],
+      "confidence": "high",
+      "evidence": ["EVIDENCE-001"]
+    },
+    {
+      "id": "SYMBOL-002",
+      "name": "buildGreeting",
+      "kind": "function",
+      "file": "src/service.js",
+      "signature": "buildGreeting(name)",
+      "exported": true,
+      "tier": 1,
+      "purpose": "Build the greeting string from name and config",
+      "inputs": ["name"],
+      "outputs": ["greeting string"],
+      "callers": ["handleGreeting"],
+      "callees": ["loadConfig"],
+      "sideEffects": [],
+      "errors": [],
+      "invariants": ["empty name falls back to world"],
+      "securityAssumptions": [],
+      "tests": ["test/service.test.js"],
+      "risks": [],
+      "confidence": "high",
+      "evidence": ["EVIDENCE-002"]
+    }
+  ]
+}

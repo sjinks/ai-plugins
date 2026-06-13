@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/dataflows.schema.json",
+  "title": "dataflows.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/stableId" },
+          "name": { "type": "string" },
+          "entrypoint": { "type": "string" },
+          "sources": { "type": "array", "items": { "type": "string" } },
+          "trustBoundaries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["boundary", "data", "validation", "risk"],
+              "properties": {
+                "boundary": { "type": "string" },
+                "data": { "type": "string" },
+                "validation": { "type": "string" },
+                "risk": { "$ref": "common.schema.json#/$defs/severity" }
+              }
+            }
+          },
+          "transformations": { "type": "array", "items": { "type": "string" } },
+          "sinks": { "type": "array", "items": { "type": "string" } },
+          "sideEffects": { "type": "array", "items": { "type": "string" } },
+          "failureModes": { "type": "array", "items": { "type": "string" } },
+          "risks": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "status": { "$ref": "common.schema.json#/$defs/status" },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

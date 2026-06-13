@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "schema": "risks",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": [
+    {
+      "id": "RISK-001",
+      "title": "Reflected name without sanitization or length limit",
+      "category": "security",
+      "severity": "high",
+      "confidence": "high",
+      "area": "routes",
+      "evidence": ["EVIDENCE-001"],
+      "whyItMatters": "Untrusted input is reflected into the response body with no length bound or encoding.",
+      "suggestedVerification": "Send GET /greeting?name= with a long HTML payload and observe the response.",
+      "suggestedMitigation": "Cap name length and escape output for the response content type.",
+      "relatedTests": ["GAP-001"]
+    }
+  ]
+}

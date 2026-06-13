@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "schema": "open_questions",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": [
+    {
+      "id": "QUESTION-001",
+      "question": "Is there an intended maximum length for name?",
+      "whyItMatters": "Determines the mitigation for RISK-001.",
+      "area": "routes",
+      "evidence": ["EVIDENCE-001"],
+      "suggestedResolution": "Decide and document a maximum length, then enforce it."
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/repository_index.schema.json",
+  "title": "repository_index.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "object",
+      "required": [
+        "languages",
+        "frameworks",
+        "packageManagers",
+        "buildSystems",
+        "testFrameworks",
+        "topLevelDirectories",
+        "ignoredPaths",
+        "importantConfigFiles"
+      ],
+      "properties": {
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "evidence"],
+            "properties": {
+              "name": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "frameworks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "evidence", "confidence"],
+            "properties": {
+              "name": { "type": "string" },
+              "evidence": { "type": "string" },
+              "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+            }
+          }
+        },
+        "packageManagers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "evidence"],
+            "properties": {
+              "name": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "buildSystems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "evidence"],
+            "properties": {
+              "name": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "testFrameworks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "evidence"],
+            "properties": {
+              "name": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "topLevelDirectories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "purpose", "confidence", "evidence"],
+            "properties": {
+              "path": { "type": "string" },
+              "purpose": { "type": "string" },
+              "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "ignoredPaths": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "importantConfigFiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "purpose"],
+            "properties": {
+              "path": { "type": "string" },
+              "purpose": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "_meta": {
+    "schema": "repository_index",
+    "schemaVersion": "1",
+    "generatedAt": "2026-06-13T00:00:00Z",
+    "generator": "code-explorer",
+    "repositoryRoot": "fixtures/tiny-node-api",
+    "commit": null,
+    "scope": "fixtures/tiny-node-api",
+    "mode": "initial",
+    "confidence": "high",
+    "limitations": []
+  },
+  "data": {
+    "languages": [
+      { "name": "JavaScript", "evidence": "package.json type=module; .js sources" }
+    ],
+    "frameworks": [],
+    "packageManagers": [
+      { "name": "npm", "evidence": "package.json present" }
+    ],
+    "buildSystems": [],
+    "testFrameworks": [
+      { "name": "node:test", "evidence": "package.json test script runs node --test" }
+    ],
+    "topLevelDirectories": [
+      { "path": "src", "purpose": "Application source", "confidence": "high", "evidence": "src/server.js starts the server" },
+      { "path": "test", "purpose": "Tests", "confidence": "high", "evidence": "test/service.test.js" }
+    ],
+    "ignoredPaths": ["node_modules"],
+    "importantConfigFiles": [
+      { "path": "package.json", "purpose": "package metadata and test script" }
+    ]
+  }
+}

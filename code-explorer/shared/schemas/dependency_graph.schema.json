@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/code-explorer/shared/schemas/dependency_graph.schema.json",
+  "title": "dependency_graph.json",
+  "type": "object",
+  "required": ["_meta", "data"],
+  "properties": {
+    "_meta": { "$ref": "common.schema.json#/$defs/artifactMeta" },
+    "data": {
+      "type": "object",
+      "required": ["nodes", "edges", "cycles", "highFanIn", "highFanOut", "hotspots"],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "path"],
+            "properties": {
+              "id": { "type": "string" },
+              "path": { "type": "string" }
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from", "to"],
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "cycles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["members", "risk"],
+            "properties": {
+              "members": { "type": "array", "items": { "type": "string" } },
+              "closingImport": { "type": "string" },
+              "risk": { "$ref": "common.schema.json#/$defs/severity" }
+            }
+          }
+        },
+        "highFanIn": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["module", "usedBy"],
+            "properties": {
+              "module": { "type": "string" },
+              "usedBy": { "type": "array", "items": { "type": "string" } },
+              "whyItMatters": { "type": "string" }
+            }
+          }
+        },
+        "highFanOut": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["module", "dependsOn"],
+            "properties": {
+              "module": { "type": "string" },
+              "dependsOn": { "type": "array", "items": { "type": "string" } },
+              "risk": { "$ref": "common.schema.json#/$defs/severity" }
+            }
+          }
+        },
+        "hotspots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["module", "signals"],
+            "properties": {
+              "module": { "type": "string" },
+              "signals": { "type": "array", "items": { "type": "string" } },
+              "verdict": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

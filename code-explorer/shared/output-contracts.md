@@ -928,7 +928,7 @@ Optional artifact produced by `performance-scalability-scan` when the user asks 
     {
       "id": "PERF-001",
       "category": "unbounded-loop|n-plus-one|missing-pagination|large-buffer|blocking-io|expensive-serialization|regex-hazard|retry-storm|unbounded-concurrency|missing-backpressure|cache-misuse|startup-cost|other",
-      "file": "",
+      "file": "src/example.ts",
       "symbol": "",
       "description": "",
       "whyItMatters": "",

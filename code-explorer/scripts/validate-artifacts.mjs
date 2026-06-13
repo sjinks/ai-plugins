@@ -78,12 +78,13 @@ function parseArgs(argv) {
     if (a === '--strict') {
       args.strict = true;
     } else if (a === '--repo-root') {
-      const value = argv[++i];
-      if (value === undefined) {
+      const value = argv[i + 1];
+      if (value === undefined || value.startsWith('--')) {
         args.error = '--repo-root requires a value';
         break;
       }
       args.repoRoot = value;
+      i++;
     } else if (a.startsWith('--')) {
       args.error = `unknown flag: ${a}`;
       break;

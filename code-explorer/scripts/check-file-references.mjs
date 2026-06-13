@@ -21,12 +21,13 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--repo-root') {
-      const value = argv[++i];
-      if (value === undefined) {
+      const value = argv[i + 1];
+      if (value === undefined || value.startsWith('--')) {
         args.error = '--repo-root requires a value';
         break;
       }
       args.repoRoot = value;
+      i++;
     } else if (a.startsWith('--')) {
       args.error = `unknown flag: ${a}`;
       break;

@@ -89,12 +89,12 @@ function checkAgentNames(text) {
   // routing target. Flag any bold token that looks like an agent name but is
   // not in the known set. Heuristic: title-case multi-word ending in a known
   // role word.
-  const ROLE_WORDS = /(Planner|Spike|Publisher)\*\*/;
+  const ROLE_WORD = /(?:Planner|Spike|Publisher)$/;
   const boldRe = /\*\*([A-Z][\w ]+?)\*\*/g;
   let m;
   while ((m = boldRe.exec(text)) !== null) {
     const name = m[1].trim();
-    if (ROLE_WORDS.test(`${name}**`) && !KNOWN_AGENTS.has(name)) {
+    if (ROLE_WORD.test(name) && !KNOWN_AGENTS.has(name)) {
       problems.push(name);
     }
   }
@@ -125,6 +125,7 @@ function listFixtureDirs(examplesDir) {
 function mdFilesIn(dir) {
   return readdirSync(dir)
     .filter((name) => name.endsWith('.md'))
+    .sort()
     .map((name) => join(dir, name));
 }
 

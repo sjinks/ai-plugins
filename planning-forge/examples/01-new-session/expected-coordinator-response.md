@@ -10,7 +10,7 @@
 
 ## Representative response
 
-```
+````
 ## Planning Status
 
 Current stage: discovery
@@ -35,7 +35,7 @@ Instructions:
 - Mark readiness as ready, partial, or blocked.
 - If information is missing, preserve it as Open Questions instead of inventing detail.
 ```
-```
+````
 
 ## Pass criteria
 

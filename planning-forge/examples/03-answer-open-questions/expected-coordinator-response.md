@@ -17,7 +17,7 @@ which the Coordinator should map back to the actual question text.
 
 ## Representative response
 
-```
+````
 ## Planning Status
 
 Current stage: spec
@@ -53,7 +53,7 @@ Instructions:
 - Return the full updated specification in your standard output format (all sections in
   order), plus remaining open questions and an ID change summary.
 ```
-```
+````
 
 ## Pass criteria
 

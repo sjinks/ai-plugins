@@ -10,7 +10,7 @@
 
 ## Representative response
 
-```
+````
 ## Planning Status
 
 Current stage: test-plan
@@ -34,7 +34,7 @@ Instructions:
 - Mark architecture-dependent tests as coverage gaps.
 - Do not invent architecture. Do not invent new requirements.
 ```
-```
+````
 
 ## Pass criteria
 

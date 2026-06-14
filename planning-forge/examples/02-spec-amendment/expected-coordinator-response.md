@@ -14,7 +14,7 @@
 
 ## Representative response
 
-```
+````
 ## Planning Status
 
 Current stage: spec
@@ -46,7 +46,7 @@ Instructions:
   order), plus updated open questions and an ID change summary.
 - Do not redesign architecture. Do not implement code.
 ```
-```
+````
 
 ## Pass criteria
 

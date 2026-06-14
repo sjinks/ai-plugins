@@ -14,7 +14,7 @@
 
 ## Representative response
 
-```
+````
 ## Planning Status
 
 Current stage: implementation
@@ -46,7 +46,7 @@ Instructions for the implementation agent:
 - Do not silently resolve open questions.
 - Return a summary mapping code changes to FR/AC/D/TC IDs.
 ```
-```
+````
 
 ## Pass criteria
 

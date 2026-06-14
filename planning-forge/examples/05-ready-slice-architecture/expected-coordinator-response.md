@@ -15,7 +15,7 @@
 
 ## Representative response
 
-```
+````
 ## Planning Status
 
 Current stage: architecture
@@ -41,7 +41,7 @@ Instructions:
 - Trace decisions to FR/NFR/AC/INT/EDGE IDs.
 - Identify assumptions introduced by limiting architecture to the ready slice.
 ```
-```
+````
 
 ## Pass criteria
 

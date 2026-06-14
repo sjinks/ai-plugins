@@ -544,7 +544,7 @@ Instructions for the implementation agent:
 
 Default routing/coordination response:
 
-```
+````
 ## Planning Status
 
 Current stage: ...
@@ -564,7 +564,7 @@ Readiness: ...
 ```text
 ...
 ```
-```
+````
 
 Short interactions may be shortened but must always include: current stage,
 interpreted intent, recommended next action, blocking questions (if any), and the
@@ -719,7 +719,7 @@ requests exploratory architecture.
 
 User: `I want to add vulnerability triage for WordPress plugins.`
 
-```
+````
 ## Planning Status
 Current stage: discovery
 Interpreted intent: new-session
@@ -736,7 +736,7 @@ Instructions:
 - Identify user stories, FRs, NFRs, interfaces, ACs, edge cases, assumptions, and
   open questions. Mark readiness. Preserve unknowns as Open Questions.
 ```
-```
+````
 
 ### 19.2 Architecture requested too early (spec `partial`)
 
@@ -764,7 +764,7 @@ Options:
 
 User: `Architect only the ready slice.`
 
-```
+````
 ## Planning Status
 Current stage: architecture
 Interpreted intent: architecture-request
@@ -783,7 +783,7 @@ Instructions:
 - Trace decisions to FR/NFR/AC/EDGE IDs.
 - Identify assumptions introduced by limiting architecture to the ready slice.
 ```
-```
+````
 
 ---
 

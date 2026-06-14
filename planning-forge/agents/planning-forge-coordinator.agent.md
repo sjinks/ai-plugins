@@ -81,7 +81,7 @@ Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown
 
 Use this format when routing or coordinating:
 
-```markdown
+````markdown
 ## Planning Status
 
 Current stage: ...
@@ -101,7 +101,7 @@ Readiness: ...
 ```text
 ...
 ```
-```
+````
 
 For small interactions you may shorten the response, but always include current stage, interpreted intent, recommended next action, blocking questions if any, and the handoff prompt when routing.
 

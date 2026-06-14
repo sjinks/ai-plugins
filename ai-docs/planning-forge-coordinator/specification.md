@@ -292,7 +292,7 @@ owning agent's output format.
 ```
 Preserve stable IDs. Do not renumber unchanged items.
 Allocate new IDs only for new items.
-Mark removed or deferred items explicitly.
+Mark removed, deferred, or out-of-scope items explicitly.
 Return an ID change summary.
 ```
 

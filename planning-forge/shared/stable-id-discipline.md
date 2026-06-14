@@ -75,6 +75,6 @@ Every spec-revision handoff (amendment or open-question resolution) must instruc
 ```
 Preserve stable IDs. Do not renumber unchanged items.
 Allocate new IDs only for new items.
-Mark removed or deferred items explicitly.
+Mark removed, deferred, or out-of-scope items explicitly.
 Return an ID change summary.
 ```

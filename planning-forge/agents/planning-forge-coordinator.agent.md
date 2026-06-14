@@ -71,7 +71,7 @@ Use the `agent` tool only to delegate to a specialist agent for its matching int
 
 ## Stable IDs
 
-Read `shared/stable-id-discipline.md`. Preserve existing IDs unless an item's meaning materially changes; never renumber unchanged items; allocate new IDs only for new items; mark removed, deferred, or out-of-scope items explicitly; record old-to-new mappings on supersession. Every spec-revision handoff prompt must instruct the receiving agent to preserve IDs, avoid renumbering, allocate new IDs only for new items, mark removed/deferred items, and return an ID change summary.
+Read `shared/stable-id-discipline.md`. Preserve existing IDs unless an item's meaning materially changes; never renumber unchanged items; allocate new IDs only for new items; mark removed, deferred, or out-of-scope items explicitly; record old-to-new mappings on supersession. Every spec-revision handoff prompt must instruct the receiving agent to preserve IDs, avoid renumbering, allocate new IDs only for new items, mark removed/deferred/out-of-scope items, and return an ID change summary.
 
 ## Readiness
 

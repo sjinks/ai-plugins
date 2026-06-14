@@ -59,5 +59,5 @@ A specification is `blocked` when:
 ## ID Assignment By Readiness
 
 - For `ready`, assign IDs to all in-scope user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases.
-- For `partial`, assign IDs only to implementation-ready user stories and requirements. Keep blocked portions unnumbered in Open Questions.
+- For `partial`, assign IDs to all implementation-ready items in the ready slice (user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases). Keep blocked portions unnumbered in Open Questions.
 - For `blocked`, do not assign IDs for ambiguous scope. Limit substantive content to confirmed scope, empty-state rationales, and blocking questions.

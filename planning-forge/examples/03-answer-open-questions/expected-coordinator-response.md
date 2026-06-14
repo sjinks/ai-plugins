@@ -3,17 +3,18 @@
 - Interpreted intent: `answer-open-questions`.
 - Routes to **Specification Planner** (exact name).
 - The handoff prompt must instruct the agent to:
-  - resolve only the answered questions (the user's local labels Q2 and Q3);
+  - resolve only the answered questions (the user's "Q2" and "Q3" map positionally to
+    the 2nd and 3rd unnumbered open questions);
   - move resolved info into the relevant requirements / ACs / assumptions / out-of-scope
-    sections (Q2 → authorization requirement; Q3 → async marked out of scope);
-  - keep the unanswered question (Q1, authoritative database) visible;
+    sections (authorization requirement; async marked out-of-scope);
+  - keep the unanswered question (the 1st: authoritative database) visible;
   - not infer answers to unanswered questions;
   - preserve stable IDs and not renumber;
   - update readiness and return an ID change summary.
 
-Note: open questions are unnumbered bullets in the agent output (there is no `Q-`
-prefix). "Q1/Q2/Q3" here are the user's own local references to the listed questions,
-which the Coordinator should map back to the actual question text.
+Note: open questions are unnumbered bullets (there is no `Q-` prefix). The user's
+"Q2/Q3" are informal positional references, which the Coordinator maps back to the
+actual question text.
 
 ## Representative response
 

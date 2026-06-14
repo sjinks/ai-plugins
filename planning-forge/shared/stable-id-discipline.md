@@ -39,11 +39,11 @@ When new items are added, allocate the next available number for that prefix. Do
 
 ### Remove or defer without renumbering
 
-When an item is removed, deferred, or declared out of scope:
+When an item is removed, deferred, or declared out-of-scope:
 
 - do not delete it silently;
 - do not reuse its ID;
-- mark it as removed, deferred, or out of scope;
+- mark it as removed, deferred, or out-of-scope;
 - record the change in the changelog / ID change summary.
 
 ### Semantic changes

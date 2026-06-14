@@ -14,6 +14,6 @@ Let a user trigger a re-scan of a WordPress plugin for known vulnerabilities.
 - AC-1 verifies FR-1: Given a valid plugin slug, when a re-scan is requested, then a scan job is recorded.
 
 ## Open Questions
-- (Q1) Which vulnerability database is authoritative for results?
-- (Q2) Who is allowed to trigger a re-scan?
-- (Q3) Should re-scans run synchronously or asynchronously?
+- Which vulnerability database is authoritative for results?
+- Who is allowed to trigger a re-scan?
+- Should re-scans run synchronously or asynchronously?

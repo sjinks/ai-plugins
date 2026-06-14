@@ -15,8 +15,8 @@ current_stage:   discovery | spec | architecture | test-plan | publish | impleme
 intent:          <one classified intent>
 readiness:
   spec:          ready | partial | blocked | unknown
-  architecture:  missing | ready | blocked | unknown
-  tests:         missing | ready | blocked | unknown
+  architecture:  missing | ready | partial | blocked | unknown
+  tests:         missing | ready | partial | blocked | unknown
 artifacts:
   specification: <path | inline | missing>
   architecture:  <path | inline | missing>

@@ -268,7 +268,7 @@ Important corrections to the original draft:
 - Open questions are **unnumbered bullets** in the current agents; there is no `Q-`
   prefix. The Coordinator must reference open questions by quoting their text or by a
   locally assigned label, and must not instruct agents to emit `Q-` IDs. Examples in
-  this spec that use `Q-3`/`Q-4` are illustrative shorthand for "a specific open
+  this spec that use `Q-*` labels are illustrative shorthand for "a specific open
   question", not a required emitted ID. See OQ-1 (§27).
 - `RISK-` (risk IDs) is **not** emitted by any current agent; risks stay as prose. See
   OQ-1 (§27).

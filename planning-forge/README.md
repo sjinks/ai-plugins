@@ -16,7 +16,7 @@ It provides a small chain of focused agents for specification, architecture, tes
 
 ## Workflow
 
-Use the agents independently, as a staged planning flow, or through the **Planning Forge Coordinator** for an iterative session. The Coordinator does not run the flow automatically: it classifies each request, enforces readiness gates, preserves stable IDs, and routes to the agent below (or emits a manual handoff prompt) only when the user explicitly asks to move forward.
+Use the agents independently, as a staged planning flow, or through the **Planning Forge Coordinator** for an iterative session. The Coordinator does not run the flow automatically: it classifies each request, enforces readiness gates, preserves stable IDs, and routes to the appropriate agent below (or emits a manual handoff prompt) only when the user explicitly asks to move forward.
 
 1. **Specification Planner** clarifies the task, writes requirements and acceptance criteria, determines readiness, and splits work when useful.
 2. **Architecture Planner** turns a ready or partial specification into implementation-facing design decisions and contracts.

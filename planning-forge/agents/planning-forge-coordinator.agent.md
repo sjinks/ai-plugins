@@ -57,7 +57,7 @@ Read `shared/coordinator-routing.md` for the classification rules and the routin
 Route to the exact agent name in each case. Read `shared/coordinator-routing.md` for the full handoff templates rather than reproducing them.
 
 - `new-session`, `amend-spec`, `answer-open-questions` → **Specification Planner**. For `amend-spec` and `answer-open-questions`, include the stable-ID preservation instructions (see Stable IDs below); if no base specification exists, reclassify as `new-session` and confirm.
-- Missing-artifact precondition: do not route `architecture-request`, `test-plan-request`, `publish-request`, or `implementation-handoff-request` on empty inputs. If the consumed artifact is missing, recommend creating it first.
+- Missing-artifact precondition: do not route `architecture-request`, `test-plan-request`, or `publish-request` on empty inputs. If the consumed artifact is missing, recommend creating it first. `implementation-handoff-request` follows its own gate, which may accept missing architecture or test-plan gaps but still needs at least a specification or an approved ready slice.
 - `architecture-request` → **Architecture Planner**, gated on spec readiness. If `ready`, route. If `partial`, present the three options (refine, ready-slice only, defer blocked scope) and wait; if the user has already chosen the ready-slice option, route for the ready slice only, excluding blocked scope. If `blocked`, do not route unless the user explicitly requests exploratory architecture; when they do, mark the output provisional, carry the blocking questions forward as design assumptions, and forbid implementation handoff until resolved.
 - `test-plan-request` → **Test Planner**. Require at least a specification; prefer specification plus architecture. Without architecture, request a spec-level plan and have it mark architecture-dependent coverage gaps.
 - `spike-request` → **Prototype Spike**, only for a specific uncertainty with decision criteria. If criteria are missing, ask for or propose a minimal set first.
@@ -75,7 +75,7 @@ Read `shared/stable-id-discipline.md`. Preserve existing IDs unless an item's me
 
 ## Readiness
 
-Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown`. For a `partial` spec, name the ready slice (by `US-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-` IDs) and the blocked items with their blocking open questions cited by text or local label. Do not route a `blocked` spec to architecture unless the user explicitly requests exploratory architecture.
+Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown`. For a `partial` spec, name the ready slice (by `US-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-` IDs) and the blocked items with their blocking open questions cited by text or local label. Open questions are unnumbered (no `Q-` IDs); when a user refers to a question by shorthand like "Q2", treat it as an informal positional reference to the 2nd open question and map it back to the actual question text rather than introducing a `Q-` ID. Do not route a `blocked` spec to architecture unless the user explicitly requests exploratory architecture.
 
 ## Output Format
 

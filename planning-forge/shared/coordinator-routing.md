@@ -48,7 +48,7 @@ When a message carries more than one intent, classify the primary actionable int
 
 The Coordinator never auto-advances stages. Routing happens only in response to the matching intent and, where a gate applies, only after the gate passes or the user explicitly overrides it.
 
-Missing-artifact precondition: `architecture-request`, `test-plan-request`, `publish-request`, and `implementation-handoff-request` require the artifact(s) they consume to exist. If a required artifact is missing, do not route on empty inputs; recommend creating it first (treat as `new-session` for a missing spec). Likewise, if `amend-spec` or `answer-open-questions` arrives with no base specification, reclassify as `new-session` and confirm with the user.
+Missing-artifact precondition: `architecture-request`, `test-plan-request`, and `publish-request` require the artifact(s) they consume to exist. If a required artifact is missing, do not route on empty inputs; recommend creating it first (treat as `new-session` for a missing spec). Likewise, if `amend-spec` or `answer-open-questions` arrives with no base specification, reclassify as `new-session` and confirm with the user. `implementation-handoff-request` is governed by its own gate (below), which may proceed without architecture or a test plan when the user explicitly accepts those gaps; it still requires at least a specification (or an explicitly approved ready slice).
 
 ## Handoff Templates
 

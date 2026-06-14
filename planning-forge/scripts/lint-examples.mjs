@@ -62,9 +62,10 @@ function usageError(message) {
   process.exit(2);
 }
 
-// Count opening/closing fences, treating a longer fence (e.g. ````) as the
-// delimiter that wraps shorter inner fences. A file passes when every fence
-// length appears an even number of times.
+// Count fence markers grouped by backtick length. A file passes when every
+// distinct fence length appears an even number of times (each opener has a
+// matching closer of the same length). This does not validate nesting order,
+// only per-length parity.
 function fenceImbalance(text) {
   const counts = new Map();
   for (const line of text.split('\n')) {

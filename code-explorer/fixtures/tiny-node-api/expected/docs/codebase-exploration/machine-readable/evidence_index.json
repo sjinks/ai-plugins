@@ -4,7 +4,6 @@
     "schemaVersion": "1",
     "generatedAt": "2026-06-13T00:00:00Z",
     "generator": "code-explorer",
-    "repositoryRoot": "fixtures/tiny-node-api",
     "commit": null,
     "scope": "fixtures/tiny-node-api",
     "mode": "initial",

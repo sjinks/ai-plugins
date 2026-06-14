@@ -16,7 +16,6 @@ All artifacts carry the provenance stamp defined in `shared/exploration-protocol
     "schemaVersion": "1",
     "generatedAt": "2026-06-12T14:00:00Z",
     "generator": "code-explorer",
-    "repositoryRoot": ".",
     "commit": "8c4d3ac",
     "scope": ".",
     "mode": "initial",

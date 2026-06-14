@@ -19,7 +19,7 @@ If any condition fails, emit the manual handoff prompt instead. Never invoke mor
 
 1. Build the handoff prompt from the matching template in `shared/coordinator-routing.md`. The invoked prompt and the manual fallback prompt must be identical in content.
 2. Call the `agent` tool with the exact specialist `name:` (see the routing reference's agent list).
-3. Pass only the planning inputs the template requires (request text, existing artifact reference or content, decision criteria, ready slice). Do not pass agent instructions, tool transcripts, or sensitive data.
+3. Pass only the planning inputs the template requires (request text, existing artifact reference or content, decision criteria, ready slice). Send the template verbatim, including its own Instructions block; do not add extra Coordinator-only instructions, this agent's own prompt text, tool transcripts, or sensitive data on top of the template.
 
 ## Relaying Results Back
 

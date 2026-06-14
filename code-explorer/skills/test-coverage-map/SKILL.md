@@ -2,7 +2,7 @@
 name: test-coverage-map
 description: "Use when: mapping tests to behavior during deep codebase exploration: test inventory, semantic behavior coverage, important coverage gaps for high-risk flows, fixtures and mocks, skipped/flaky tests. Phase 9 of the Code Explorer workflow."
 argument-hint: "Repository scope; entrypoints, flows, and symbol inventory if available; whether running tests is approved."
-user-invocable: true
+user-invocable: false
 ---
 
 # Test Coverage and Behavior Map

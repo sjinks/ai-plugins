@@ -2,7 +2,7 @@
 name: observability-map
 description: "Use when: mapping how a system's health is observed: logs, structured logging, metrics, tracing, spans, dashboards, alert rules, health/readiness/liveness checks, error reporting, audit logs, correlation/request IDs, and missing visibility for important flows. Answers 'how would we know this system is broken?'. Part of the Code Explorer workflow."
 argument-hint: "Repository scope; entrypoints and data-flow findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Observability Map

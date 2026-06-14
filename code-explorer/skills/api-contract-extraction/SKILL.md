@@ -1,8 +1,8 @@
 ---
 name: api-contract-extraction
-description: "Use when: identifying public and semi-public contracts a codebase must preserve across changes: HTTP routes, OpenAPI/GraphQL/RPC, CLI commands and flags, exported library APIs, queue/event payloads, webhooks, database schemas/migrations, config formats, and serialized data formats. Part of the Code Explorer workflow."
+description: "Use when: during Code Explorer exploration of a repository or scoped path, mapping the public and semi-public contracts the code must preserve: HTTP routes, OpenAPI/GraphQL/RPC, CLI commands and flags, exported library APIs, queue/event payloads, webhooks, database schemas/migrations, config formats, and serialized data formats. Part of the Code Explorer workflow; not for reviewing an individual diff or change set."
 argument-hint: "Repository scope; entrypoints and architecture findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # API and Contract Extraction

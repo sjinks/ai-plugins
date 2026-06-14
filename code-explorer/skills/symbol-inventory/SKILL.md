@@ -2,7 +2,7 @@
 name: symbol-inventory
 description: "Use when: building a tiered function and symbol inventory during deep codebase exploration: deep analysis of critical symbols, brief summaries of supporting symbols, index-only treatment of trivial ones, with callers, callees, side effects, error behavior, and tests. Phase 7 of the Code Explorer workflow."
 argument-hint: "Repository scope; entrypoint, architecture, and data-flow findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Function and Symbol Inventory

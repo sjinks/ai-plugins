@@ -2,7 +2,7 @@
 name: config-surface-map
 description: "Use when: mapping a codebase's runtime configuration and deployment-sensitive settings: environment variables, .env files, config files (YAML/TOML/JSON), feature flags, secrets, default values, deployment overrides, Docker/Kubernetes/CI config, config validation, and dangerous or missing defaults. Part of the Code Explorer workflow."
 argument-hint: "Repository scope; build/runtime findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Configuration Surface Map

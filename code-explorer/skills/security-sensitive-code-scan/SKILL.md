@@ -1,8 +1,8 @@
 ---
 name: security-sensitive-code-scan
-description: "Use when: identifying code that should receive extra human security review: authentication, authorization, permission/role checks, input validation, SQL/query construction, shell execution, filesystem access, network requests, SSRF-capable clients, template/HTML/Markdown rendering, deserialization, redirects, cryptography, token/session/secret handling, sensitive logging, dynamic imports/eval, and plugin/dependency loading. Part of the Code Explorer workflow."
+description: "Use when: during Code Explorer exploration of a repository or scoped path, mapping the code that should receive extra human security review: authentication, authorization, permission/role checks, input validation, SQL/query construction, shell execution, filesystem access, network requests, SSRF-capable clients, template/HTML/Markdown rendering, deserialization, redirects, cryptography, token/session/secret handling, sensitive logging, dynamic imports/eval, and plugin/dependency loading. Part of the Code Explorer workflow; not for reviewing an individual diff or change set."
 argument-hint: "Repository scope or a specific path (e.g. src/api); entrypoints and data-flow findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Security-Sensitive Code Scan

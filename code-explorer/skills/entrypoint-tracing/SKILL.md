@@ -2,7 +2,7 @@
 name: entrypoint-tracing
 description: "Use when: discovering and tracing system entrypoints during deep codebase exploration: HTTP routes, CLI commands, queue consumers, cron jobs, webhooks, event listeners, exported library APIs, with validation, auth, side effects, call chains, and per-entrypoint risk. Phase 4 of the Code Explorer workflow."
 argument-hint: "Repository scope; architecture overview if available; any entrypoint focus."
-user-invocable: true
+user-invocable: false
 ---
 
 # Entrypoint Tracing

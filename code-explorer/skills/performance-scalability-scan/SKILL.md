@@ -1,8 +1,8 @@
 ---
 name: performance-scalability-scan
-description: "Use when: identifying likely performance, scalability, and resource-use issues in a codebase: unbounded loops over external input, N+1 queries, missing pagination, large in-memory buffers, synchronous blocking I/O, expensive serialization, regex hazards, retry storms, unbounded concurrency, missing backpressure, cache misuse, and heavy startup cost. Part of the Code Explorer workflow."
+description: "Use when: during Code Explorer exploration of a repository or scoped path, mapping the likely performance, scalability, and resource-use issues: unbounded loops over external input, N+1 queries, missing pagination, large in-memory buffers, synchronous blocking I/O, expensive serialization, regex hazards, retry storms, unbounded concurrency, missing backpressure, cache misuse, and heavy startup cost. Part of the Code Explorer workflow; not for reviewing an individual diff or change set."
 argument-hint: "Repository scope or a specific path; symbol inventory and data-flow findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Performance and Scalability Scan

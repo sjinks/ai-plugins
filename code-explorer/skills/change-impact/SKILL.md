@@ -2,7 +2,7 @@
 name: change-impact
 description: "Use when: producing a change impact guide during deep codebase exploration: per-area direct and indirect dependencies, tests to run, contracts to preserve, compatibility and migration concerns, and safe-change strategies. Phase 11 of the Code Explorer workflow."
 argument-hint: "Major components and flows from earlier phases, or the area to analyze when standalone."
-user-invocable: true
+user-invocable: false
 ---
 
 # Change Impact Guide

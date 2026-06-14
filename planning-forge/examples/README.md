@@ -1,6 +1,8 @@
 # Planning Forge Coordinator Examples
 
-These fixtures are manual-review regression anchors for the Planning Forge Coordinator (`agents/planning-forge-coordinator.agent.md`). They are **not executable golden tests** — `planning-forge` has no test harness. Use them to check, by hand, that a Coordinator response classifies intent correctly, applies the right readiness gate, preserves stable IDs, and routes to the correct specialist agent.
+These fixtures are manual-review regression anchors for the Planning Forge Coordinator (`agents/planning-forge-coordinator.agent.md`). They are **not executable behavioral golden tests** — there is no harness that runs the Coordinator and asserts on its output. Use them to check, by hand, that a Coordinator response classifies intent correctly, applies the right readiness gate, preserves stable IDs, and routes to the correct specialist agent.
+
+A static lint, `../scripts/lint-examples.mjs`, validates fixture structure (required files, balanced code fences, known agent names, allowed stable-ID prefixes) without running the Coordinator. Run it from the repo root: `node planning-forge/scripts/lint-examples.mjs`.
 
 ## How to use
 

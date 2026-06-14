@@ -36,7 +36,7 @@ If sources conflict, keep the current question and confirmed spec/architecture c
 
 Use the `agent` tool only for these bounded delegations:
 
-- **Planning Document Publisher**: invoke only after producing the required spike findings output format and only when the user requested saving or publishing. Prompt: `Save completed spike findings to the requested docs directory, defaulting to ai-docs only when saving was requested and no directory was named. Preserve question, setup, evidence, verdict, and cleanup path.`
+- **Planning Document Publisher**: invoke only after producing the required spike findings output format and only when the user requested saving or publishing. Prompt: `Save completed spike findings to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve question, setup, evidence, verdict, and cleanup path.`
 - **Architecture Planner**: invoke after the spike verdict when the current user request explicitly asks to continue through architecture planning. Prompt: `Use spike findings as advisory architecture evidence. Produce design decisions only and identify which decisions the evidence supports. Do not implement production code.`
 
 ## Spike Branches

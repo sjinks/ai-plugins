@@ -229,7 +229,7 @@ Artifacts:
 {{ARTIFACT_LIST}}
 
 Target location:
-{{TARGET_LOCATION_OR_DEFAULT_ai-docs}}
+{{TARGET_LOCATION}} (default: docs/specifications)
 
 Instructions:
 - Save or update only the requested artifacts.

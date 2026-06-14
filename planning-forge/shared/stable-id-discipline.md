@@ -44,7 +44,7 @@ When an item is removed, deferred, or declared out-of-scope:
 - do not delete it silently;
 - do not reuse its ID;
 - mark it as removed, deferred, or out-of-scope;
-- record the change in the changelog / ID change summary.
+- record the change in the ID change summary.
 
 ### Semantic changes
 

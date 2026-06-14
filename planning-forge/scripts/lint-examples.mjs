@@ -69,7 +69,8 @@ function usageError(message) {
 function fenceImbalance(text) {
   const counts = new Map();
   for (const line of text.split('\n')) {
-    const match = /^(`{3,})/.exec(line);
+    // CommonMark allows a fenced code block to be indented by up to 3 spaces.
+    const match = /^ {0,3}(`{3,})/.exec(line);
     if (match) {
       const len = match[1].length;
       counts.set(len, (counts.get(len) ?? 0) + 1);

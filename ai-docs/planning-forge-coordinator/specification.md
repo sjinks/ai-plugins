@@ -574,8 +574,11 @@ handoff prompt (when routing).
 
 ## 13. Manual router MVP (Phase 1 deliverable)
 
-The first implementation is a manual router. It generates a precise handoff prompt for
-the user to pass to the specialist agent; it does not invoke subagents.
+The first implementation is a manual router. It always generates a precise handoff
+prompt for the user to pass to the specialist agent, and may optionally invoke a
+specialist via the `agent` tool when the runtime supports it (see §14) — but it never
+*requires* subagent invocation and always keeps the manual handoff-prompt fallback. It
+does not invoke subagents automatically or chain stages without explicit user intent.
 
 ### 13.1 MVP must
 

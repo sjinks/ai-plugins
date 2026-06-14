@@ -89,7 +89,7 @@ Instructions:
 - Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
 - Return the full updated specification in your standard output format (all sections in
-  order), plus updated open questions and an ID change summary.
+  order), plus the updated Open Questions section and an ID change summary.
 - Do not redesign architecture. Do not implement code.
 ```
 
@@ -114,7 +114,7 @@ Instructions:
 - Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
 - Return the full updated specification in your standard output format (all sections in
-  order), plus remaining open questions and an ID change summary.
+  order), plus the remaining Open Questions section and an ID change summary.
 - Do not redesign architecture. Do not implement code.
 ```
 

@@ -101,6 +101,8 @@ High-level requests hide decision trees. Surface only the decisions that materia
 
 ## Readiness Rules
 
+These readiness values and the stable-ID rules below are shared across Planning Forge agents. The canonical definitions live in `shared/readiness-model.md` and `shared/stable-id-discipline.md`; keep this section aligned with them. If those files are unavailable, apply the rules below.
+
 Use exactly one readiness value:
 
 - `ready`: downstream implementation can proceed for the full stated scope.

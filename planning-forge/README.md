@@ -6,6 +6,7 @@ It provides a small chain of focused agents for specification, architecture, tes
 
 ## What ships
 
+- `agents/planning-forge-coordinator.agent.md` — Planning Forge Coordinator for iterative, human-in-the-loop sessions: intent classification, readiness gating, stable-ID custody, and routing to the specialist agents or manual handoff prompts. Does not implement code, publish, or auto-advance stages.
 - `agents/task-spec-agent.agent.md` — Specification Planner for requirements, acceptance criteria, readiness assessment, and task splitting.
 - `agents/architecture-planner.agent.md` — Architecture Planner for design decisions, contracts, interfaces, data flow, failure modes, risks, rollout notes, and verification seams.
 - `agents/test-planner.agent.md` — Test Planner for builder-ready test cases, fixtures, assertions, verification commands, and coverage gaps.
@@ -15,7 +16,7 @@ It provides a small chain of focused agents for specification, architecture, tes
 
 ## Workflow
 
-Use the agents independently or as a staged planning flow:
+Use the agents independently, as a staged planning flow, or through the **Planning Forge Coordinator** for an iterative session. The Coordinator does not run the flow automatically: it classifies each request, enforces readiness gates, preserves stable IDs, and routes to the agent below (or emits a manual handoff prompt) only when the user explicitly asks to move forward.
 
 1. **Specification Planner** clarifies the task, writes requirements and acceptance criteria, determines readiness, and splits work when useful.
 2. **Architecture Planner** turns a ready or partial specification into implementation-facing design decisions and contracts.
@@ -29,6 +30,9 @@ The workflow is intentionally conservative: missing requirements become open que
 
 The shared references are not standalone skills. They are read by the agents only when relevant:
 
+- `shared/readiness-model.md` — shared `ready`/`partial`/`blocked`/`unknown` model and ready-slice rules used by the spec, architecture, test, and coordinator agents.
+- `shared/stable-id-discipline.md` — shared stable-ID taxonomy, preservation, supersession, and ID-change-summary rules.
+- `shared/coordinator-routing.md` — Coordinator intent taxonomy, routing map, and per-intent handoff templates.
 - `shared/interactive-clarification.md` — one-question-at-a-time clarification protocol.
 - `shared/spec-discovery.md` — live scope checks, candidate re-reading, and acceptance-criteria feasibility checks.
 - `shared/spec-self-review.md` — brainstorming, oversized-scope decomposition, and meaningful alternatives checks.
@@ -36,6 +40,10 @@ The shared references are not standalone skills. They are read by the agents onl
 - `shared/decision-panel.md` — lightweight multi-perspective review for high-impact architecture tradeoffs.
 - `shared/prototype-spike.md` — branch-specific prototype guidance for logic/state, dependency compatibility, and UI variation spikes.
 - `shared/planning-self-review.md` — final adversarial self-review checks for planning artifacts.
+
+## Examples
+
+`examples/` holds manual-review fixtures for the Planning Forge Coordinator. Each folder pairs an input message (and any supplied artifact) with an `expected-coordinator-response.md` describing the required intent classification, gate decision, routing target, and handoff constraints. They are review anchors, not executable tests; see `examples/README.md`.
 
 ## Persistence
 

@@ -53,6 +53,8 @@ Use exactly one design contract status:
 
 For `partial`, design only the ready portions and leave blocked portions unnumbered in Open Questions or Scope Amendments Requested. For `blocked`, include mandatory headings but limit substantive content to confirmed context, blockers, and next questions.
 
+The upstream specification readiness model this status consumes is defined in `shared/readiness-model.md`; read it when interpreting a supplied spec's `ready`/`partial`/`blocked` state. If the file is unavailable, continue and record the limitation.
+
 ## Persistence Requests
 
 If the current user explicitly asks to save, write, persist, or publish the architecture plan or planning documents, produce the required architecture output format first, then invoke Planning Document Publisher with the completed architecture plan and the requested target directory. Default the target directory to `ai-docs` only when the user requested saved planning documents and named no other directory.
@@ -62,7 +64,7 @@ Use Planning Document Publisher only for persistence. Do not edit files directly
 ## Architecture Decision Rules
 
 - Optimize first for the smallest design that satisfies the spec contract and fits the existing codebase.
-- Make consequential choices explicit as `D-1`, `D-2`, etc. Each decision must name the choice, rationale, tradeoff, and trace to FR/NFR/AC/interface when available.
+- Make consequential choices explicit as `D-1`, `D-2`, etc. Each decision must name the choice, rationale, tradeoff, and trace to FR/NFR/AC/interface when available. Follow `shared/stable-id-discipline.md` for `D-` allocation and for preserving upstream `US/FR/NFR/INT/AC/EDGE` IDs; if the file is unavailable, continue and record the limitation.
 - Compare meaningful alternatives when there is a real tradeoff. Do not list fake alternatives just to fill space.
 - For high-impact decisions with meaningful tradeoffs, broad blast radius, production-readiness risk, or no obvious correct answer, read `shared/decision-panel.md` and fold its perspective review into the required architecture output sections. If the file is unavailable, continue and record the limitation.
 - Use the lightest faithful representation for contracts: bullet lists, pseudotypes, schema sketches, state diagrams in text, or signatures only when they help a builder.

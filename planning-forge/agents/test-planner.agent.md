@@ -49,6 +49,8 @@ Use exactly one test contract status:
 
 For `partial`, plan only the ready portions and leave blocked portions unnumbered in Coverage Gaps or Open Questions. For `blocked`, include mandatory headings but limit content to confirmed context, blockers, and next questions.
 
+The upstream specification readiness model this status consumes is defined in `shared/readiness-model.md`; read it when interpreting a supplied spec's `ready`/`partial`/`blocked` state. If the file is unavailable, continue and record the limitation.
+
 ## Persistence Requests
 
 If the current user explicitly asks to save, write, persist, or publish the test plan or planning documents, produce the required test plan output format first, then invoke Planning Document Publisher with the completed test plan and the requested target directory. Default the target directory to `ai-docs` only when the user requested saved planning documents and named no other directory.
@@ -64,6 +66,7 @@ Use Planning Document Publisher only for persistence. Do not edit files directly
 - When deriving coverage for types, defaults, validation rules, error recovery, state transitions, configuration behavior, security/privacy constraints, observability signals, or forward-compatibility promises, read `shared/implementation-contract-hardening.md` first. If the file is unavailable, continue and record the limitation.
 - Keep tests focused on externally observable behavior and stable contracts. Avoid assertions that freeze incidental implementation details.
 - Separate merge-blocking tests from useful follow-up tests.
+- Allocate `TC-` IDs and preserve upstream `AC/FR/NFR/INT/D/EDGE` IDs per `shared/stable-id-discipline.md`; if the file is unavailable, continue and record the limitation.
 - Mark tests that require human judgment, product/design review, manual verification, or external systems instead of pretending they are automatable.
 - Use synthetic, minimal, non-sensitive fixtures. Do not require real customer data or secrets.
 

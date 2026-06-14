@@ -138,8 +138,8 @@ output is the evidence-backed decision, not the code. This agent carries `edit` 
 ### 5.5 `Planning Document Publisher`
 
 Internal helper (`user-invocable: false`). Persists completed artifacts into the
-requested docs directory, defaulting to `ai-docs` when saving was requested and no
-directory was named. Preserves IDs, avoids unrelated overwrites, redacts/blocks
+requested docs directory, defaulting to `docs/specifications` when saving was requested
+and no directory was named. Preserves IDs, avoids unrelated overwrites, redacts/blocks
 sensitive content. Must not be invoked except for completed artifacts.
 
 ---
@@ -223,8 +223,8 @@ current_stage:   discovery | spec | architecture | test-plan | publish | impleme
 intent:          <one of §7>
 readiness:
   spec:          ready | partial | blocked | unknown
-  architecture:  missing | ready | blocked | unknown
-  tests:         missing | ready | blocked | unknown
+  architecture:  missing | ready | partial | blocked | unknown
+  tests:         missing | ready | partial | blocked | unknown
 artifacts:
   specification: <path-or-inline-or-missing>
   architecture:  <path-or-inline-or-missing>
@@ -234,9 +234,10 @@ ready_slice:        [<US/FR/NFR/INT/AC/EDGE IDs>]   # when readiness is partial
 ```
 
 The richer, fully-typed session schema (stable-ID tables per category, assumptions,
-risks, spike reports, changelog, published-document tracking) is **Phase 4** and is
-defined in §25. Introducing it earlier contradicts the MVP and adds avoidable
-cognitive load.
+risks, spike reports, published-document tracking) is **Phase 4**, now implemented in
+`shared/session-state.md`. It remains persistence-free: the Coordinator reconstructs
+state from the latest artifact and the conversation and reports it inline, populating
+only evidence-backed fields.
 
 ---
 
@@ -492,7 +493,7 @@ Artifacts:
 {{ARTIFACT_LIST}}
 
 Target location:
-{{TARGET_LOCATION_OR_DEFAULT_ai-docs}}
+{{TARGET_LOCATION}} (default: docs/specifications)
 
 Instructions:
 - Save or update only the requested artifacts.
@@ -605,11 +606,18 @@ agents). It must not carry `edit` or `execute`.
 
 ---
 
-## 14. Optional advanced mode (Phase 3)
+## 14. Optional advanced mode (Phase 3) — implemented
 
 When the runtime supports it, the Coordinator may invoke specialist agents directly via
 the `agent` tool, using the same templates. Even then it must not auto-advance stages
 without explicit user intent, and it must keep the manual handoff-prompt fallback.
+
+Implemented in `shared/subagent-invocation.md`: invoke at most one specialist per
+request and only when the intent matches, the gate has passed (or the user overrode
+it), the `agent` tool is available, and the user asked to proceed this turn; relay the
+result unedited, refresh session state, recommend the next action, and stop. On an
+unavailable `agent` tool or invocation failure, fall back to the identical manual
+handoff prompt.
 
 ---
 
@@ -644,9 +652,10 @@ Fallbacks:
   rewriting unrelated sections.
 - **Published** — stable paths owned by `Planning Document Publisher`.
 
-Path convention: defer to the publisher's existing default of `ai-docs` and to any
-repository planning convention already in place. Do not introduce a competing
-`planning/{slug}/...` tree. A suggested layout under the chosen docs root:
+Path convention: the default planning-docs root is `docs/specifications` (OQ-4
+resolved); defer to any repository planning convention already in place when one
+exists. Do not introduce a competing `planning/{slug}/...` tree. A suggested layout
+under the chosen docs root:
 
 ```
 <docs-root>/<feature-slug>/
@@ -790,12 +799,18 @@ Instructions:
 
 ---
 
-## 20. Example fixtures (not executable tests)
+## 20. Example fixtures (manual review + static lint)
 
-`planning-forge` has **no test harness** (unlike `code-explorer`). These are
-illustrative fixtures stored under `examples/`, used for manual regression review of
-Coordinator behavior, not automated golden tests. Building an executable harness for
-agent-prompt behavior is out of scope for this spec (OQ-3, §27).
+These are illustrative fixtures stored under `examples/`, used for manual regression
+review of Coordinator behavior, not automated behavioral golden tests. A full
+run-the-Coordinator-and-assert harness stays out of scope because agent-prompt behavior
+is non-deterministic (OQ-3, §27).
+
+A static lint, `planning-forge/scripts/lint-examples.mjs`, checks fixture structure:
+every fixture has a non-empty `input.md` and `expected-coordinator-response.md`, code
+fences balance, any bold agent name matches a known specialist, and any stable-ID token
+uses an allowed prefix (`US/FR/NFR/INT/AC/EDGE/ASM/D/TC`). It does not execute the
+Coordinator. Run it with `node planning-forge/scripts/lint-examples.mjs`.
 
 Each fixture documents: input message, available artifacts, expected intent, expected
 routing target, and the key constraints the handoff prompt must contain.
@@ -949,14 +964,16 @@ The implementation is complete when:
 ### Phase 2 — Example fixtures
 - Add `planning-forge/examples/...` covering the eight §20 behaviors.
 
-### Phase 3 — Optional subagent integration
-- Allow the Coordinator to invoke specialists via `agent`; keep the manual fallback;
-  never auto-advance without explicit user intent.
+### Phase 3 — Optional subagent integration (implemented)
+- `shared/subagent-invocation.md`: the Coordinator may invoke specialists via `agent`;
+  keeps the manual fallback; one specialist per request; never auto-advances without
+  explicit user intent.
 
-### Phase 4 — Artifact state support
-- Introduce the full session-state schema (per-category stable-ID tables, assumptions,
-  risks, spike reports, changelog, published-document tracking), path conventions, and
-  ID-change-summary persistence.
+### Phase 4 — Artifact state support (implemented)
+- `shared/session-state.md`: the full session-state shape (per-category stable-ID
+  tables, assumptions, risks, spike reports, published-document tracking) reconstructed
+  without persistence and reported inline. Open questions stay unnumbered and risks
+  stay prose, consistent with the current agent output formats.
 
 ---
 
@@ -968,16 +985,20 @@ workflow safer, more traceable, and easier to resume.
 
 ---
 
-## 27. Open questions
+## 27. Open questions (resolved)
 
-- **OQ-1** — Should open questions (`Q-`) and risks (`RISK-`) become first-class
-  numbered IDs? Today open questions are unnumbered bullets and risks are prose. This
-  requires updating the Specification Planner / Test Planner output formats first. Until
-  resolved, the Coordinator references open questions by text/local label and keeps
-  risks as prose (§9.1).
-- **OQ-2** — Should the Coordinator carry the `web` tool? Sibling agents do, but a pure
-  router may not need it (§15, §22).
-- **OQ-3** — Do we want an executable regression harness for agent-prompt behavior, or
-  are manual example fixtures sufficient? `planning-forge` currently has none (§20).
-- **OQ-4** — Where should published planning docs live by default — the publisher's
-  `ai-docs` default or a repo-specific planning convention? (§16)
+- **OQ-1 — Resolved: No.** Open questions stay unnumbered bullets and risks stay prose;
+  no `Q-`/`RISK-` stable IDs. Adding them would require changing the Specification
+  Planner / Test Planner output formats and rippling through every shared doc and
+  fixture for no downstream cross-reference need. The Coordinator references open
+  questions by text/local label (§9.1).
+- **OQ-2 — Resolved: No.** The Coordinator does not carry the `web` tool. It is a pure
+  router/gatekeeper; external lookups belong to the specialist agents (§15, §22).
+- **OQ-3 — Resolved: static lint, not a behavioral harness.** A full
+  run-the-Coordinator-and-assert harness is out of scope because agent-prompt behavior
+  is non-deterministic. Instead, `planning-forge/scripts/lint-examples.mjs` statically
+  checks fixture structure (required files, balanced fences, known agent names, allowed
+  stable-ID prefixes) — the class of issues that recurred in review (§20).
+- **OQ-4 — Resolved: `docs/specifications`.** The default planning-docs root is
+  `docs/specifications`. The Publisher and the specialist agents default there when
+  saving is requested and no directory is named (§16).

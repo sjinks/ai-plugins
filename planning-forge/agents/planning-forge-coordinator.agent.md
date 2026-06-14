@@ -63,11 +63,13 @@ Route to the exact agent name in each case. Read `shared/coordinator-routing.md`
 - `spike-request` → **Prototype Spike**, only for a specific uncertainty with decision criteria. If criteria are missing, ask for or propose a minimal set first.
 - `publish-request` → **Planning Document Publisher**, only when the user explicitly asks to save or publish.
 - `implementation-handoff-request` → run the gate check and emit a builder handoff prompt only. Do not implement code or invoke a builder.
-- `readiness-check`, `status-request` → do not route; report readiness or current state.
+- `readiness-check`, `status-request` → do not route; report readiness or current planning-session state. For `status-request` or a resumable summary, report the session state per `shared/session-state.md`, populating only fields with evidence.
 
 ## Subagent Invocations
 
 Use the `agent` tool only to delegate to a specialist agent for its matching intent, using the templates in `shared/coordinator-routing.md`. Do not chain agents automatically. If subagent invocation is unavailable, output the same prompt as a manual handoff for the user to run. Even when invocation is available, do not advance to the next stage without an explicit user request.
+
+Read `shared/subagent-invocation.md` when invoking a specialist directly. Invoke only when the intent matches, the gate has passed (or the user overrode it), the `agent` tool is available, and the user asked to proceed this turn. Invoke at most one specialist per request. After a specialist returns, present its output without editing its substance, refresh the reported planning state, surface any ID change summary, recommend the next action, and stop — wait for an explicit user request before invoking again or advancing. On invocation failure or an unavailable `agent` tool, fall back to the manual handoff prompt and say so. If the shared file is unavailable, apply these rules and record the limitation.
 
 ## Stable IDs
 
@@ -76,6 +78,10 @@ Read `shared/stable-id-discipline.md`. Preserve existing IDs unless an item's me
 ## Readiness
 
 Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown`. For a `partial` spec, name the ready slice (by `US-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-` IDs) and the blocked items with their blocking open questions cited by text or local label. Open questions are unnumbered (no `Q-` IDs); when a user refers to a question by shorthand like "Q2", treat it as an informal positional reference to the 2nd open question and map it back to the actual question text rather than introducing a `Q-` ID. Do not route a `blocked` spec to architecture unless the user explicitly requests exploratory architecture.
+
+## Planning Session State
+
+Read `shared/session-state.md`. Track the planning session by reconstructing state from the most recent supplied artifact and the conversation; do not require persistent storage. Always report the minimal routing fields (stage, intent, readiness, artifacts, blocking questions, ready slice). For a `status-request` or a resumable summary, report the fuller session state, populating only fields with evidence. Do not invent IDs, requirements, questions, or risks to fill the schema, and do not renumber or reconcile IDs beyond what the specialist agents reported. When the user asks to save the session state, route it to the Planning Document Publisher like any other artifact.
 
 ## Output Format
 

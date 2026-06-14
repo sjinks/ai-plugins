@@ -1,0 +1,54 @@
+# Expected behavior
+
+- Interpreted intent: `architecture-request`.
+- Spec readiness is `ready`, and the user explicitly asked the Coordinator to run the
+  specialist this turn.
+- **Advanced mode**: if the `agent` tool is available, the Coordinator may invoke
+  **Architecture Planner** directly with the same prompt it would have emitted manually
+  (see `shared/subagent-invocation.md`).
+- It invokes at most one specialist. After the specialist returns, it presents the
+  output unedited, refreshes the reported planning state, surfaces any ID change
+  summary, recommends the next action, and **stops** — it does not auto-advance to test
+  planning or implementation.
+- **Fallback**: if the `agent` tool is unavailable or invocation fails, it emits the
+  manual Architecture Planner handoff prompt instead and says invocation was
+  unavailable. The prompt content is identical to the invoked prompt.
+
+## Representative response (advanced mode available)
+
+````
+## Planning Status
+
+Current stage: architecture
+Interpreted intent: architecture-request
+Readiness: spec ready
+
+## Recommended Next Action
+
+Invoking Architecture Planner now (you asked to proceed). I will relay its output and
+stop for your review before any further stage.
+
+## Handoff Prompt (sent to Architecture Planner)
+
+```text
+Create an architecture plan from the approved task specification.
+
+Task specification:
+<specification.md>
+
+Instructions:
+- Do not change product scope. Do not add requirements. Do not implement code.
+- Design the minimal architecture sufficient for the specification.
+- Trace decisions to FR/NFR/AC/INT/EDGE IDs.
+- Identify risks, trade-offs, implementation seams, and test seams.
+```
+````
+
+After the Architecture Planner returns, the Coordinator relays the result and waits.
+
+## Pass criteria
+
+- Intent is `architecture-request`; gate (spec `ready`) passes.
+- At most one specialist invoked; no auto-advance to the next stage.
+- Invoked prompt content equals the manual fallback prompt.
+- On unavailable `agent` tool or failure, falls back to the manual handoff prompt.

@@ -1,6 +1,8 @@
 # Planning Forge Coordinator Examples
 
-These fixtures are manual-review regression anchors for the Planning Forge Coordinator (`agents/planning-forge-coordinator.agent.md`). They are **not executable golden tests** — `planning-forge` has no test harness. Use them to check, by hand, that a Coordinator response classifies intent correctly, applies the right readiness gate, preserves stable IDs, and routes to the correct specialist agent.
+These fixtures are manual-review regression anchors for the Planning Forge Coordinator (`agents/planning-forge-coordinator.agent.md`). They are **not executable behavioral golden tests** — there is no harness that runs the Coordinator and asserts on its output. Use them to check, by hand, that a Coordinator response classifies intent correctly, applies the right readiness gate, preserves stable IDs, and routes to the correct specialist agent.
+
+A static lint, `../scripts/lint-examples.mjs`, validates fixture structure (required files, balanced code fences, known agent names, allowed stable-ID prefixes) without running the Coordinator. Run it from the repo root: `node planning-forge/scripts/lint-examples.mjs`.
 
 ## How to use
 
@@ -31,3 +33,5 @@ The expected responses describe the **required behavior and constraints**, not a
 | 7 | `07-spike-without-criteria/` | "prototype this parser behavior" | `spike-request` | ask for / propose decision criteria; no broad implementation |
 | 8 | `08-implementation-handoff/` | "prepare this for the coding agent" | `implementation-handoff-request` | run gates; builder handoff prompt only if gates pass or gaps accepted |
 | 9 | `09-architecture-no-spec/` | "let's do architecture" (no spec yet) | `architecture-request` | missing-artifact precondition: do not route; recommend creating a spec first |
+| 10 | `10-advanced-invocation/` | "run the Architecture Planner for me now" (spec ready) | `architecture-request` | advanced mode: invoke one specialist, relay, stop; manual fallback if unavailable |
+| 11 | `11-status-request/` | "where are we; give me a resumable summary" | `status-request` | no routing; report session state with evidence-backed fields only |

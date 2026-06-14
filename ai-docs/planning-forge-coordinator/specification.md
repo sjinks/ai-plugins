@@ -234,9 +234,10 @@ ready_slice:        [<US/FR/NFR/INT/AC/EDGE IDs>]   # when readiness is partial
 ```
 
 The richer, fully-typed session schema (stable-ID tables per category, assumptions,
-risks, spike reports, changelog, published-document tracking) is **Phase 4** and is
-defined in §25. Introducing it earlier contradicts the MVP and adds avoidable
-cognitive load.
+risks, spike reports, published-document tracking) is **Phase 4**, now implemented in
+`shared/session-state.md`. It remains persistence-free: the Coordinator reconstructs
+state from the latest artifact and the conversation and reports it inline, populating
+only evidence-backed fields.
 
 ---
 
@@ -605,11 +606,18 @@ agents). It must not carry `edit` or `execute`.
 
 ---
 
-## 14. Optional advanced mode (Phase 3)
+## 14. Optional advanced mode (Phase 3) — implemented
 
 When the runtime supports it, the Coordinator may invoke specialist agents directly via
 the `agent` tool, using the same templates. Even then it must not auto-advance stages
 without explicit user intent, and it must keep the manual handoff-prompt fallback.
+
+Implemented in `shared/subagent-invocation.md`: invoke at most one specialist per
+request and only when the intent matches, the gate has passed (or the user overrode
+it), the `agent` tool is available, and the user asked to proceed this turn; relay the
+result unedited, refresh session state, recommend the next action, and stop. On an
+unavailable `agent` tool or invocation failure, fall back to the identical manual
+handoff prompt.
 
 ---
 
@@ -949,14 +957,16 @@ The implementation is complete when:
 ### Phase 2 — Example fixtures
 - Add `planning-forge/examples/...` covering the eight §20 behaviors.
 
-### Phase 3 — Optional subagent integration
-- Allow the Coordinator to invoke specialists via `agent`; keep the manual fallback;
-  never auto-advance without explicit user intent.
+### Phase 3 — Optional subagent integration (implemented)
+- `shared/subagent-invocation.md`: the Coordinator may invoke specialists via `agent`;
+  keeps the manual fallback; one specialist per request; never auto-advances without
+  explicit user intent.
 
-### Phase 4 — Artifact state support
-- Introduce the full session-state schema (per-category stable-ID tables, assumptions,
-  risks, spike reports, changelog, published-document tracking), path conventions, and
-  ID-change-summary persistence.
+### Phase 4 — Artifact state support (implemented)
+- `shared/session-state.md`: the full session-state shape (per-category stable-ID
+  tables, assumptions, risks, spike reports, published-document tracking) reconstructed
+  without persistence and reported inline. Open questions stay unnumbered and risks
+  stay prose, consistent with the current agent output formats.
 
 ---
 

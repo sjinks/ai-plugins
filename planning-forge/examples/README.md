@@ -31,3 +31,5 @@ The expected responses describe the **required behavior and constraints**, not a
 | 7 | `07-spike-without-criteria/` | "prototype this parser behavior" | `spike-request` | ask for / propose decision criteria; no broad implementation |
 | 8 | `08-implementation-handoff/` | "prepare this for the coding agent" | `implementation-handoff-request` | run gates; builder handoff prompt only if gates pass or gaps accepted |
 | 9 | `09-architecture-no-spec/` | "let's do architecture" (no spec yet) | `architecture-request` | missing-artifact precondition: do not route; recommend creating a spec first |
+| 10 | `10-advanced-invocation/` | "run the Architecture Planner for me now" (spec ready) | `architecture-request` | advanced mode: invoke one specialist, relay, stop; manual fallback if unavailable |
+| 11 | `11-status-request/` | "where are we; give me a resumable summary" | `status-request` | no routing; report session state with evidence-backed fields only |

@@ -33,6 +33,8 @@ The shared references are not standalone skills. They are read by the agents onl
 - `shared/readiness-model.md` — shared `ready`/`partial`/`blocked`/`unknown` model and ready-slice rules used by the spec, architecture, test, and coordinator agents.
 - `shared/stable-id-discipline.md` — shared stable-ID taxonomy, preservation, supersession, and ID-change-summary rules.
 - `shared/coordinator-routing.md` — Coordinator intent taxonomy, routing map, and per-intent handoff templates.
+- `shared/subagent-invocation.md` — optional advanced mode: how the Coordinator invokes a specialist directly, relays the result, and falls back to a manual handoff prompt.
+- `shared/session-state.md` — the Coordinator's resumable planning-session state shape, reconstructed without persistence.
 - `shared/interactive-clarification.md` — one-question-at-a-time clarification protocol.
 - `shared/spec-discovery.md` — live scope checks, candidate re-reading, and acceptance-criteria feasibility checks.
 - `shared/spec-self-review.md` — brainstorming, oversized-scope decomposition, and meaningful alternatives checks.

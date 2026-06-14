@@ -114,12 +114,12 @@ Prefer `partial` over `blocked` when a conservative recommended MVP is implement
 ID assignment rules:
 
 - For `ready`, assign IDs to all in-scope user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases.
-- For `partial`, assign IDs to all implementation-ready items in the ready slice (user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases). Keep blocked portions unnumbered in Open questions.
+- For `partial`, assign IDs to all implementation-ready items in the ready slice (user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases). Keep blocked portions unnumbered in Open Questions.
 - For `blocked`, do not assign user-story/FR/NFR/interface/AC/assumption/edge-case IDs for ambiguous scope. Include mandatory headings, but limit substantive content to confirmed scope, empty-state rationales, and blocking questions.
 
 Route gaps using this rule:
 
-- If a different answer would change FRs, NFRs, interfaces, ACs, task boundaries, sequencing, or verification, put it in Open questions.
+- If a different answer would change FRs, NFRs, interfaces, ACs, task boundaries, sequencing, or verification, put it in Open Questions.
 - If the answer would not materially change implementation behavior, put it in Assumptions.
 
 ## Task Splitting Rules

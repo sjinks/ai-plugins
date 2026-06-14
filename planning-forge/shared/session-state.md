@@ -41,15 +41,16 @@ artifacts:
   published:     [ { path, artifact_type } ]
 
 stable_ids:        # mirror what the specialist agents emitted; do not invent IDs
-  user_stories:    [ { id: US-*,  status: active|changed|removed|deferred } ]
-  functional:      [ { id: FR-*,  status: active|changed|removed|deferred } ]
-  non_functional:  [ { id: NFR-*, status: active|changed|removed|deferred } ]
-  interfaces:      [ { id: INT-*, status: active|changed|removed|deferred } ]
-  acceptance:      [ { id: AC-*,  status: active|changed|removed|deferred } ]
-  edge_cases:      [ { id: EDGE-*, status: active|changed|removed|deferred } ]
-  assumptions:     [ { id: ASM-*, status: active|changed|removed|deferred } ]
-  decisions:       [ { id: D-*,   status: active|changed|superseded|removed|deferred } ]
-  test_cases:      [ { id: TC-*,  status: active|changed|removed|deferred } ]
+  # status: active | changed | superseded | removed | deferred | out-of-scope
+  user_stories:    [ { id: US-*,   status } ]
+  functional:      [ { id: FR-*,   status } ]
+  non_functional:  [ { id: NFR-*,  status } ]
+  interfaces:      [ { id: INT-*,  status } ]
+  acceptance:      [ { id: AC-*,   status } ]
+  edge_cases:      [ { id: EDGE-*, status } ]
+  assumptions:     [ { id: ASM-*,  status } ]
+  decisions:       [ { id: D-*,    status } ]
+  test_cases:      [ { id: TC-*,   status } ]
 
 open_questions:    [ <unnumbered question text; mark blocking vs non-blocking> ]
 risks:             [ <risk text; prose, no RISK- IDs> ]

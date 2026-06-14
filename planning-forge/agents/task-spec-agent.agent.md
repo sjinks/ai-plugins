@@ -101,7 +101,7 @@ High-level requests hide decision trees. Surface only the decisions that materia
 
 ## Readiness Rules
 
-These readiness values and the ID-assignment-by-readiness rules below are shared across Planning Forge agents. The canonical readiness model lives in `shared/readiness-model.md`, and the full stable-ID discipline (preservation, supersession, ID change summaries) lives in `shared/stable-id-discipline.md`; keep this section aligned with both. If those files are unavailable, apply the readiness and ID-assignment rules below.
+These readiness values and the ID-assignment-by-readiness rules below are shared across Planning Forge agents. The canonical readiness model lives in `shared/readiness-model.md`, and the full stable-ID discipline (preservation, supersession, ID change summaries) lives in `shared/stable-id-discipline.md`. The bullets below are a fallback copy for use only when those shared references cannot be read; do not edit them independently — update the shared references and keep this copy in sync.
 
 Use exactly one readiness value:
 

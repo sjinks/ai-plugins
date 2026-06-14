@@ -2,7 +2,7 @@
 name: risk-register
 description: "Use when: consolidating exploration findings into an evidence-backed risk register during deep codebase exploration: security, correctness, reliability, performance, maintainability, data-integrity, configuration, deployment, and testing risks with severity, confidence, verification, and mitigation. Phase 10 of the Code Explorer workflow."
 argument-hint: "Candidate risks and findings from earlier phases, or the repository scope when standalone."
-user-invocable: true
+user-invocable: false
 ---
 
 # Risk Register Builder

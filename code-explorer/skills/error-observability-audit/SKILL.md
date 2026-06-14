@@ -1,8 +1,8 @@
 ---
 name: error-observability-audit
-description: "Use when: reviewing how a codebase represents, propagates, logs, observes, and recovers from failures: swallowed exceptions, generic error responses, inconsistent error mapping, missing timeouts/retries, unsafe retries, missing cancellation, partial-failure behavior, missing or noisy or sensitive logs, missing failure metrics, and missing correlation IDs. Part of the Code Explorer workflow."
+description: "Use when: during whole-repository exploration, mapping across a codebase how it represents, propagates, logs, observes, and recovers from failures: swallowed exceptions, generic error responses, inconsistent error mapping, missing timeouts/retries, unsafe retries, missing cancellation, partial-failure behavior, missing or noisy or sensitive logs, missing failure metrics, and missing correlation IDs. Part of the Code Explorer workflow; not for reviewing an individual diff or change set."
 argument-hint: "Repository scope; symbol inventory, data-flow, and observability findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Error Handling and Observability Audit

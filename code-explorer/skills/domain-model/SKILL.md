@@ -2,7 +2,7 @@
 name: domain-model
 description: "Use when: extracting the domain model during deep codebase exploration: entities, value objects, DTOs, schemas, events, commands, roles, relationships, invariants, lifecycle/state transitions, and naming inconsistencies. Phase 5 of the Code Explorer workflow."
 argument-hint: "Repository scope; entrypoint and architecture findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Domain Model Extraction

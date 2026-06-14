@@ -2,7 +2,7 @@
 name: build-runtime
 description: "Use when: determining how a repository is built, tested, run, and deployed during deep codebase exploration: install/build/run/test commands, runtime services, external dependencies, environment variables, and CI/CD flow. Phase 2 of the Code Explorer workflow."
 argument-hint: "Repository scope; whether running build/tests is approved."
-user-invocable: true
+user-invocable: false
 ---
 
 # Build and Runtime Detection

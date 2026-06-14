@@ -2,7 +2,7 @@
 name: dataflow-trust-boundaries
 description: "Use when: tracing data flows and trust boundaries during deep codebase exploration: sources to sinks, validation and sanitization points, security-relevant sinks (SQL, shell, filesystem, HTTP, templates, deserialization, redirects, auth decisions), and failure modes. Phase 6 of the Code Explorer workflow."
 argument-hint: "Repository scope; traced entrypoints if available; any flow focus."
-user-invocable: true
+user-invocable: false
 ---
 
 # Data Flows and Trust Boundaries

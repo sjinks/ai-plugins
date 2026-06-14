@@ -2,7 +2,7 @@
 name: artifact-validation
 description: "Use when: validating generated Code Explorer exploration artifacts before declaring an exploration complete: checking required markdown and machine-readable files exist, JSON parses and matches schemas, stable IDs are valid and unique, high/critical risks carry evidence, and limitations are documented. Final validation step of the Code Explorer workflow."
 argument-hint: "Path to the docs/codebase-exploration directory to validate, and the repository root."
-user-invocable: true
+user-invocable: false
 ---
 
 # Artifact Validation

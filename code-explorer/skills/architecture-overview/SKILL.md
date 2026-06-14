@@ -2,7 +2,7 @@
 name: architecture-overview
 description: "Use when: producing a system-level architecture model during deep codebase exploration: major components, layers, boundaries, dependency direction, architectural patterns, recovered design decisions, and architecture smells. Phase 3 of the Code Explorer workflow."
 argument-hint: "Repository scope; repository map and build/runtime findings if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Architecture Overview

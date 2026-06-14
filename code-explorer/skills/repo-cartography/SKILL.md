@@ -2,7 +2,7 @@
 name: repo-cartography
 description: "Use when: mapping repository structure during deep codebase exploration: languages, frameworks, package managers, build systems, test frameworks, CI/CD workflows, top-level directory purposes, and generated/vendored paths to exclude. Phase 1 of the Code Explorer workflow."
 argument-hint: "Repository root or scope path to map."
-user-invocable: true
+user-invocable: false
 ---
 
 # Repository Cartography

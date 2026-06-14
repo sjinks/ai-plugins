@@ -2,7 +2,7 @@
 name: dependency-graph
 description: "Use when: analyzing module dependencies and hotspots during deep codebase exploration: module-level dependency graph, high fan-in/fan-out modules, cycles, cross-layer imports, change-dangerous modules, and churn-based hotspots. Phase 8 of the Code Explorer workflow."
 argument-hint: "Repository scope; architecture layers and symbol inventory if available."
-user-invocable: true
+user-invocable: false
 ---
 
 # Dependency Graph and Hotspot Analysis

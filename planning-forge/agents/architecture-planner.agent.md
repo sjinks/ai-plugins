@@ -40,7 +40,7 @@ Use the `agent` tool only for these bounded delegations:
 
 - **Prototype Spike**: invoke when one unresolved architecture question needs evidence. Prompt: `Answer one unresolved architecture question with the smallest throwaway validation artifact. Preserve question, criteria, evidence, verdict, and cleanup path.`
 - **Test Planner**: invoke after completing architecture when the current user request explicitly asks to continue through test planning. Prompt: `Use the architecture output and supplied specification as the test-planning contract. Produce test cases, fixtures, assertions, priorities, seams, and coverage gaps. Do not implement or run tests. Preserve IDs.`
-- **Planning Document Publisher**: invoke only after producing the required architecture output format and only when the user requested saving or publishing. Prompt: `Save the completed architecture plan to the requested docs directory, defaulting to ai-docs only when saving was requested and no directory was named. Preserve substance and IDs.`
+- **Planning Document Publisher**: invoke only after producing the required architecture output format and only when the user requested saving or publishing. Prompt: `Save the completed architecture plan to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs.`
 
 ## Design Contract Status
 
@@ -57,7 +57,7 @@ The upstream specification readiness model this status consumes is defined in `s
 
 ## Persistence Requests
 
-If the current user explicitly asks to save, write, persist, or publish the architecture plan or planning documents, produce the required architecture output format first, then invoke Planning Document Publisher with the completed architecture plan and the requested target directory. Default the target directory to `ai-docs` only when the user requested saved planning documents and named no other directory.
+If the current user explicitly asks to save, write, persist, or publish the architecture plan or planning documents, produce the required architecture output format first, then invoke Planning Document Publisher with the completed architecture plan and the requested target directory. Default the target directory to `docs/specifications` only when the user requested saved planning documents and named no other directory.
 
 Use Planning Document Publisher only for persistence. Do not edit files directly from this agent. If Planning Document Publisher is unavailable or cannot save, report the completed architecture plan and the save blocker.
 

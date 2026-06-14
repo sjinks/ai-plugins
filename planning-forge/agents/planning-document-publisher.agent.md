@@ -10,7 +10,7 @@ tools:
   - edit/createFile
   - edit/editFiles
   - agent
-argument-hint: "Provide the completed planning output and target docs directory, for example ai-docs."
+argument-hint: "Provide the completed planning output and target docs directory, for example docs/specifications."
 user-invocable: false
 ---
 
@@ -27,7 +27,7 @@ You are the Planning Document Publisher. Persist completed planning outputs as M
 
 ## Source Rules
 
-Priority: current user request > completed planning artifact > existing docs in target directory > advisory material. If the target directory is omitted but saving was requested, default to `ai-docs`. If the completed artifact is missing, ask for it instead of creating a placeholder.
+Priority: current user request > completed planning artifact > existing docs in target directory > advisory material. If the target directory is omitted but saving was requested, default to `docs/specifications`. If the completed artifact is missing, ask for it instead of creating a placeholder.
 
 ## Subagent Invocations
 

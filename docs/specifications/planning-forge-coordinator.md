@@ -138,8 +138,8 @@ output is the evidence-backed decision, not the code. This agent carries `edit` 
 ### 5.5 `Planning Document Publisher`
 
 Internal helper (`user-invocable: false`). Persists completed artifacts into the
-requested docs directory, defaulting to `ai-docs` when saving was requested and no
-directory was named. Preserves IDs, avoids unrelated overwrites, redacts/blocks
+requested docs directory, defaulting to `docs/specifications` when saving was requested
+and no directory was named. Preserves IDs, avoids unrelated overwrites, redacts/blocks
 sensitive content. Must not be invoked except for completed artifacts.
 
 ---
@@ -493,7 +493,7 @@ Artifacts:
 {{ARTIFACT_LIST}}
 
 Target location:
-{{TARGET_LOCATION_OR_DEFAULT_ai-docs}}
+{{TARGET_LOCATION_OR_DEFAULT_docs/specifications}}
 
 Instructions:
 - Save or update only the requested artifacts.
@@ -652,9 +652,10 @@ Fallbacks:
   rewriting unrelated sections.
 - **Published** — stable paths owned by `Planning Document Publisher`.
 
-Path convention: defer to the publisher's existing default of `ai-docs` and to any
-repository planning convention already in place. Do not introduce a competing
-`planning/{slug}/...` tree. A suggested layout under the chosen docs root:
+Path convention: the default planning-docs root is `docs/specifications` (OQ-4
+resolved); defer to any repository planning convention already in place when one
+exists. Do not introduce a competing `planning/{slug}/...` tree. A suggested layout
+under the chosen docs root:
 
 ```
 <docs-root>/<feature-slug>/
@@ -798,12 +799,18 @@ Instructions:
 
 ---
 
-## 20. Example fixtures (not executable tests)
+## 20. Example fixtures (manual review + static lint)
 
-`planning-forge` has **no test harness** (unlike `code-explorer`). These are
-illustrative fixtures stored under `examples/`, used for manual regression review of
-Coordinator behavior, not automated golden tests. Building an executable harness for
-agent-prompt behavior is out of scope for this spec (OQ-3, §27).
+These are illustrative fixtures stored under `examples/`, used for manual regression
+review of Coordinator behavior, not automated behavioral golden tests. A full
+run-the-Coordinator-and-assert harness stays out of scope because agent-prompt behavior
+is non-deterministic (OQ-3, §27).
+
+A static lint, `planning-forge/scripts/lint-examples.mjs`, checks fixture structure:
+every fixture has a non-empty `input.md` and `expected-coordinator-response.md`, code
+fences balance, any bold agent name matches a known specialist, and any stable-ID token
+uses an allowed prefix (`US/FR/NFR/INT/AC/EDGE/ASM/D/TC`). It does not execute the
+Coordinator. Run it with `node planning-forge/scripts/lint-examples.mjs`.
 
 Each fixture documents: input message, available artifacts, expected intent, expected
 routing target, and the key constraints the handoff prompt must contain.
@@ -978,16 +985,20 @@ workflow safer, more traceable, and easier to resume.
 
 ---
 
-## 27. Open questions
+## 27. Open questions (resolved)
 
-- **OQ-1** — Should open questions (`Q-`) and risks (`RISK-`) become first-class
-  numbered IDs? Today open questions are unnumbered bullets and risks are prose. This
-  requires updating the Specification Planner / Test Planner output formats first. Until
-  resolved, the Coordinator references open questions by text/local label and keeps
-  risks as prose (§9.1).
-- **OQ-2** — Should the Coordinator carry the `web` tool? Sibling agents do, but a pure
-  router may not need it (§15, §22).
-- **OQ-3** — Do we want an executable regression harness for agent-prompt behavior, or
-  are manual example fixtures sufficient? `planning-forge` currently has none (§20).
-- **OQ-4** — Where should published planning docs live by default — the publisher's
-  `ai-docs` default or a repo-specific planning convention? (§16)
+- **OQ-1 — Resolved: No.** Open questions stay unnumbered bullets and risks stay prose;
+  no `Q-`/`RISK-` stable IDs. Adding them would require changing the Specification
+  Planner / Test Planner output formats and rippling through every shared doc and
+  fixture for no downstream cross-reference need. The Coordinator references open
+  questions by text/local label (§9.1).
+- **OQ-2 — Resolved: No.** The Coordinator does not carry the `web` tool. It is a pure
+  router/gatekeeper; external lookups belong to the specialist agents (§15, §22).
+- **OQ-3 — Resolved: static lint, not a behavioral harness.** A full
+  run-the-Coordinator-and-assert harness is out of scope because agent-prompt behavior
+  is non-deterministic. Instead, `planning-forge/scripts/lint-examples.mjs` statically
+  checks fixture structure (required files, balanced fences, known agent names, allowed
+  stable-ID prefixes) — the class of issues that recurred in review (§20).
+- **OQ-4 — Resolved: `docs/specifications`.** The default planning-docs root is
+  `docs/specifications`. The Publisher and the specialist agents default there when
+  saving is requested and no directory is named (§16).

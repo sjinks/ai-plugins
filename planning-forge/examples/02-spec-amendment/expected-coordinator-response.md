@@ -42,7 +42,8 @@ Instructions:
 - Allocate new IDs only for new requirements, ACs, edge cases, or assumptions.
 - Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
-- Return changed sections, updated open questions, and an ID change summary.
+- Return the full updated specification in your standard output format (all sections in
+  order), plus updated open questions and an ID change summary.
 - Do not redesign architecture. Do not implement code.
 ```
 ```

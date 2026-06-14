@@ -88,7 +88,8 @@ Instructions:
 - Allocate new IDs only for new requirements, ACs, edge cases, or assumptions.
 - Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
-- Return changed sections, updated open questions, and an ID change summary.
+- Return the full updated specification in your standard output format (all sections in
+  order), plus updated open questions and an ID change summary.
 - Do not redesign architecture. Do not implement code.
 ```
 
@@ -109,8 +110,12 @@ Instructions:
   out-of-scope sections.
 - Keep unanswered questions visible. Do not infer answers to unanswered questions.
 - Preserve stable IDs. Do not renumber unchanged items.
+- Allocate new IDs only for new items.
+- Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
-- Return changed sections, remaining open questions, and an ID change summary.
+- Return the full updated specification in your standard output format (all sections in
+  order), plus remaining open questions and an ID change summary.
+- Do not redesign architecture. Do not implement code.
 ```
 
 ### `architecture-request` → Architecture Planner (gated)

@@ -7,7 +7,8 @@
 - The handoff prompt must:
   - name the ready scope (US-1, US-2, FR-1, FR-2, NFR-1, INT-1, AC-1 through AC-5,
     EDGE-1);
-  - exclude the blocked item (FR-3 and its blocking notification-channel question);
+  - exclude the blocked notification-on-critical scope (unnumbered, pending the
+    notification-channel question);
   - forbid product-scope changes and designing excluded requirements;
   - require tracing decisions to FR/NFR/AC/INT/EDGE IDs;
   - ask for assumptions introduced by limiting architecture to the ready slice.
@@ -31,7 +32,8 @@ Route to Architecture Planner for the approved ready slice only.
 Create an architecture plan for the approved ready slice only.
 
 Ready scope: US-1, US-2, FR-1, FR-2, NFR-1, INT-1, AC-1 through AC-5, EDGE-1
-Excluded (blocked): FR-3, pending the notification-channel question.
+Excluded (blocked): notification-on-critical scope, pending the notification-channel
+question (unnumbered; no ID assigned while blocked).
 
 Instructions:
 - Do not change product scope. Do not design excluded requirements. Do not implement.
@@ -45,5 +47,5 @@ Instructions:
 
 - Intent is `architecture-request`.
 - Routes to Architecture Planner.
-- Scope limited to the ready slice; blocked FR-3 excluded.
+- Scope limited to the ready slice; blocked notification scope excluded and unnumbered.
 - Traceability to existing IDs required.

@@ -361,7 +361,8 @@ Instructions:
 - Allocate new IDs only for new requirements, ACs, edge cases, or assumptions.
 - Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
-- Return changed sections, updated open questions, and an ID change summary.
+- Return the full updated specification in your standard output format (all sections in
+  order), plus updated open questions and an ID change summary.
 - Do not redesign architecture. Do not implement code.
 ```
 
@@ -382,8 +383,12 @@ Instructions:
   out-of-scope sections.
 - Keep unanswered questions visible. Do not infer answers to unanswered questions.
 - Preserve stable IDs. Do not renumber unchanged items.
+- Allocate new IDs only for new items.
+- Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
-- Return changed sections, remaining open questions, and an ID change summary.
+- Return the full updated specification in your standard output format (all sections in
+  order), plus remaining open questions and an ID change summary.
+- Do not redesign architecture. Do not implement code.
 ```
 
 ### 11.4 `architecture-request` → `Architecture Planner` (gated)
@@ -834,9 +839,13 @@ Optional example fixtures (§20):
 ```
 planning-forge/examples/01-new-session/...
 planning-forge/examples/02-spec-amendment/...
-planning-forge/examples/03-architecture-too-early/...
-planning-forge/examples/04-ready-slice-architecture/...
-planning-forge/examples/05-implementation-handoff/...
+planning-forge/examples/03-answer-open-questions/...
+planning-forge/examples/04-architecture-too-early/...
+planning-forge/examples/05-ready-slice-architecture/...
+planning-forge/examples/06-test-plan-without-architecture/...
+planning-forge/examples/07-spike-without-criteria/...
+planning-forge/examples/08-implementation-handoff/...
+planning-forge/examples/09-architecture-no-spec/...
 ```
 
 ---

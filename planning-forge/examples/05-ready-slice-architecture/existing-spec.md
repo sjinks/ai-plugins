@@ -11,7 +11,7 @@ Triage incoming WordPress plugin vulnerability reports and notify on critical fi
 ## Functional Requirements
 - FR-1 MUST ingest vulnerability reports from the configured source.
 - FR-2 MUST let an analyst assign a severity (low/medium/high/critical).
-- FR-3 MUST notify a channel when a report is marked critical. (blocked)
+(Notification-on-critical is blocked and kept unnumbered in Open Questions.)
 
 ## Non-Functional Requirements
 - NFR-1 MUST process a single report in under 2 seconds.
@@ -30,5 +30,5 @@ Triage incoming WordPress plugin vulnerability reports and notify on critical fi
 - EDGE-1 MUST-handle a malformed report payload by rejecting it and logging the reason.
 
 ## Open Questions
-- Which notification channel (email, Slack, webhook) should fire for critical reports?
-  (blocks FR-3)
+- Notify a channel when a report is marked critical: which channel (email, Slack,
+  webhook) should fire? Blocked and unnumbered until the channel is chosen.

@@ -45,9 +45,9 @@ The shared references are not standalone skills. They are read by the agents onl
 
 ## Examples
 
-`examples/` holds manual-review fixtures for the Planning Forge Coordinator. Each folder pairs an input message (and any supplied artifact) with an `expected-coordinator-response.md` describing the required intent classification, gate decision, routing target, and handoff constraints. They are review anchors, not executable behavioral tests; see `examples/README.md`.
+Manual-review fixtures for the Planning Forge Coordinator live under `dev/planning-forge/examples/` (development-only; not shipped with the plugin). Each folder pairs an input message (and any supplied artifact) with an `expected-coordinator-response.md` describing the required intent classification, gate decision, routing target, and handoff constraints. They are review anchors, not executable behavioral tests; see `dev/planning-forge/examples/README.md`.
 
-A static lint, `scripts/lint-examples.mjs`, checks fixture structure (required files, balanced fences, known agent names, allowed stable-ID prefixes) without running the Coordinator: `node planning-forge/scripts/lint-examples.mjs`.
+A static lint, `dev/planning-forge/scripts/lint-examples.mjs`, checks fixture structure (required files, balanced fences, known agent names, allowed stable-ID prefixes) without running the Coordinator: `node dev/planning-forge/scripts/lint-examples.mjs`.
 
 ## Persistence
 

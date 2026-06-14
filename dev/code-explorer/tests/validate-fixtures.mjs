@@ -2,12 +2,12 @@
 // Validate expected fixture outputs against the artifact schemas.
 //
 // Usage:
-//   node code-explorer/tests/validate-fixtures.mjs
+//   node dev/code-explorer/tests/validate-fixtures.mjs
 //
-// Locates every fixture under code-explorer/fixtures/*/expected/docs/codebase-exploration
-// and runs validate-artifacts.mjs against it. The repo root for file-reference
-// checks is the fixture root (code-explorer/fixtures/<name>), so fixture source
-// paths like src/routes.js resolve.
+// Locates every fixture under dev/code-explorer/fixtures/*/expected/docs/codebase-exploration
+// and runs the plugin's validate-artifacts.mjs against it. The repo root for
+// file-reference checks is the fixture root (dev/code-explorer/fixtures/<name>),
+// so fixture source paths like src/routes.js resolve.
 //
 // Does NOT run an AI agent. Exit code is 0 only if every fixture validates.
 
@@ -17,9 +17,13 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const TESTS_DIR = dirname(fileURLToPath(import.meta.url));
-const PLUGIN_DIR = resolve(TESTS_DIR, '..');
-const FIXTURES_DIR = join(PLUGIN_DIR, 'fixtures');
-const VALIDATOR = join(PLUGIN_DIR, 'scripts', 'validate-artifacts.mjs');
+// This harness lives under dev/code-explorer/tests/; the fixtures sit alongside
+// it under dev/code-explorer/, while the validator stays in the shipped plugin
+// at <repo-root>/code-explorer/scripts/.
+const DEV_PLUGIN_DIR = resolve(TESTS_DIR, '..');
+const REPO_ROOT = resolve(DEV_PLUGIN_DIR, '..', '..');
+const FIXTURES_DIR = join(DEV_PLUGIN_DIR, 'fixtures');
+const VALIDATOR = join(REPO_ROOT, 'code-explorer', 'scripts', 'validate-artifacts.mjs');
 
 function findExpectedDirs() {
   const dirs = [];

@@ -54,7 +54,7 @@ Defined in `shared/execution-modes.md`. The default is conservative: if no mode 
 - `shared/execution-modes.md`, `shared/stable-id-policy.md`, `shared/prompt-injection-policy.md`, `shared/tooling-adapter.md`, `shared/artifact-validation-rules.md` — modes, ID stability, injection policy, capability-based tooling, validation rules.
 - `shared/schemas/` — JSON Schemas (Draft 2020-12 subset) for every machine-readable artifact.
 - `scripts/` — `validate-artifacts.mjs`, `check-file-references.mjs`, `collect-repo-index.mjs`, `summarize-artifacts.mjs`.
-- `fixtures/`, `tests/validate-fixtures.mjs` — fixture repositories and their validation harness.
+- `dev/code-explorer/fixtures/`, `dev/code-explorer/tests/validate-fixtures.mjs` — fixture repositories and their validation harness (development-only; not shipped with the plugin).
 
 ## Generated artifacts
 
@@ -78,7 +78,7 @@ The validator checks required files exist, JSON parses and matches `shared/schem
 ## Run fixture validation
 
 ```bash
-node code-explorer/tests/validate-fixtures.mjs
+node dev/code-explorer/tests/validate-fixtures.mjs
 ```
 
 Validates each fixture's expected outputs against the schemas (no AI agent runs). The `tiny-node-api` fixture ships golden outputs that pass strict validation; `prompt-injection-repo` tests that adversarial repository text is treated as data.

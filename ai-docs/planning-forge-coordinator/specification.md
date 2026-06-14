@@ -410,7 +410,7 @@ Instructions:
 - Design the minimal architecture sufficient for the specification.
 - Avoid queues, distributed systems, caches, plugin architectures, or broad
   abstractions unless required by the specification.
-- Trace decisions to FR/NFR/AC/EDGE IDs.
+- Trace decisions to FR/NFR/AC/INT/EDGE IDs.
 - Identify risks, trade-offs, implementation seams, and test seams.
 ```
 
@@ -694,7 +694,7 @@ Partial:
 ```
 Spec readiness: partial
 Ready slice: FR-1, FR-2, AC-1 through AC-5
-Blocked: FR-3 depends on Q-4.
+Blocked: the notification-on-critical scope (unnumbered) depends on Q-4.
 Recommended next action: resolve Q-4 before full architecture, or explicitly request
 architecture for the ready slice only.
 ```
@@ -777,10 +777,10 @@ Route to Architecture Planner for the approved ready slice only.
 ```text
 Create an architecture plan for the approved ready slice only.
 Ready scope: FR-1, FR-2, AC-1 through AC-5
-Excluded (blocked): FR-3, pending Q-4
+Excluded (blocked): the notification-on-critical scope (unnumbered), pending Q-4
 Instructions:
 - Do not change product scope. Do not design excluded requirements.
-- Trace decisions to FR/NFR/AC/EDGE IDs.
+- Trace decisions to FR/NFR/AC/INT/EDGE IDs.
 - Identify assumptions introduced by limiting architecture to the ready slice.
 ```
 ````

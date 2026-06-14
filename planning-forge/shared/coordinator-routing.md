@@ -155,7 +155,7 @@ For an approved ready-slice pass, add to the template:
 ```
 Architect the approved ready slice only.
 Ready scope: {{READY_SLICE_IDS}}
-Excluded (blocked): {{BLOCKED_IDS_AND_QUESTIONS}}
+Excluded (blocked, unnumbered): {{BLOCKED_SCOPE_AND_QUESTIONS}}
 Do not design excluded requirements. Identify assumptions introduced by limiting
 architecture to the ready slice.
 ```

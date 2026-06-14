@@ -358,7 +358,7 @@ Existing specification:
 Instructions:
 - Preserve stable IDs. Do not renumber unchanged items.
 - Update only affected sections where possible.
-- Allocate new IDs only for new requirements, ACs, edge cases, or assumptions.
+- Allocate new IDs only for new items.
 - Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
 - Return the full updated specification in your standard output format (all sections in
@@ -436,7 +436,7 @@ Inputs:
 - Architecture:  {{ARCH_REFERENCE_OR_CONTENT}}
 
 Instructions:
-- Trace test cases to AC/FR/NFR/D/EDGE IDs.
+- Trace test cases to AC/FR/NFR/INT/D/EDGE IDs.
 - Identify unit, integration, E2E, regression, negative, and edge-case tests where
   applicable.
 - Identify fixtures, mocks, fakes, and test data.
@@ -452,7 +452,7 @@ Specification:
 {{SPEC_REFERENCE_OR_CONTENT}}
 
 Instructions:
-- Trace test cases to AC/FR/NFR/EDGE IDs.
+- Trace test cases to AC/FR/NFR/INT/EDGE IDs.
 - Mark architecture-dependent tests as coverage gaps.
 - Do not invent architecture. Do not invent new requirements.
 ```

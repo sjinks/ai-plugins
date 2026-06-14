@@ -39,7 +39,7 @@ Existing specification:
 Instructions:
 - Preserve stable IDs. Do not renumber unchanged items.
 - Update only affected sections where possible.
-- Allocate new IDs only for new requirements, ACs, edge cases, or assumptions.
+- Allocate new IDs only for new items.
 - Mark removed, deferred, or out-of-scope items explicitly.
 - Update readiness status.
 - Return the full updated specification in your standard output format (all sections in

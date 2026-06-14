@@ -13,7 +13,7 @@
 
 Current stage: spec
 Interpreted intent: spike-request
-Readiness: n/a (spike gating)
+Readiness: unknown (spike gating; readiness not assessed)
 
 ## Recommended Next Action
 

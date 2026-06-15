@@ -28,14 +28,14 @@ After a specialist returns:
 1. Present the specialist's output to the user without silently editing its substance.
 2. Add a compact Coordinator-owned relay summary after the specialist output. Use this shape:
 
-	```markdown
-	## Specialist Result Summary
-	Stage completed: <spec | architecture | test-plan | spike | publish>
-	Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
-	Stable ID changes: <reported ID change summary or None reported>
-	Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup/redaction/save blockers, or None>
-	Next recommended action: <one next step; do not auto-advance>
-	```
+   ```markdown
+   ## Specialist Result Summary
+   Stage completed: <spec | architecture | test-plan | spike | publish>
+   Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
+   Stable ID changes: <reported ID change summary or None reported>
+   Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup/redaction/save blockers, or None>
+   Next recommended action: <one next step; do not auto-advance>
+   ```
 
 3. Promote specialist open items into the refreshed planning state. Carry forward unresolved `Open Questions`, `Scope Amendments Requested`, `Coverage Gaps`, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures until a later user answer or artifact resolves them.
 4. Update the reported planning state (stage, readiness, artifacts, stable-ID changes, blockers, ready slice, and carry-forward items) from the returned content. Read `shared/session-state.md` for the fields to refresh.

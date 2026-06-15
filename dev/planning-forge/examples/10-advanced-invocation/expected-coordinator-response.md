@@ -53,7 +53,7 @@ Coordinator-owned summary like:
 Stage completed: architecture
 Artifact readiness: ready, partial, blocked, missing, or unknown based on the returned Design Contract Status
 Stable ID changes: None reported, or the returned ID change summary
-Carry-forward items: Scope amendments, open questions, unresolved risks that block the next stage, or None
+Carry-forward items: Scope amendments, open questions, coverage gaps, cleanup or absorb requirements, redactions, skipped writes, failed saves, invocation failures, or None
 Also include any coverage gaps, prototype cleanup/absorb requirements, publishing redactions or skipped writes, failed saves, and invocation failures until resolved, deferred, or explicitly accepted.
 Next recommended action: Review the architecture, request amendments, ask for test planning, publish, or request implementation handoff
 ```

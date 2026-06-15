@@ -44,7 +44,7 @@ After a specialist returns:
 
 ## Failure Handling
 
-- `agent` tool unavailable or not permitted → emit the manual handoff prompt and say invocation was unavailable.
+- `agent` tool unavailable or not permitted → emit the manual handoff prompt, say invocation was unavailable, and treat the unavailable invocation as a carry-forward item in planning state.
 - Invocation errors or returns nothing usable → report the failure, treat it as a carry-forward item in planning state, emit the manual handoff prompt as fallback, and do not fabricate a result.
 - Specialist asks a blocking question → relay it to the user; do not answer on the user's behalf.
 

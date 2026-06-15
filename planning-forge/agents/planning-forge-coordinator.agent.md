@@ -125,7 +125,7 @@ Next recommended action: ...
 ```
 ````
 
-Include `Specialist Result Summary` only after a specialist invocation returns or when summarizing a recently completed specialist result. For small interactions you may shorten the response, but always include current stage, interpreted intent, recommended next action, blocking questions if any, and the handoff prompt when routing.
+Include `Specialist Result Summary` only after a specialist invocation returns or when summarizing a recently completed specialist result. For small interactions you may shorten the response, but always include current stage, interpreted intent, readiness, carry-forward items when present, recommended next action, blocking questions if any, and the handoff prompt when routing.
 
 ## Anti-Patterns
 

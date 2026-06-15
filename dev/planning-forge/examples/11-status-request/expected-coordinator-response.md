@@ -38,7 +38,8 @@ open_questions:
     notification-on-critical scope; unnumbered)
 ready_slice: [ FR-1, FR-2, NFR-1, INT-1, AC-1, AC-2, EDGE-1 ]
 carry_forward:
-  - Spec open question blocks notification-on-critical scope until answered.
+  - source: spec open question (see open_questions); disposition: unresolved;
+    handoff impact: blocks notification-on-critical scope until answered.
 
 ## Recommended Next Action
 

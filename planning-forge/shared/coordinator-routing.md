@@ -249,7 +249,7 @@ Gate checks:
 - Specification is ready, or a ready slice is explicitly approved.
 - Architecture is ready, or the user explicitly accepts proceeding without it.
 - A test plan exists, or the user explicitly accepts the test-plan gap.
-- Known open questions are non-blocking or explicitly deferred.
+- Known open questions are non-blocking, explicitly deferred, or explicitly accepted for this handoff.
 - Unresolved carry-forward items are resolved, explicitly non-blocking, explicitly deferred, or explicitly accepted for this handoff.
 - The user explicitly requested implementation handoff.
 ```

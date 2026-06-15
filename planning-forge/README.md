@@ -42,6 +42,7 @@ The shared references are not standalone skills. They are read by the agents onl
 - `shared/decision-panel.md` — lightweight multi-perspective review for high-impact architecture tradeoffs.
 - `shared/prototype-spike.md` — branch-specific prototype guidance for logic/state, dependency compatibility, and UI variation spikes.
 - `shared/planning-self-review.md` — final adversarial self-review checks for planning artifacts.
+- `shared/skill-extension.md` — optional, name-agnostic rules for using a host-provided skill catalog as advisory material without overriding source precedence, scope, or safety.
 
 ## Examples
 

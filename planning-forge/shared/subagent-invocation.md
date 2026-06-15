@@ -25,6 +25,8 @@ If any condition fails, emit the manual handoff prompt instead. Never invoke mor
 
 After a specialist returns:
 
+Emit the relay turn in this order: (1) the specialist's verbatim output, (2) a refreshed `## Planning Status`, (3) the `## Specialist Result Summary`, (4) `## Recommended Next Action`, then stop.
+
 1. Present the specialist's output to the user without silently editing its substance.
 2. Add a compact Coordinator-owned relay summary after the specialist output. Use this shape:
 

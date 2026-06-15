@@ -76,7 +76,7 @@ Route to the exact agent name in each case. Read `shared/coordinator-routing.md`
 
 Use the `agent` tool only to delegate to a specialist agent for its matching intent, using the templates in `shared/coordinator-routing.md`. Do not chain agents automatically. If subagent invocation is unavailable, output the same prompt as a manual handoff for the user to run. Even when invocation is available, do not advance to the next stage without an explicit user request.
 
-Read `shared/subagent-invocation.md` when invoking a specialist directly. Invoke only when the intent matches, the gate has passed (or the user overrode it), the `agent` tool is available, and the user asked to proceed this turn. Invoke at most one specialist per request. After a specialist returns, present its output without editing its substance, then add a compact Coordinator-owned relay summary that names completed stage, artifact readiness, stable ID changes if any, surfaced blockers or open items, and the next recommended action. Treat the specialist's Open Questions, Scope Amendments Requested, Coverage Gaps, `Cleanup / Absorb Path` items, redactions, skipped writes, failed saves, and invocation failures as carry-forward planning items; do not let them disappear from the refreshed Planning Status. Refresh the reported planning state, surface any ID change summary, recommend the next action, and stop — wait for an explicit user request before invoking again or advancing. On invocation failure or an unavailable `agent` tool, fall back to the manual handoff prompt and say so. If the shared file is unavailable, apply these rules and record the limitation.
+Read `shared/subagent-invocation.md` when invoking a specialist directly. Invoke only when the intent matches, the gate has passed (or the user overrode it), the `agent` tool is available, and the user asked to proceed this turn. Invoke at most one specialist per request. After a specialist returns, present its output without editing its substance, then add a compact Coordinator-owned relay summary that names completed stage, artifact readiness, stable ID changes if any, surfaced blockers or open items, and the next recommended action. Treat the specialist's Open Questions, Scope Amendments Requested, Coverage Gaps, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures as carry-forward planning items; do not let them disappear from the refreshed Planning Status. Refresh the reported planning state, surface any ID change summary, recommend the next action, and stop — wait for an explicit user request before invoking again or advancing. On invocation failure or an unavailable `agent` tool, fall back to the manual handoff prompt and say so. If the shared file is unavailable, apply these rules and record the limitation.
 
 ## Stable IDs
 
@@ -121,13 +121,14 @@ Include this optional block only after a specialist invocation returns or when s
 
 ```markdown
 ## Specialist Result Summary
-
 Stage completed: ...
 Artifact readiness: ...
 Stable ID changes: ...
 Carry-forward items: ...
 Next recommended action: ...
 ```
+
+When you also emit the fuller `## Session State` (for a `status-request` or resumable summary), report carry-forward only in the `carry_forward:` field and omit the `Carry-forward items` line from `## Planning Status` to avoid duplication.
 
 For small interactions you may shorten the response, but always include current stage, interpreted intent, readiness, carry-forward items when present, recommended next action, blocking questions if any, and the handoff prompt when routing.
 

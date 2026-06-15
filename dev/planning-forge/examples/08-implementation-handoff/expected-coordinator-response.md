@@ -7,6 +7,8 @@
   code and does not invoke a builder automatically.
 - The handoff prompt must:
   - point to the specification, architecture, and test plan as source of truth;
+  - name the approved ready slice (`full scope` here) and excluded blocked scope
+    (`None` here);
   - restrict the builder to the approved scope and preserve out-of-scope behavior;
   - require following architecture decisions, stopping on repo-reality conflicts;
   - require implementing the mapped tests;
@@ -36,6 +38,8 @@ Use the following planning artifacts as the source of truth.
 Specification: <specification.md>
 Architecture:  <architecture.md>
 Test Plan:     <test-plan.md>
+Approved ready slice: full scope
+Excluded blocked scope: None
 
 Instructions for the implementation agent:
 - Implement only the approved scope. Do not add new product requirements.
@@ -53,4 +57,4 @@ Instructions for the implementation agent:
 - Intent is `implementation-handoff-request`.
 - Gate check is performed and passes.
 - Output is a builder handoff prompt, not code, and no builder is auto-invoked.
-- Prompt restricts scope and requires FR/AC/D/TC traceability.
+- Prompt names the approved scope, excludes blocked scope, and requires FR/AC/D/TC traceability.

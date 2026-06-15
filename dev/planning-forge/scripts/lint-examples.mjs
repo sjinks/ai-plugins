@@ -8,7 +8,7 @@
 // model behavior (agent-prompt behavior is non-deterministic; that harness is
 // deliberately out of scope — see spec OQ-3). It catches the class of issues
 // that recurred in review: missing files, unbalanced fences, unknown agent
-// names, and disallowed stable-ID prefixes.
+// names, disallowed stable-ID prefixes, and stale prompt patterns.
 //
 // Checks per fixture folder under <examples>:
 //   1. `input.md` exists and is non-empty.
@@ -16,6 +16,8 @@
 //   3. Markdown code fences are balanced in every `.md` file.
 //   4. Any agent name referenced in **bold** matches a known specialist name.
 //   5. Any stable-ID token (e.g. FR-1) uses an allowed prefix.
+//   6. Planning Forge prompts do not reintroduce forbidden tool/invocation patterns.
+//   7. Critical publish path-safety text remains present.
 //
 // Exit codes:
 //   0 = all fixtures pass
@@ -39,6 +41,43 @@ const ALLOWED_ID_PREFIXES = new Set([
 ]);
 
 const REQUIRED_FILES = ['input.md', 'expected-coordinator-response.md'];
+
+const FORBIDDEN_PROMPT_PATTERNS = [
+  {
+    label: 'default implementation-agent delegation wording',
+    pattern: /default\s+(?:implementation|builder)[\s-]agent|`agent` means|^\s*- \*\*agent\*\*:/m,
+  },
+  {
+    label: 'automatic builder invocation wording',
+    pattern: /\bauto(?:matically)?[\s-]invok(?:e|es|ed|ing)\s+(?:a\s+)?(?:builder|implementation)/i,
+  },
+  {
+    label: 'granular read/search tool identifiers',
+    pattern: /\b(?:read\/readFile|search\/fileSearch|search\/listDirectory|search\/textSearch)\b/,
+  },
+];
+
+const REQUIRED_AGENT_SECTIONS = [
+  {
+    label: 'Critical Invariants section',
+    pattern: /^## Critical Invariants$/m,
+  },
+];
+
+const FORBIDDEN_AGENT_ROLES = /\b(?:Builder|Implementation Agent|Coding Agent)\b/;
+
+const REQUIRED_PROMPT_TEXT = [
+  {
+    path: ['planning-forge', 'agents', 'planning-document-publisher.agent.md'],
+    label: 'publisher symlink/path safety fallback',
+    pattern: /If symlink safety cannot be verified, block and ask for a non-symlink target or explicit approval\./,
+  },
+  {
+    path: ['planning-forge', 'shared', 'coordinator-routing.md'],
+    label: 'publish handoff path safety',
+    pattern: /Reject targets outside the approved workspace-relative documentation directory\./,
+  },
+];
 
 function parseExamplesDir(argv) {
   const idx = argv.indexOf('--examples');
@@ -131,6 +170,89 @@ function mdFilesIn(dir) {
     .map((name) => join(dir, name));
 }
 
+function collectMdFiles(dir) {
+  const files = [];
+  for (const entry of readdirSync(dir).sort()) {
+    const path = join(dir, entry);
+    const stat = statSync(path);
+    if (stat.isDirectory()) {
+      files.push(...collectMdFiles(path));
+    } else if (entry.endsWith('.md')) {
+      files.push(path);
+    }
+  }
+  return files;
+}
+
+function frontmatter(text) {
+  const match = /^---\n([\s\S]*?)\n---/.exec(text);
+  return match ? match[1] : '';
+}
+
+function frontmatterAgentsBlock(metadata) {
+  const lines = metadata.split('\n');
+  const agentsIndex = lines.findIndex((line) => /^agents:\s*$/.test(line));
+  if (agentsIndex === -1) {
+    return '';
+  }
+
+  const block = [];
+  for (const line of lines.slice(agentsIndex + 1)) {
+    if (/^[ \t]+-[ \t]+/.test(line)) {
+      block.push(line);
+      continue;
+    }
+    if (line.trim() === '') {
+      continue;
+    }
+    break;
+  }
+  return block.join('\n');
+}
+
+function checkPromptGuardrails(repoRoot) {
+  const failures = [];
+  const pluginRoot = join(repoRoot, 'planning-forge');
+  const agentsRoot = join(pluginRoot, 'agents');
+
+  for (const mdPath of collectMdFiles(pluginRoot)) {
+    const rel = mdPath.slice(repoRoot.length + 1);
+    const text = readFileSync(mdPath, 'utf8');
+    for (const { label, pattern } of FORBIDDEN_PROMPT_PATTERNS) {
+      if (pattern.test(text)) {
+        failures.push(`${rel}: forbidden prompt pattern: ${label}`);
+      }
+    }
+
+    if (mdPath.startsWith(`${agentsRoot}/`) && mdPath.endsWith('.agent.md')) {
+      for (const { label, pattern } of REQUIRED_AGENT_SECTIONS) {
+        if (!pattern.test(text)) {
+          failures.push(`${rel}: missing required agent section: ${label}`);
+        }
+      }
+
+      const agentsBlock = frontmatterAgentsBlock(frontmatter(text));
+      if (FORBIDDEN_AGENT_ROLES.test(agentsBlock)) {
+        failures.push(`${rel}: forbidden builder-like role in agent frontmatter`);
+      }
+    }
+  }
+
+  for (const { path, label, pattern } of REQUIRED_PROMPT_TEXT) {
+    const fullPath = join(repoRoot, ...path);
+    if (!existsSync(fullPath)) {
+      failures.push(`${path.join('/')}: missing required prompt file for ${label}`);
+      continue;
+    }
+    const text = readFileSync(fullPath, 'utf8');
+    if (!pattern.test(text)) {
+      failures.push(`${path.join('/')}: missing required prompt text: ${label}`);
+    }
+  }
+
+  return failures;
+}
+
 function main() {
   const examplesDir = parseExamplesDir(process.argv.slice(2));
   if (!existsSync(examplesDir) || !statSync(examplesDir).isDirectory()) {
@@ -139,6 +261,8 @@ function main() {
 
   const failures = [];
   const fixtureDirs = listFixtureDirs(examplesDir);
+  const here = dirname(fileURLToPath(import.meta.url));
+  const repoRoot = resolve(here, '..', '..', '..');
 
   for (const dir of fixtureDirs) {
     const rel = dir.slice(examplesDir.length + 1);
@@ -172,6 +296,8 @@ function main() {
       }
     }
   }
+
+  failures.push(...checkPromptGuardrails(repoRoot));
 
   if (failures.length > 0) {
     process.stderr.write('Planning Forge example lint FAILED:\n');

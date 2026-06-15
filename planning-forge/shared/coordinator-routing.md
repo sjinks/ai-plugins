@@ -233,6 +233,7 @@ Target location:
 
 Instructions:
 - Save or update only the requested artifacts.
+- Reject targets outside the approved workspace-relative documentation directory.
 - Preserve existing artifact names and paths where possible.
 - Do not publish unrelated drafts. Do not implement code.
 - Return a summary of written or updated files.
@@ -262,6 +263,8 @@ Use the following planning artifacts as the source of truth.
 Specification: {{SPEC_REFERENCE_OR_CONTENT}}
 Architecture:  {{ARCH_REFERENCE_OR_CONTENT_OR_ACCEPTED_GAP}}
 Test Plan:     {{TEST_PLAN_REFERENCE_OR_CONTENT_OR_ACCEPTED_GAP}}
+Approved ready slice: {{READY_SLICE_IDS_OR_FULL_SCOPE}}
+Excluded blocked scope: {{BLOCKED_SCOPE_AND_QUESTIONS_OR_NONE}}
 
 Instructions for the implementation agent:
 - Implement only the approved scope. Do not add new product requirements.

@@ -88,7 +88,7 @@ Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown
 
 ## Planning Session State
 
-Read `shared/session-state.md`. Track the planning session by reconstructing state from the most recent supplied artifact and the conversation; do not require persistent storage. Always report the minimal routing fields (stage, intent, readiness, artifacts, blocking questions, ready slice, carry-forward items). Carry forward specialist blockers and open items into this state: unresolved Open Questions, Scope Amendments Requested, Coverage Gaps, `Cleanup / Absorb Path` items, redaction/skipped-write notes, failed saves, and invocation failures stay visible until a later artifact or user answer resolves them. For a `status-request` or a resumable summary, report the fuller session state, populating only fields with evidence. Do not invent IDs, requirements, questions, or risks to fill the schema, and do not renumber or reconcile IDs beyond what the specialist agents reported. When the user asks to save the session state, route it to the Planning Document Publisher like any other artifact.
+Read `shared/session-state.md`. Track the planning session by reconstructing state from the most recent supplied artifact and the conversation; do not require persistent storage. Always report the minimal routing fields (stage, intent, readiness, artifacts, blocking questions, ready slice); add carry-forward items only when at least one exists. Carry forward specialist blockers and open items into this state: unresolved Open Questions, Scope Amendments Requested, Coverage Gaps, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures stay visible until a later artifact or user answer resolves them. For a `status-request` or a resumable summary, report the fuller session state, populating only fields with evidence. Do not invent IDs, requirements, questions, or risks to fill the schema, and do not renumber or reconcile IDs beyond what the specialist agents reported. When the user asks to save the session state, route it to the Planning Document Publisher like any other artifact.
 
 ## Output Format
 
@@ -100,7 +100,7 @@ Use this format when routing or coordinating:
 Current stage: ...
 Interpreted intent: ...
 Readiness: ...
-Carry-forward items: ...
+Carry-forward items: ...   # include this line only when at least one carry-forward item exists
 
 ## Recommended Next Action
 
@@ -117,7 +117,7 @@ Carry-forward items: ...
 ```
 ````
 
-Include this optional block only after a specialist invocation returns or when summarizing a recently completed specialist result, placing it between `Planning Status` and `Recommended Next Action`:
+Include this optional block only after a specialist invocation returns or when summarizing a recently completed specialist result, placing it between `Planning Status` and `Recommended Next Action`. Use the field shapes and value enums defined in `shared/subagent-invocation.md` (for example, `Stage completed` is a specialist stage, never `discovery`):
 
 ```markdown
 ## Specialist Result Summary

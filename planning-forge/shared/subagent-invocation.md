@@ -33,7 +33,7 @@ After a specialist returns:
    Stage completed: <spec | architecture | test-plan | spike | publish>   # never discovery; that is the Coordinator's pre-spec phase, not a specialist stage
    Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
    Stable ID changes: <reported ID change summary or None reported>
-   Carry-forward items: <open questions, scope amendments, coverage gaps, `Cleanup / Absorb Path` items, redactions, skipped writes, failed saves, invocation failures, or None; include disposition and source when present>
+   Carry-forward items: <open questions, scope amendments, coverage gaps, `Cleanup / Absorb Path` items, redactions, skipped writes, failed saves, invocation failures, or None; include source and disposition (`unresolved | non-blocking | deferred | accepted-for-handoff`, see `shared/session-state.md`) when present>
    Next recommended action: <one next step; do not auto-advance>
    ```
 
@@ -46,6 +46,7 @@ After a specialist returns:
 
 - `agent` tool unavailable or not permitted → emit the manual handoff prompt, say invocation was unavailable, and treat the unavailable invocation as a carry-forward item in planning state.
 - Invocation errors or returns nothing usable → report the failure, treat it as a carry-forward item in planning state, emit the manual handoff prompt as fallback, and do not fabricate a result.
+- On any failure path no specialist returned, so do not emit a Specialist Result Summary; record the failure only in the `## Planning Status` carry-forward items.
 - Specialist asks a blocking question → relay it to the user; do not answer on the user's behalf.
 
 ## Invariants

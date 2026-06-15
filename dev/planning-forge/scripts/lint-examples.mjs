@@ -25,7 +25,7 @@
 //   2 = invalid usage or missing examples directory
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve, dirname } from 'node:path';
+import { join, resolve, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const KNOWN_AGENTS = new Set([
@@ -45,7 +45,7 @@ const REQUIRED_FILES = ['input.md', 'expected-coordinator-response.md'];
 const FORBIDDEN_PROMPT_PATTERNS = [
   {
     label: 'default implementation-agent delegation wording',
-    pattern: /default\s+(?:implementation|builder)[\s-]agent|`agent` means|^\s*- \*\*agent\*\*:/m,
+    pattern: /default\s+(?:implementation|builder)[\s-]agent|`agent` means|^\s*- \*\*agent\*\*:/mi,
   },
   {
     label: 'automatic builder invocation wording',
@@ -185,7 +185,7 @@ function collectMdFiles(dir) {
 }
 
 function frontmatter(text) {
-  const match = /^---\n([\s\S]*?)\n---/.exec(text);
+  const match = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text);
   return match ? match[1] : '';
 }
 
@@ -224,7 +224,7 @@ function checkPromptGuardrails(repoRoot) {
       }
     }
 
-    if (mdPath.startsWith(`${agentsRoot}/`) && mdPath.endsWith('.agent.md')) {
+    if (mdPath.startsWith(`${agentsRoot}${sep}`) && mdPath.endsWith('.agent.md')) {
       for (const { label, pattern } of REQUIRED_AGENT_SECTIONS) {
         if (!pattern.test(text)) {
           failures.push(`${rel}: missing required agent section: ${label}`);

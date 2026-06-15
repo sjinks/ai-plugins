@@ -46,7 +46,7 @@ When a message carries more than one intent, classify the primary actionable int
 | `status-request` | (no routing) report status | none |
 | `unclear` | (no routing) ask one question | none |
 
-The Coordinator never auto-advances stages. Routing happens only in response to the matching intent and, where a gate applies, only after the gate passes or the user explicitly overrides it. After a specialist result, the Coordinator must preserve unresolved open items in the next Planning Status: Open Questions, Scope Amendments Requested, Coverage Gaps, prototype cleanup or absorb requirements, publishing redactions or skipped writes, failed saves, and invocation failures remain visible until a later artifact or user answer resolves them or removes them from scope.
+The Coordinator never auto-advances stages. Routing happens only in response to the matching intent and, where a gate applies, only after the gate passes or the user explicitly overrides it. After a specialist result, the Coordinator must preserve unresolved open items in the next Planning Status: Open Questions, Scope Amendments Requested, Coverage Gaps, prototype `Cleanup / Absorb Path` items, publishing redactions or skipped writes, failed saves, and invocation failures remain visible until a later artifact or user answer resolves them or removes them from scope.
 
 Missing-artifact precondition: `architecture-request`, `test-plan-request`, and `publish-request` require their primary input to exist. `architecture-request` and `test-plan-request` require at least a specification (`test-plan-request` does not require architecture — it falls back to a spec-level plan); `publish-request` requires that the artifact to publish already exists as a completed draft. If the required input is missing, do not route on empty inputs; recommend creating it first (treat as `new-session` for a missing spec). Likewise, if `amend-spec` or `answer-open-questions` arrives with no base specification, reclassify as `new-session` and confirm with the user. `implementation-handoff-request` is governed by its own gate (below), which may proceed without architecture or a test plan when the user explicitly accepts those gaps; it still requires at least a specification (or an explicitly approved ready slice).
 
@@ -268,7 +268,7 @@ Architecture:  {{ARCH_REFERENCE_OR_CONTENT_OR_ACCEPTED_GAP}}
 Test Plan:     {{TEST_PLAN_REFERENCE_OR_CONTENT_OR_ACCEPTED_GAP}}
 Approved ready slice: {{READY_SLICE_IDS_OR_FULL_SCOPE}}
 Excluded blocked scope: {{BLOCKED_SCOPE_AND_QUESTIONS_OR_NONE}}
-Accepted carry-forward items: {{ACCEPTED_OR_DEFERRED_CARRY_FORWARD_ITEMS_OR_NONE}}
+Accepted or deferred carry-forward items: {{ACCEPTED_OR_DEFERRED_CARRY_FORWARD_ITEMS_OR_NONE}}
 
 Instructions for the implementation agent:
 - Implement only the approved scope. Do not add new product requirements.

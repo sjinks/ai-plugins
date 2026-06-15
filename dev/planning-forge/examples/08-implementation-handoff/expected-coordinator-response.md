@@ -41,7 +41,7 @@ Architecture:  <architecture.md>
 Test Plan:     <test-plan.md>
 Approved ready slice: full scope
 Excluded blocked scope: None
-Accepted carry-forward items: None
+Accepted or deferred carry-forward items: None
 
 Instructions for the implementation agent:
 - Implement only the approved scope. Do not add new product requirements.
@@ -59,4 +59,4 @@ Instructions for the implementation agent:
 - Intent is `implementation-handoff-request`.
 - Gate check is performed and passes.
 - Output is a builder handoff prompt, not code, and no builder is auto-invoked.
-- Prompt names the approved scope, excludes blocked scope, includes accepted carry-forward items, and requires FR/AC/D/TC traceability.
+- Prompt names the approved scope, excludes blocked scope, includes accepted or deferred carry-forward items, and requires FR/AC/D/TC traceability.

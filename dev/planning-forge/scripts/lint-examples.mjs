@@ -91,7 +91,7 @@ const REQUIRED_PROMPT_TEXT = [
   {
     path: ['planning-forge', 'shared', 'coordinator-routing.md'],
     label: 'implementation handoff accepted carry-forward template field',
-    pattern: /Accepted carry-forward items: \{\{ACCEPTED_OR_DEFERRED_CARRY_FORWARD_ITEMS_OR_NONE\}\}/,
+    pattern: /Accepted or deferred carry-forward items: \{\{ACCEPTED_OR_DEFERRED_CARRY_FORWARD_ITEMS_OR_NONE\}\}/,
   },
   {
     path: [
@@ -102,7 +102,7 @@ const REQUIRED_PROMPT_TEXT = [
       'expected-coordinator-response.md',
     ],
     label: 'implementation handoff accepted carry-forward field',
-    pattern: /Accepted carry-forward items: None/,
+    pattern: /Accepted or deferred carry-forward items: None/,
   },
   {
     path: [

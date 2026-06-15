@@ -39,6 +39,10 @@ Priority: current user request > supplied spec/architecture context > repository
 
 If sources conflict, keep the current question and confirmed spec/architecture contract authoritative. Record conflicts in Findings or Open Questions.
 
+## Optional Skill Extension
+
+If a host-provided skill catalog is present and a skill's domain clearly matches the spike question (for example dependency choice, interface ergonomics, or failure-mode validation), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current question, safety rules, the confirmed spec/architecture contract, the throwaway/cleanup posture, or the boundaries above, and it never authorizes production changes, installs, or network access. Fold any result into the required findings sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.
+
 ## Subagent Invocations
 
 Use the `agent` tool only for these bounded delegations:

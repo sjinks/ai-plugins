@@ -18,6 +18,7 @@
 //   5. Any stable-ID token (e.g. FR-1) uses an allowed prefix.
 //   6. Planning Forge prompts do not reintroduce forbidden tool/invocation patterns.
 //   7. Critical publish path-safety text remains present.
+//   8. New Planning Forge relay/carry-forward contract anchors remain present.
 //
 // Exit codes:
 //   0 = all fixtures pass
@@ -76,6 +77,48 @@ const REQUIRED_PROMPT_TEXT = [
     path: ['planning-forge', 'shared', 'coordinator-routing.md'],
     label: 'publish handoff path safety',
     pattern: /Reject targets outside the approved workspace-relative documentation directory\./,
+  },
+  {
+    path: ['planning-forge', 'shared', 'coordinator-routing.md'],
+    label: 'implementation handoff carry-forward gate',
+    pattern: /Unresolved carry-forward items are resolved, explicitly non-blocking, explicitly deferred, or explicitly accepted for this handoff\./,
+  },
+  {
+    path: ['planning-forge', 'shared', 'coordinator-routing.md'],
+    label: 'implementation handoff carry-forward retention',
+    pattern: /Deferred or accepted carry-forward items remain visible in session state and in the handoff prompt\./,
+  },
+  {
+    path: ['planning-forge', 'shared', 'coordinator-routing.md'],
+    label: 'implementation handoff accepted carry-forward template field',
+    pattern: /Accepted or deferred carry-forward items: \{\{ACCEPTED_OR_DEFERRED_CARRY_FORWARD_ITEMS_OR_NONE\}\}/,
+  },
+  {
+    path: [
+      'dev',
+      'planning-forge',
+      'examples',
+      '08-implementation-handoff',
+      'expected-coordinator-response.md',
+    ],
+    label: 'implementation handoff accepted carry-forward field',
+    pattern: /Accepted or deferred carry-forward items: None/,
+  },
+  {
+    path: [
+      'dev',
+      'planning-forge',
+      'examples',
+      '10-advanced-invocation',
+      'expected-coordinator-response.md',
+    ],
+    label: 'specialist result summary field set',
+    pattern: /## Specialist Result Summary[\s\S]*Stage completed:[\s\S]*Artifact readiness:[\s\S]*Stable ID changes:[\s\S]*Carry-forward items:[\s\S]*Next recommended action:/,
+  },
+  {
+    path: ['planning-forge', 'shared', 'session-state.md'],
+    label: 'carry-forward disposition semantics',
+    pattern: /disposition: unresolved\|non-blocking\|deferred\|accepted-for-handoff/,
   },
 ];
 

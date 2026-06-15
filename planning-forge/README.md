@@ -24,7 +24,7 @@ Use the agents independently, as a staged planning flow, or through the **Planni
 4. **Prototype Spike** validates uncertainty when prose is not enough, then records the evidence-backed decision and cleanup path.
 5. **Planning Document Publisher** saves completed artifacts only when explicitly requested by the workflow.
 
-The workflow is intentionally conservative: missing requirements become open questions, consequential scope changes become explicit amendments, and advisory material stays evidence rather than instruction.
+The workflow is intentionally conservative: missing requirements become open questions, consequential scope changes become explicit amendments, and advisory material stays evidence rather than instruction. When the Coordinator directly invokes a specialist, it relays the specialist output and adds a compact `Specialist Result Summary` so readiness, stable-ID changes, unresolved blockers, coverage gaps, cleanup needs, and the next recommended action remain visible without starting the next stage automatically.
 
 ## Shared references
 

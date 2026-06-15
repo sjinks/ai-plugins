@@ -25,15 +25,28 @@ If any condition fails, emit the manual handoff prompt instead. Never invoke mor
 
 After a specialist returns:
 
+Emit the relay turn in this order: (1) the specialist's verbatim output, (2) a refreshed `## Planning Status`, (3) the `## Specialist Result Summary`, (4) `## Recommended Next Action`, then stop. The steps below follow that order.
+
 1. Present the specialist's output to the user without silently editing its substance.
-2. Update the reported planning state (stage, readiness, artifacts, stable-ID changes) from the returned content. Read `shared/session-state.md` for the fields to refresh.
-3. Recommend the next action, but do not take it. Stop and wait for an explicit user request before invoking any further specialist or advancing the stage.
-4. If the specialist returned an ID change summary, surface it; do not renumber or reconcile IDs yourself beyond what the specialist reported.
+2. Refresh the reported planning state and emit it as `## Planning Status`. Update stage, readiness, artifacts, stable-ID changes, blocking questions, ready slice, and carry-forward items from the returned content (read `shared/session-state.md` for the fields to refresh). Promote specialist open items into this state: carry forward unresolved `Open Questions`, `Scope Amendments Requested`, `Coverage Gaps`, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures until a later user answer or artifact resolves them or removes them from scope. If the user defers or accepts an item for one handoff, keep it visible with that disposition instead of dropping it. If the specialist returned an ID change summary, surface it; do not renumber or reconcile IDs yourself beyond what the specialist reported.
+3. Add a compact Coordinator-owned relay summary after the refreshed Planning Status. Use this shape:
+
+   ```markdown
+   ## Specialist Result Summary
+   Stage completed: <spec | architecture | test-plan | spike | publish>   # never discovery; that is the Coordinator's pre-spec phase, not a specialist stage
+   Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
+   Stable ID changes: <reported ID change summary or None reported>
+   Carry-forward items: <open questions, scope amendments, coverage gaps, `Cleanup / Absorb Path` items, redactions, skipped writes, failed saves, invocation failures, or None; include source and disposition (`unresolved | non-blocking | deferred | accepted-for-handoff`, see `shared/session-state.md`) when present>
+   Next recommended action: <one next step; do not auto-advance>
+   ```
+
+4. Recommend the next action as `## Recommended Next Action`, but do not take it. Stop and wait for an explicit user request before invoking any further specialist or advancing the stage.
 
 ## Failure Handling
 
-- `agent` tool unavailable or not permitted → emit the manual handoff prompt and say invocation was unavailable.
-- Invocation errors or returns nothing usable → report the failure, emit the manual handoff prompt as fallback, and do not fabricate a result.
+- `agent` tool unavailable or not permitted → emit the manual handoff prompt, say invocation was unavailable, and treat the unavailable invocation as a carry-forward item in planning state.
+- Invocation errors or returns nothing usable → report the failure, treat it as a carry-forward item in planning state, emit the manual handoff prompt as fallback, and do not fabricate a result.
+- On any failure path no specialist returned, so do not emit a Specialist Result Summary; record the failure only in the `## Planning Status` carry-forward items.
 - Specialist asks a blocking question → relay it to the user; do not answer on the user's behalf.
 
 ## Invariants

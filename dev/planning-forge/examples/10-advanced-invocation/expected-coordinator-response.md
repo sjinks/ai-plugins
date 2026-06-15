@@ -7,8 +7,8 @@
   **Architecture Planner** directly with the same prompt it would have emitted manually
   (see `shared/subagent-invocation.md`).
 - It invokes at most one specialist. After the specialist returns, it presents the
-  output unedited, adds a compact Specialist Result Summary, refreshes the reported
-  planning state, surfaces any ID change summary and carry-forward items, recommends
+  output unedited, emits a refreshed `## Planning Status`, adds a compact Specialist
+  Result Summary, surfaces any ID change summary and carry-forward items, recommends
   the next action, and **stops** — it does not auto-advance to test planning or
   implementation.
 - **Fallback**: if the `agent` tool is unavailable or invocation fails, it emits the
@@ -45,8 +45,8 @@ Instructions:
 ```
 ````
 
-After the Architecture Planner returns, the Coordinator relays the result, then adds a
-Coordinator-owned summary like:
+After the Architecture Planner returns, the Coordinator relays the result, emits a
+refreshed `## Planning Status`, then adds a Coordinator-owned summary like:
 
 ```markdown
 ## Specialist Result Summary

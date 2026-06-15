@@ -7,7 +7,7 @@
 - Stable-ID status mirrors what the spec emitted; open questions stay unnumbered; no
   invented IDs, risks, or questions.
 - Any unresolved specialist open items from the latest artifacts remain visible as
-  carry-forward items until resolved.
+  carry-forward items until resolved or removed from scope.
 - Because the user asked for a resumable summary, the Coordinator includes the fuller
   state inline (no persistence required).
 

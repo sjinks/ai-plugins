@@ -23,7 +23,7 @@ artifacts:
   test_plan:     <path | inline | missing>
 blocking_questions: [<question text or local label>]
 ready_slice:        [<US/FR/NFR/INT/AC/EDGE IDs>]   # when readiness is partial
-carry_forward:      [<source stage, disposition, handoff impact; full text only when not already in blocking_questions>]
+carry_forward:      [<specialist source (artifact/stage), disposition, handoff impact; include the full item text only when it is not already in blocking_questions>]
 ```
 
 ## Full Session State (optional, resumable)

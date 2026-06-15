@@ -25,10 +25,11 @@ If any condition fails, emit the manual handoff prompt instead. Never invoke mor
 
 After a specialist returns:
 
-Emit the relay turn in this order: (1) the specialist's verbatim output, (2) a refreshed `## Planning Status`, (3) the `## Specialist Result Summary`, (4) `## Recommended Next Action`, then stop.
+Emit the relay turn in this order: (1) the specialist's verbatim output, (2) a refreshed `## Planning Status`, (3) the `## Specialist Result Summary`, (4) `## Recommended Next Action`, then stop. The steps below follow that order.
 
 1. Present the specialist's output to the user without silently editing its substance.
-2. Add a compact Coordinator-owned relay summary after the specialist output. Use this shape:
+2. Refresh the reported planning state and emit it as `## Planning Status`. Update stage, readiness, artifacts, stable-ID changes, blocking questions, ready slice, and carry-forward items from the returned content (read `shared/session-state.md` for the fields to refresh). Promote specialist open items into this state: carry forward unresolved `Open Questions`, `Scope Amendments Requested`, `Coverage Gaps`, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures until a later user answer or artifact resolves them or removes them from scope. If the user defers or accepts an item for one handoff, keep it visible with that disposition instead of dropping it. If the specialist returned an ID change summary, surface it; do not renumber or reconcile IDs yourself beyond what the specialist reported.
+3. Add a compact Coordinator-owned relay summary after the refreshed Planning Status. Use this shape:
 
    ```markdown
    ## Specialist Result Summary
@@ -39,10 +40,7 @@ Emit the relay turn in this order: (1) the specialist's verbatim output, (2) a r
    Next recommended action: <one next step; do not auto-advance>
    ```
 
-3. Promote specialist open items into the refreshed planning state. Carry forward unresolved `Open Questions`, `Scope Amendments Requested`, `Coverage Gaps`, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures until a later user answer or artifact resolves them or removes them from scope. If the user defers or accepts an item for one handoff, keep it visible with that disposition instead of dropping it.
-4. Update the reported planning state (stage, readiness, artifacts, stable-ID changes, blocking questions, ready slice, and carry-forward items) from the returned content. Read `shared/session-state.md` for the fields to refresh.
-5. Recommend the next action, but do not take it. Stop and wait for an explicit user request before invoking any further specialist or advancing the stage.
-6. If the specialist returned an ID change summary, surface it; do not renumber or reconcile IDs yourself beyond what the specialist reported.
+4. Recommend the next action as `## Recommended Next Action`, but do not take it. Stop and wait for an explicit user request before invoking any further specialist or advancing the stage.
 
 ## Failure Handling
 

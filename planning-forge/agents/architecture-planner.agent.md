@@ -193,7 +193,9 @@ Single change: <the one change to build, with files and the verification seam> (
 - Alternatives are real tradeoffs, not filler.
 - Scope amendments are reserved for true spec changes.
 - Verification plan covers ACs, design risks, failure modes, and chosen seams.
-- Implementation sequencing is present; for `multi-step` plans its ordered steps are each independently buildable, traceable to decisions or ACs, and tied to a verification seam, and for `single-slice` plans the single change names its files and verification seam.
+- Implementation sequencing is always present.
+- For `multi-step` plans, each ordered step is independently buildable, traceable to decisions or ACs, and tied to a verification seam.
+- For `single-slice` plans, the single change names its files and verification seam.
 
 ## Anti-Patterns
 

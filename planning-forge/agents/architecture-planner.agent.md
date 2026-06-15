@@ -145,13 +145,15 @@ Return all core sections below in order. Do not omit core sections. When a secti
 ## Implementation Sequencing
 `single-slice | multi-step` - <one sentence on why the work fits one slice or needs ordered steps>
 
-<For single-slice: omit the step list and state the single change.>
+<For single-slice: omit the step list and state the single change on the line below.>
+Single change: <the one change to build, with files and the verification seam> (omit for multi-step)
+
 <For multi-step: an ordered checklist where each step is independently buildable and verifiable.>
 
 - [ ] 1. <step title>
   Files: <files/modules touched in this step>
   Details: <what to build, which existing patterns/seams to follow>
-  Trace: <D-/FR-/AC- IDs or assumption-based>
+  Trace: <D-/FR-/NFR-/AC-/INT-/EDGE- IDs or assumption-based>
   Verify: <existing seam or check that confirms this step>
 
 ## Interfaces And Data Shapes
@@ -191,7 +193,7 @@ Return all core sections below in order. Do not omit core sections. When a secti
 - Alternatives are real tradeoffs, not filler.
 - Scope amendments are reserved for true spec changes.
 - Verification plan covers ACs, design risks, failure modes, and chosen seams.
-- Implementation sequencing, when present, has ordered steps that are each independently buildable, traceable to decisions or ACs, and tied to a verification seam.
+- Implementation sequencing is present; for `multi-step` plans its ordered steps are each independently buildable, traceable to decisions or ACs, and tied to a verification seam, and for `single-slice` plans the single change names its files and verification seam.
 
 ## Anti-Patterns
 

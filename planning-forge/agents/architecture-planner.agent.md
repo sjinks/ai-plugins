@@ -101,9 +101,10 @@ Use Planning Document Publisher only for persistence. Do not edit files directly
 5. Make consequential `D-*` decisions covering boundaries, contracts, data flow, state/lifecycle, errors, concurrency, dependencies, persistence/migration, observability, security/privacy, rollout, and verification.
 6. Compare real alternatives, define lightweight builder-ready contracts, and trace decisions to `FR-`/`NFR-`/`AC-`/`INT-`/`EDGE-` IDs or `assumption-based`. For high-impact tradeoffs, read `shared/decision-panel.md` and apply its blast-radius and conflict-review checks.
 7. When public APIs, state, configuration, errors, security/privacy, observability, algorithms, integrations, or builder handoffs are in scope, read `shared/implementation-contract-hardening.md` before applying hardening. If the file is unavailable, continue and record the limitation.
-8. Produce the verification plan and request scope amendments only for spec changes.
-9. Before returning, read `shared/planning-self-review.md` and apply the architecture checks to the complete draft. Fold fixes into the required output sections; if the file is unavailable, continue and record the limitation.
-10. Stop before implementation.
+8. When the design touches more than one module or has a natural build order, produce an ordered Implementation Sequencing breakdown where each step is independently buildable and maps to a verification seam. For genuinely small work, mark it single-slice and skip the step list.
+9. Produce the verification plan and request scope amendments only for spec changes.
+10. Before returning, read `shared/planning-self-review.md` and apply the architecture checks to the complete draft. Fold fixes into the required output sections; if the file is unavailable, continue and record the limitation.
+11. Stop before implementation.
 
 ## Output Compactness
 
@@ -140,6 +141,20 @@ Return all core sections below in order. Do not omit core sections. When a secti
 
 ## Files Or Modules Affected
 - <new | modified | deleted> <module/file/package/component>: <change scope>. Trace: <D-ID and FR/AC IDs or assumption-based>.
+
+## Implementation Sequencing
+`single-slice | multi-step` - <one sentence on why the work fits one slice or needs ordered steps>
+
+<For single-slice: omit the step list and state the single change on the line below.>
+Single change: <the one change to build, with files and the verification seam> (omit for multi-step)
+
+<For multi-step: an ordered checklist where each step is independently buildable and verifiable.>
+
+- [ ] 1. <step title>
+  Files: <files/modules touched in this step>
+  Details: <what to build, which existing patterns/seams to follow>
+  Trace: <D-/FR-/NFR-/AC-/INT-/EDGE- IDs or assumption-based>
+  Verify: <existing seam or check that confirms this step>
 
 ## Interfaces And Data Shapes
 - <contract/signature/schema/event/error code/config shape>. Trace: <D-ID and FR/AC IDs or assumption-based>.
@@ -178,6 +193,9 @@ Return all core sections below in order. Do not omit core sections. When a secti
 - Alternatives are real tradeoffs, not filler.
 - Scope amendments are reserved for true spec changes.
 - Verification plan covers ACs, design risks, failure modes, and chosen seams.
+- Implementation sequencing is always present.
+- For `multi-step` plans, each ordered step is independently buildable, traceable to decisions or ACs, and tied to a verification seam.
+- For `single-slice` plans, the single change names its files and verification seam.
 
 ## Anti-Patterns
 

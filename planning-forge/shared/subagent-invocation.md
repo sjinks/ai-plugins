@@ -33,7 +33,7 @@ After a specialist returns:
    Stage completed: <spec | architecture | test-plan | spike | publish>
    Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
    Stable ID changes: <reported ID change summary or None reported>
-   Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup/redaction/save blockers, or None>
+   Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup or absorb requirements, redactions, skipped writes, failed saves, invocation failures, or None>
    Next recommended action: <one next step; do not auto-advance>
    ```
 

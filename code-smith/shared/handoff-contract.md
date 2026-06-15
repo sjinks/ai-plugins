@@ -8,7 +8,7 @@ Read this before scope-lock. The contract is frozen at scope-lock and is read-on
 
 Code Smith works from these fields. A full Planning Forge builder-handoff fills them directly; other input forms map onto them, and any absent field is recorded as a limitation rather than invented.
 
-- **Specification** — the requirements and acceptance criteria the change must satisfy. Carries `US/FR/NFR/INT/AC/EDGE` IDs when present.
+- **Specification** — the requirements and acceptance criteria the change must satisfy. Carries `US-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-` IDs when present.
 - **Architecture** — the design decisions to follow. Carries `D-` IDs when present. May be an accepted gap.
 - **Test Plan** — the planned tests and verification. Carries `TC-` IDs when present. May be an accepted gap.
 - **Approved ready slice** — the IDs (or "full scope") the agent is allowed to implement this run.

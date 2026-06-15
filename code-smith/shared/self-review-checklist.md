@@ -6,7 +6,7 @@ Read this before producing the completion report. Run the checklist over the com
 
 ## Checklist
 
-- **Scope adherence.** Every change maps to a `US/FR/NFR/INT/AC/EDGE/D/TC` ID in the approved ready slice, or is a behavior-preserving mechanical support edit required for an in-slice change and listed as a flagged deviation. No change maps to `Excluded blocked scope`.
+- **Scope adherence.** Every change maps to a `US-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-`/`D-`/`TC-` ID in the approved ready slice, or is a behavior-preserving mechanical support edit required for an in-slice change and listed as a flagged deviation. No change maps to `Excluded blocked scope`.
 - **No incidental work.** No unrequested refactors, renames, formatting sweeps, feature additions, or behavior changes outside the approved scope.
 - **Behavior preserved.** Code outside the changed area is untouched and still behaves as before.
 - **Verification actually ran.** The planned `TC-` tests and the project's targeted build/lint were attempted; results are recorded with restated resolved commands. If verification could not run, this is a gap, not a pass.

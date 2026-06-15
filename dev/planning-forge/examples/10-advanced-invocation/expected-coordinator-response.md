@@ -51,10 +51,10 @@ Coordinator-owned summary like:
 ```markdown
 ## Specialist Result Summary
 Stage completed: architecture
-Artifact readiness: ready, partial, blocked, missing, or unknown based on the returned Design Contract Status
-Stable ID changes: None reported, or the returned ID change summary
-Carry-forward items: Scope amendments, open questions, coverage gaps, cleanup or absorb requirements, redactions, skipped writes, failed saves, invocation failures, or None; keep each item with its disposition until resolved or removed from scope.
-Next recommended action: Review the architecture, request amendments, ask for test planning, publish, or request implementation handoff
+Artifact readiness: ready - the returned Design Contract Status is ready
+Stable ID changes: None reported
+Carry-forward items: None
+Next recommended action: Review the architecture output and choose the next stage
 ```
 
 Then it waits.

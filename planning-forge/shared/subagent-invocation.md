@@ -33,12 +33,12 @@ After a specialist returns:
    Stage completed: <spec | architecture | test-plan | spike | publish>
    Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
    Stable ID changes: <reported ID change summary or None reported>
-   Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup or absorb requirements, redactions, skipped writes, failed saves, invocation failures, or None>
+   Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup or absorb requirements, redactions, skipped writes, failed saves, invocation failures, or None; include disposition and source when present>
    Next recommended action: <one next step; do not auto-advance>
    ```
 
-3. Promote specialist open items into the refreshed planning state. Carry forward unresolved `Open Questions`, `Scope Amendments Requested`, `Coverage Gaps`, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures until a later user answer or artifact resolves them.
-4. Update the reported planning state (stage, readiness, artifacts, stable-ID changes, blockers, ready slice, and carry-forward items) from the returned content. Read `shared/session-state.md` for the fields to refresh.
+3. Promote specialist open items into the refreshed planning state. Carry forward unresolved `Open Questions`, `Scope Amendments Requested`, `Coverage Gaps`, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures until a later user answer or artifact resolves them or removes them from scope. If the user defers or accepts an item for one handoff, keep it visible with that disposition instead of dropping it.
+4. Update the reported planning state (stage, readiness, artifacts, stable-ID changes, blocking questions, ready slice, and carry-forward items) from the returned content. Read `shared/session-state.md` for the fields to refresh.
 5. Recommend the next action, but do not take it. Stop and wait for an explicit user request before invoking any further specialist or advancing the stage.
 6. If the specialist returned an ID change summary, surface it; do not renumber or reconcile IDs yourself beyond what the specialist reported.
 

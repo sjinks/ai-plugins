@@ -254,6 +254,8 @@ Gate checks:
 - The user explicitly requested implementation handoff.
 ```
 
+Deferred or accepted carry-forward items remain visible in session state and in the handoff prompt. Acceptance for one handoff changes the item's blocking effect for that handoff only; it does not remove the item from later status reports unless a later artifact or user answer resolves it or removes it from scope.
+
 Handoff prompt:
 
 ```

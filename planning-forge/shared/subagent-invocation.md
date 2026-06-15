@@ -26,14 +26,26 @@ If any condition fails, emit the manual handoff prompt instead. Never invoke mor
 After a specialist returns:
 
 1. Present the specialist's output to the user without silently editing its substance.
-2. Update the reported planning state (stage, readiness, artifacts, stable-ID changes) from the returned content. Read `shared/session-state.md` for the fields to refresh.
-3. Recommend the next action, but do not take it. Stop and wait for an explicit user request before invoking any further specialist or advancing the stage.
-4. If the specialist returned an ID change summary, surface it; do not renumber or reconcile IDs yourself beyond what the specialist reported.
+2. Add a compact Coordinator-owned relay summary after the specialist output. Use this shape:
+
+	```markdown
+	## Specialist Result Summary
+	Stage completed: <spec | architecture | test-plan | spike | publish>
+	Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
+	Stable ID changes: <reported ID change summary or None reported>
+	Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup/redaction/save blockers, or None>
+	Next recommended action: <one next step; do not auto-advance>
+	```
+
+3. Promote specialist open items into the refreshed planning state. Carry forward unresolved `Open Questions`, `Scope Amendments Requested`, `Coverage Gaps`, prototype `Cleanup / Absorb Path` items, publishing redactions, skipped writes, failed saves, and invocation failures until a later user answer or artifact resolves them.
+4. Update the reported planning state (stage, readiness, artifacts, stable-ID changes, blockers, ready slice, and carry-forward items) from the returned content. Read `shared/session-state.md` for the fields to refresh.
+5. Recommend the next action, but do not take it. Stop and wait for an explicit user request before invoking any further specialist or advancing the stage.
+6. If the specialist returned an ID change summary, surface it; do not renumber or reconcile IDs yourself beyond what the specialist reported.
 
 ## Failure Handling
 
 - `agent` tool unavailable or not permitted → emit the manual handoff prompt and say invocation was unavailable.
-- Invocation errors or returns nothing usable → report the failure, emit the manual handoff prompt as fallback, and do not fabricate a result.
+- Invocation errors or returns nothing usable → report the failure, treat it as a carry-forward item in planning state, emit the manual handoff prompt as fallback, and do not fabricate a result.
 - Specialist asks a blocking question → relay it to the user; do not answer on the user's behalf.
 
 ## Invariants

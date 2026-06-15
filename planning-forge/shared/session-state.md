@@ -23,6 +23,7 @@ artifacts:
   test_plan:     <path | inline | missing>
 blocking_questions: [<question text or local label>]
 ready_slice:        [<US/FR/NFR/INT/AC/EDGE IDs>]   # when readiness is partial
+carry_forward:      [<specialist open item, blocker, coverage gap, cleanup need, redaction, save blocker, or invocation failure>]
 ```
 
 ## Full Session State (optional, resumable)
@@ -54,6 +55,7 @@ stable_ids:        # mirror what the specialist agents emitted; do not invent ID
 
 open_questions:    [ <unnumbered question text; mark blocking vs non-blocking> ]
 risks:             [ <risk text; prose, no RISK- IDs> ]
+carry_forward:     [ <unresolved specialist item with source artifact/stage and whether it blocks next stage> ]
 
 revision_log:      # the Coordinator's own session log, not an agent artifact section
   - { when, change, affected_ids: [..] }
@@ -65,5 +67,6 @@ revision_log:      # the Coordinator's own session log, not an agent artifact se
 - Do not invent IDs, requirements, questions, or risks to fill the schema. Omit unknown fields.
 - Mirror stable-ID status from what the specialist agents reported; do not reconcile or renumber IDs yourself beyond what they returned (see `shared/stable-id-discipline.md`).
 - Open questions stay unnumbered (no `Q-` IDs) and risks stay prose (no `RISK-` IDs), consistent with the current agent output formats.
+- Carry-forward items come only from specialist output or failed invocations: unresolved Open Questions, Scope Amendments Requested, Coverage Gaps, prototype cleanup or absorb requirements, publishing redactions, skipped writes, failed saves, and invocation failures. Keep each item visible until a later artifact or user answer resolves it. If an item duplicates an open question or blocking question, keep one concise entry and preserve its source.
 - The `revision_log` is the Coordinator's session bookkeeping; it is not an `## ID Change Summary` and not a section any specialist agent emits.
 - When persistent storage is unavailable, include this state inline in the response so the user can resume later. When the user asks to save it, route to the Planning Document Publisher like any other artifact.

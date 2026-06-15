@@ -30,7 +30,7 @@ After a specialist returns:
 
    ```markdown
    ## Specialist Result Summary
-   Stage completed: <spec | architecture | test-plan | spike | publish>
+   Stage completed: <spec | architecture | test-plan | spike | publish>   # never discovery; that is the Coordinator's pre-spec phase, not a specialist stage
    Artifact readiness: <ready | partial | blocked | missing | unknown, with evidence>
    Stable ID changes: <reported ID change summary or None reported>
    Carry-forward items: <open questions, scope amendments, coverage gaps, cleanup or absorb requirements, redactions, skipped writes, failed saves, invocation failures, or None; include disposition and source when present>

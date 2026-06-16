@@ -38,9 +38,9 @@ Read before routing: `shared/review-input-contract.md`, `shared/read-only-safety
 ## Procedure
 
 1. Normalize input: target, diff source, changed files, upstream artifacts, requested lenses, constraints, and absent fields.
-2. Use read/search or approved read-only local commands only to obtain missing diff/file context. A PR URL alone is insufficient.
+2. Use read/search or approved read-only local commands only to obtain missing local diff/file context. A PR URL alone is insufficient and must not trigger network or CLI fetching in v1.
 3. Select lenses. Default to all six v1 lenses unless the user explicitly excludes one. If context is thin, run the lens as `partial` or mark it `blocked`; do not silently skip it.
-4. Build specialist packets. The Independent Reviewer packet must include only diff, changed paths, and minimal direct code context.
+4. Build specialist packets. If the request includes forbidden independent-review context (specs, architecture, Smith reports, Code Explorer artifacts, reviewer discussion, or other lens findings), do not invoke Independent Reviewer in this conversation; mark that lens `blocked` and ask for an isolated diff-only request. Otherwise, the Independent Reviewer packet must include only diff, changed paths, and minimal direct code context.
 5. Invoke at most the selected specialist agents. Do not pass one specialist's findings into another specialist.
 6. Preserve every specialist finding with its original ID, lens, severity, evidence, expected fix, and acceptance condition. Synthesize without suppressing, downgrading, or merging findings away; put overlaps or disagreements in Cross-Lens Conflicts and keep the highest severity visible.
 7. Return the `shared/finding-report-contract.md` synthesized report with `go | go-with-risks | no-go | inconclusive`.
@@ -48,6 +48,6 @@ Read before routing: `shared/review-input-contract.md`, `shared/read-only-safety
 ## Recommendation Rules
 
 - `no-go`: blocker/high finding, missing diff (including PR URL-only input), blocked required lens, compromised independent isolation, or unsafe/secret concern.
-- `go-with-risks`: only medium/low/info findings or explicit residual risks remain.
-- `go`: all requested lenses completed with no material findings or limitations.
+- `go-with-risks`: open medium/low findings, info findings, accepted risks, or explicit residual risks remain.
+- `go`: all requested lenses completed with no open findings above `info`, no accepted risks, and no material limitations or residual risk.
 - `inconclusive`: not enough evidence to support go/no-go.

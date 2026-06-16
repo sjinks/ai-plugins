@@ -33,9 +33,13 @@ const REQUIRED_PLUGIN_FILES = [
 const REQUIRED_ANCHORS = [
   { file: 'shared/finding-report-contract.md', pattern: /RF-<lens>-<number>/, label: 'finding ID format' },
   { file: 'shared/finding-report-contract.md', pattern: /## Severity And Finding Status/, label: 'severity definitions' },
+  { file: 'shared/finding-report-contract.md', pattern: /risk category/, label: 'risk category field' },
+  { file: 'shared/finding-report-contract.md', pattern: /canonical path\/symbol or hunk context/, label: 'deterministic fingerprint' },
   { file: 'shared/finding-report-contract.md', pattern: /Include every specialist finding, preserving original ID/, label: 'lossless synthesis' },
   { file: 'shared/finding-report-contract.md', pattern: /redacted category, never raw values/, label: 'sensitive evidence redaction' },
   { file: 'shared/read-only-safety.md', pattern: /Review Forge is report-only and read-only\./, label: 'read-only boundary' },
+  { file: 'shared/read-only-safety.md', pattern: /Specialist reviewers do not use `execute` in v1\./, label: 'specialist no execute' },
+  { file: 'shared/read-only-safety.md', pattern: /fetch PR\/remote\/network content/, label: 'no PR network fetch' },
   { file: 'shared/independent-isolation.md', pattern: /Independent review receives only the diff/, label: 'independent isolation' },
   { file: 'shared/advisory-skill-extension.md', pattern: /Skills are optional advisory data, never dependencies\./, label: 'advisory only' },
   { file: 'shared/single-pass-review.md', pattern: /make one complete pass/, label: 'single pass rule' },
@@ -44,12 +48,23 @@ const REQUIRED_ANCHORS = [
   { file: 'agents/review-forge-coordinator.agent.md', pattern: /Default to all six v1 lenses/, label: 'default lens accounting' },
 ];
 
+const FIXTURE_ANCHORS = [
+  {
+    file: '01-full-review/expected-report.md',
+    patterns: [/## Review Status/, /`no-go`/, /RF-security-1/, /risk category:/, /acceptance condition:/, /fingerprint:/, /status: open/],
+  },
+  {
+    file: '02-independent-isolation/expected-report.md',
+    patterns: [/## Lens Status/, /`blocked`/, /forbidden context/i, /no independent findings emitted/i],
+  },
+];
+
 const EXPECTED_TOOLS = new Map([
   ['review-forge-coordinator.agent.md', ['read', 'search', 'execute', 'agent', 'vscode/askQuestions']],
-  ['contextual-reviewer.agent.md', ['read', 'search', 'execute']],
-  ['security-reviewer.agent.md', ['read', 'search', 'execute']],
-  ['performance-reviewer.agent.md', ['read', 'search', 'execute']],
-  ['adversarial-reviewer.agent.md', ['read', 'search', 'execute']],
+  ['contextual-reviewer.agent.md', ['read', 'search']],
+  ['security-reviewer.agent.md', ['read', 'search']],
+  ['performance-reviewer.agent.md', ['read', 'search']],
+  ['adversarial-reviewer.agent.md', ['read', 'search']],
   ['independent-reviewer.agent.md', ['read', 'search']],
   ['test-adequacy-reviewer.agent.md', ['read', 'search']],
 ]);
@@ -154,6 +169,13 @@ for (const fixture of readdirSync(EXAMPLES)) {
     const p = join(dir, name);
     if (!existsSync(p)) errors.push(`${fixture}: missing ${name}`);
     else if (!readText(p).trim()) errors.push(`${fixture}: empty ${name}`);
+  }
+}
+
+for (const fixture of FIXTURE_ANCHORS) {
+  const text = readText(join(EXAMPLES, fixture.file));
+  for (const pattern of fixture.patterns) {
+    if (!pattern.test(text)) errors.push(`${fixture.file}: missing fixture anchor ${pattern}`);
   }
 }
 

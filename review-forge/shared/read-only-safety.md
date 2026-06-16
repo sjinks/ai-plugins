@@ -9,17 +9,17 @@ Review Forge is report-only and read-only. It must not edit files, post comments
 ## Tool Policy
 
 - `read` and `search` are preferred.
-- `execute` is only for read-only local inspection commands needed to obtain review evidence.
+- `execute` is only for the Coordinator's read-only local inspection commands needed to obtain review evidence. Specialist reviewers do not use `execute` in v1.
 - `agent` is only for the Coordinator to invoke Review Forge specialist agents.
 - Edit/create/write tools are forbidden in all Review Forge agents.
 
 ## Allowed Execute Examples
 
-Read-only local inspection such as status, diff, show, log, merge-base, file metadata, or listing commands. Use the narrowest command that obtains the needed evidence.
+Coordinator-only read-only local inspection such as status, diff, show, log, merge-base, file metadata, or listing commands. Use the narrowest command that obtains the needed evidence.
 
 ## Forbidden Execute Examples
 
-Refuse commands that stage, commit, checkout, reset, clean, push, install dependencies, contact the network by default, post comments, deploy, write files, generate artifacts, run tests with side effects, or reveal secrets.
+Refuse commands that stage, commit, checkout, reset, clean, push, install dependencies, fetch PR/remote/network content, post comments, deploy, write files, generate artifacts, run tests with side effects, or reveal secrets.
 
 ## Command Handling
 

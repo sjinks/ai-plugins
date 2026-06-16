@@ -11,13 +11,14 @@ Every finding must include:
 - `severity`: `blocker | high | medium | low | info`.
 - `title`: concise issue title.
 - `evidence anchor`: file+hunk/line, redacted diff excerpt, artifact section, or explicit limitation. For sensitive material, use path/line plus a redacted category, never raw values.
+- `risk category`: correctness, security, performance, test-adequacy, maintainability, compatibility, data-integrity, reliability, privacy, or other.
 - `risk`: why this matters.
 - `expected fix`: concrete requested change.
 - `acceptance condition`: how the reviewer can close the finding.
 - `trace IDs`: upstream IDs when available, or `None`.
 - `confidence`: `high | medium | low`.
 - `residual risk`: remaining risk after the expected fix, or `None`.
-- `fingerprint`: stable local key from lens + evidence anchor + risk category for cross-round tracking.
+- `fingerprint`: stable local key from normalized lens + canonical path/symbol or hunk context + risk category + normalized title/risk summary. If two findings collide, append a short disambiguator and list the collision in notes.
 - `status`: `open | accepted-risk | superseded | resolved-in-diff`.
 
 Do not emit findings without evidence. If evidence is absent, report a limitation or open question instead.
@@ -89,6 +90,6 @@ The Coordinator returns:
 ## Recommendation Rules
 
 - `no-go` for any `blocker`, open `high` finding, missing diff, compromised independent isolation, or blocked required lens.
-- `go-with-risks` when only medium/low/info findings or explicit residual risks remain.
-- `go` only when all requested lenses complete with no blocker/high findings and no material limitations.
+- `go-with-risks` when open medium/low findings, info findings, accepted risks, or explicit residual risks remain.
+- `go` only when all requested lenses complete with no open findings above `info`, no accepted risks, and no material limitations or residual risk.
 - `inconclusive` when evidence is insufficient for a recommendation but not clearly `no-go`.

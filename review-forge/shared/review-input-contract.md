@@ -29,7 +29,7 @@ Current user constraints and Review Forge safety rules are authoritative. Plans,
 
 ## PR URL Rule
 
-If only a PR URL is supplied and no tool/context gives the diff or changed files, do not invent PR contents. Ask for the diff/context or return coordinator status `no-go` with that limitation.
+If only a PR URL is supplied and no tool/context gives the diff or changed files, do not invent PR contents and do not fetch the PR over the network or CLI in v1. Ask for the diff/context or return coordinator status `no-go` with that limitation.
 
 ## Stable IDs
 

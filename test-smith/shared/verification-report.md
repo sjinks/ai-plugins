@@ -2,7 +2,7 @@
 
 This reference defines Test Smith's required report. It is a local reference, not an invocable skill.
 
-Return every section in order. Use `None - <reason>` for empty sections.
+Return every section in order. For an empty section, write one bullet entry: `- None - <reason>`.
 
 ## Status Rules
 

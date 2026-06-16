@@ -11,7 +11,7 @@
 - contextual, independent, performance, adversarial, test-adequacy: completed or partial with stated limitations.
 
 ## Findings
-- id: `RF-security-1`; lens: security; severity: high; title: SQL query concatenates untrusted `id`; evidence anchor: `src/example.js` added query line; risk category: security; risk: attacker-controlled input can alter SQL; expected fix: use a parameterized query; acceptance condition: query uses bound parameters and tests cover malicious input; trace IDs: None; confidence: high; residual risk: None; fingerprint: security|src/example.js|sql-injection|query-concatenates-id; status: open.
+- id: `RF-security-1`; lens: security; severity: high; title: SQL query concatenates untrusted `id`; evidence anchor: `src/example.js` added query line; risk category: security; risk: attacker-controlled input can alter SQL; expected fix: use a parameterized query; acceptance condition: query uses bound parameters and tests cover malicious input; trace IDs: None; confidence: high; residual risk: None; fingerprint: security|src/example.js|sql-injection|query-concatenates-id; status: open
 
 ## Cross-Lens Conflicts
 - None - no conflicts.

@@ -51,7 +51,7 @@ const REQUIRED_ANCHORS = [
 const FIXTURE_ANCHORS = [
   {
     file: '01-full-review/expected-report.md',
-    patterns: [/## Review Status/, /`no-go`/, /RF-security-1/, /risk category:/, /acceptance condition:/, /fingerprint:/, /status: open/],
+    patterns: [/## Review Status/, /`no-go`/, /RF-security-1/, /risk category:/, /acceptance condition:/, /fingerprint:/, /status: open(?:\n|$)/],
   },
   {
     file: '02-independent-isolation/expected-report.md',

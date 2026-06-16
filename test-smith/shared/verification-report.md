@@ -15,6 +15,8 @@ Use exactly one status:
 
 Never use `verified` for a check that did not run, was denied approval, lacked evidence, or was only assumed.
 
+Status precedence: use `blocked` only when no meaningful required verification could proceed. Otherwise, `failed` outranks `partial` whenever any required check has failing evidence. Use `partial` for mixed success with skipped, blocked, inconclusive, unavailable, or unresolved required/requested checks and no required failures.
+
 ## Result Item Shape
 
 Each result in `## Results` should include these fields in compact prose:

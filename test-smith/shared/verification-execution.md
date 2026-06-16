@@ -22,7 +22,7 @@ Use it after input normalization and command-safety loading.
 
 ## Manual And Review Checks
 
-Manual/review checks may be marked `passed` only when the user supplies explicit confirmation or there is observable evidence from allowed read/search/execute outputs. Otherwise mark them `inconclusive`, `skipped`, or `blocked` and explain the residual risk.
+Manual/review checks may be marked `passed` only when there is observable evidence from allowed read/search/execute outputs or the user supplies structured confirmation naming the check label/ID, actor/source, environment, observed result, acceptance condition, and freshness. Bare confirmation such as "passed" is insufficient; mark it `inconclusive`, `skipped`, or `blocked` and explain the residual risk.
 
 ## Evidence Handling
 

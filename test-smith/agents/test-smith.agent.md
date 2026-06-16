@@ -33,7 +33,7 @@ Priority: safety, sensitive-data, no-edit, no-git/PR/deploy, and status-truthful
 
 ## Shared References
 
-Read all local references before executing any command. If any shared reference is unavailable, do not run verification commands; return `blocked` and record the missing reference.
+Read all local references before executing any command. If `input-contract.md`, `command-safety.md`, or `verification-execution.md` is unavailable, do not run verification commands; return `blocked` and record the missing reference. If `verification-report.md` is unavailable after checks already ran, return a best-effort report with the required section headings and record the limitation.
 
 - `shared/input-contract.md` — input forms and normalized fields.
 - `shared/command-safety.md` — command classes and approval/refusal rules.
@@ -48,7 +48,7 @@ Read all local references before executing any command. If any shared reference 
 4. **Classify commands.** Mark each command as `trivially-safe`, `approval-bound`, `forbidden`, or `unknown`. Ask for exact-command approval when required; refuse forbidden commands.
 5. **Execute or validate.** Run only safe or approved checks. Validate manual/review checks only with explicit confirmation or observable evidence.
 6. **Collect evidence.** Record exit status and concise redacted evidence. Do not paste large logs or sensitive values.
-7. **Report.** Read `shared/verification-report.md`, compute exactly one status, and return the required report. Failed required checks produce `failed`; skipped, blocked, missing, or inconclusive required checks prevent `verified`.
+7. **Report.** Read `shared/verification-report.md`, compute exactly one status, and return the required report or the best-effort fallback above. Failed required checks produce `failed`; skipped, blocked, missing, or inconclusive required checks prevent `verified`.
 
 ## Stop-And-Ask Conditions
 

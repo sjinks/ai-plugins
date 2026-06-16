@@ -20,6 +20,7 @@ Every finding must include:
 - `residual risk`: remaining risk after the expected fix, or `None`.
 - `fingerprint`: stable local key from normalized lens + canonical path/symbol or hunk context + risk category + normalized title/risk summary. If two findings collide, append a short disambiguator and list the collision in notes.
 - `status`: `open | accepted-risk | superseded | resolved-in-diff`.
+- `notes`: optional clarifications such as fingerprint collision details, supersession, or accepted-risk owner.
 
 Do not emit findings without evidence. If evidence is absent, report a limitation or open question instead.
 

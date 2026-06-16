@@ -93,6 +93,10 @@ function normalize(text) {
 
 function listMarkdownFiles(dir) {
   const out = [];
+  if (!existsSync(dir)) {
+    errors.push(`missing directory ${dir}`);
+    return out;
+  }
   for (const entry of readdirSync(dir)) {
     const p = join(dir, entry);
     const st = statSync(p);
@@ -100,6 +104,18 @@ function listMarkdownFiles(dir) {
     else if (entry.endsWith('.md')) out.push(p);
   }
   return out;
+}
+
+function listDirIfPresent(dir, label) {
+  if (!existsSync(dir)) {
+    errors.push(`missing directory ${label}`);
+    return [];
+  }
+  if (!statSync(dir).isDirectory()) {
+    errors.push(`${label} is not a directory`);
+    return [];
+  }
+  return readdirSync(dir);
 }
 
 function balancedFences(text) {
@@ -138,7 +154,7 @@ try {
   errors.push(`plugin.json invalid: ${error.message}`);
 }
 
-for (const file of readdirSync(join(PLUGIN, 'agents'))) {
+for (const file of listDirIfPresent(join(PLUGIN, 'agents'), 'review-forge/agents')) {
   if (!file.endsWith('.agent.md')) continue;
   const text = readRel(`agents/${file}`);
   const name = text.match(/^name: "([^"]+)"/m)?.[1];
@@ -162,7 +178,7 @@ for (const file of [...listMarkdownFiles(PLUGIN), ...listMarkdownFiles(EXAMPLES)
   if (!balancedFences(text)) errors.push(`${file}: unbalanced code fences`);
 }
 
-for (const fixture of readdirSync(EXAMPLES)) {
+for (const fixture of listDirIfPresent(EXAMPLES, 'dev/review-forge/examples')) {
   const dir = join(EXAMPLES, fixture);
   if (!statSync(dir).isDirectory()) continue;
   for (const name of ['input.md', 'expected-report.md']) {
@@ -173,7 +189,12 @@ for (const fixture of readdirSync(EXAMPLES)) {
 }
 
 for (const fixture of FIXTURE_ANCHORS) {
-  const text = readText(join(EXAMPLES, fixture.file));
+  const fixturePath = join(EXAMPLES, fixture.file);
+  if (!existsSync(fixturePath)) {
+    errors.push(`missing fixture ${fixture.file}`);
+    continue;
+  }
+  const text = readText(fixturePath);
   for (const pattern of fixture.patterns) {
     if (!pattern.test(text)) errors.push(`${fixture.file}: missing fixture anchor ${pattern}`);
   }

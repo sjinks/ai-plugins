@@ -29,6 +29,11 @@
             "source": "./planning-forge"
         },
         {
+            "name": "review-forge",
+            "description": "Read-only multi-lens review workflow agents for evidence-grounded code, security, performance, adversarial, independent, and test adequacy review.",
+            "source": "./review-forge"
+        },
+        {
             "name": "review-skills",
             "description": "Review workflow skills for scoping pull requests, improving review findings, planning fixes, and gatekeeping merge readiness.",
             "source": "./review-skills"

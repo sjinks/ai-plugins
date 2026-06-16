@@ -13,7 +13,7 @@ Return all sections in order. Write an empty section as `None — <reason>`.
 `done | partial | blocked` — <one-sentence rationale>
 
 ## Changes
-- <file or change> → satisfies <FR-/AC-/D-/TC- (and EDGE-/INT- where relevant)>
+- <file or change> → satisfies <US-/FR-/NFR-/INT-/AC-/EDGE-/D-/TC- as relevant>
 
 ## Verification
 - Tests: <TC- IDs or test scope> — <passed | failed | skipped> (restated resolved command)

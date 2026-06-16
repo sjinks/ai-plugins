@@ -20,13 +20,8 @@
         },
         {
             "name": "code-smith",
-            "description": "Implementation-phase agent for turning approved Planning Forge handoffs into focused, self-verified code changes.",
+            "description": "Execution-phase agents for implementing approved Planning Forge handoffs and running verification reports.",
             "source": "./code-smith"
-        },
-        {
-            "name": "test-smith",
-            "description": "Run-only verification execution agent for safely running requested workspace checks and returning truthful reports mapped to existing planning IDs.",
-            "source": "./test-smith"
         },
         {
             "name": "planning-forge",

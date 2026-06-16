@@ -33,7 +33,7 @@ Priority: Review Forge safety, read-only, sensitive-data, and independent-isolat
 
 ## Shared References
 
-Read before routing: `shared/review-input-contract.md`, `shared/read-only-safety.md`, `shared/finding-report-contract.md`, `shared/independent-isolation.md`, `shared/single-pass-review.md`, and `shared/advisory-skill-extension.md`. If any is unavailable, continue only if the missing reference is not needed; otherwise return `inconclusive` or `no-go` with the limitation.
+Read before routing: `shared/review-input-contract.md`, `shared/read-only-safety.md`, `shared/finding-report-contract.md`, `shared/independent-isolation.md`, `shared/single-pass-review.md`, `shared/review-lenses.md`, and `shared/advisory-skill-extension.md`. If any is unavailable, continue only if the missing reference is not needed; otherwise return `inconclusive` or `no-go` with the limitation.
 
 ## Procedure
 

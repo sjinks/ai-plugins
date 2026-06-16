@@ -65,7 +65,15 @@ const KNOWN_AGENT_NAMES = new Set([
 ]);
 
 function readRel(path) {
-  return readFileSync(join(PLUGIN, path), 'utf8');
+  return normalize(readFileSync(join(PLUGIN, path), 'utf8'));
+}
+
+function readText(path) {
+  return normalize(readFileSync(path, 'utf8'));
+}
+
+function normalize(text) {
+  return text.replace(/\r\n?/g, '\n');
 }
 
 function listMarkdownFiles(dir) {
@@ -80,8 +88,18 @@ function listMarkdownFiles(dir) {
 }
 
 function balancedFences(text) {
-  const matches = text.match(/^```/gm);
-  return !matches || matches.length % 2 === 0;
+  let openFence = null;
+  for (const line of text.split('\n')) {
+    const match = line.match(/^ {0,3}(`{3,})/);
+    if (!match) continue;
+    const length = match[1].length;
+    if (openFence === null) {
+      openFence = length;
+    } else if (length >= openFence) {
+      openFence = null;
+    }
+  }
+  return openFence === null;
 }
 
 function parseTools(text) {
@@ -124,8 +142,8 @@ for (const anchor of REQUIRED_ANCHORS) {
   if (!anchor.pattern.test(text)) errors.push(`${anchor.file}: missing ${anchor.label}`);
 }
 
-for (const file of listMarkdownFiles(PLUGIN)) {
-  const text = readFileSync(file, 'utf8');
+for (const file of [...listMarkdownFiles(PLUGIN), ...listMarkdownFiles(EXAMPLES)]) {
+  const text = readText(file);
   if (!balancedFences(text)) errors.push(`${file}: unbalanced code fences`);
 }
 
@@ -135,7 +153,7 @@ for (const fixture of readdirSync(EXAMPLES)) {
   for (const name of ['input.md', 'expected-report.md']) {
     const p = join(dir, name);
     if (!existsSync(p)) errors.push(`${fixture}: missing ${name}`);
-    else if (!readFileSync(p, 'utf8').trim()) errors.push(`${fixture}: empty ${name}`);
+    else if (!readText(p).trim()) errors.push(`${fixture}: empty ${name}`);
   }
 }
 

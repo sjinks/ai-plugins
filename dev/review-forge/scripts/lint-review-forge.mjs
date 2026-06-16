@@ -3,9 +3,11 @@
 // This validates structure and guardrail anchors only; it does not evaluate model behavior.
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(new URL('../../..', import.meta.url).pathname);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '../../..');
 const PLUGIN = join(ROOT, 'review-forge');
 const EXAMPLES = join(ROOT, 'dev/review-forge/examples');
 

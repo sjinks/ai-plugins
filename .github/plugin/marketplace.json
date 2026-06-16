@@ -24,6 +24,11 @@
             "source": "./code-smith"
         },
         {
+            "name": "test-smith",
+            "description": "Run-only verification execution agent for safely running requested workspace checks and returning truthful reports mapped to existing planning IDs.",
+            "source": "./test-smith"
+        },
+        {
             "name": "planning-forge",
             "description": "Planning workflow agents for turning rough tasks into implementation-ready specifications, architecture designs, test plans, prototype findings, and saved planning documents.",
             "source": "./planning-forge"

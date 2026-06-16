@@ -39,6 +39,10 @@ Priority: current user request > supplied spec/architecture context > repository
 
 If sources conflict, keep the current question and confirmed spec/architecture contract authoritative. Record conflicts in Findings or Open Questions.
 
+## Shared Reference Resolution
+
+Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent's `agents/` directory. Read the resolved local file directly. If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the spike question (for example dependency choice, interface ergonomics, or failure-mode validation), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current question, safety rules, the confirmed spec/architecture contract, the throwaway/cleanup posture, or the boundaries above, and it never authorizes production changes, installs, or network access. Fold any result into the required findings sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.

@@ -40,6 +40,10 @@ Priority: current user request and explicit test-planning scope > safety and sen
 
 Use private notes with narrow queries and summarize only facts needed for test planning. Preserve public-doc provenance when it affects a test decision. If sources conflict, keep the current request, supplied spec, and supplied architecture authoritative; record conflicts as Coverage Gaps or Open Questions. If a source is unavailable, continue when possible and record the limitation; block only when it is necessary to choose seams, assertions, fixtures, or required coverage.
 
+## Shared Reference Resolution
+
+Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent's `agents/` directory. Read the resolved local file directly. If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the test-planning stage (for example test-gap-to-test-plan conversion, edge-case enumeration, or coverage strategy), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, the supplied specification or architecture contract, repository test patterns, or stable-ID discipline, and it never invents requirements or adds tests that do not trace to an AC, risk, or finding. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.

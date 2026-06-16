@@ -46,6 +46,30 @@ const REQUIRED_ANCHORS = [
   { file: 'shared/review-input-contract.md', pattern: /PR URL.*coordinator status `no-go`/s, label: 'PR URL no-go path' },
   { file: 'agents/review-forge-coordinator.agent.md', pattern: /Review Forge safety, read-only, sensitive-data, and independent-isolation rules > current user constraints/, label: 'safety precedence' },
   { file: 'agents/review-forge-coordinator.agent.md', pattern: /Default to all six v1 lenses/, label: 'default lens accounting' },
+  { file: 'agents/review-forge-coordinator.agent.md', pattern: /search for `review-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/, label: 'coordinator plugin-root shared reference resolution' },
+  { file: 'agents/contextual-reviewer.agent.md', pattern: /search for `review-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/, label: 'contextual reviewer plugin-root shared reference resolution' },
+  { file: 'agents/independent-reviewer.agent.md', pattern: /search for `review-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/, label: 'independent reviewer plugin-root shared reference resolution' },
+  { file: 'agents/security-reviewer.agent.md', pattern: /search for `review-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/, label: 'security reviewer plugin-root shared reference resolution' },
+  { file: 'agents/performance-reviewer.agent.md', pattern: /search for `review-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/, label: 'performance reviewer plugin-root shared reference resolution' },
+  { file: 'agents/adversarial-reviewer.agent.md', pattern: /search for `review-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/, label: 'adversarial reviewer plugin-root shared reference resolution' },
+  { file: 'agents/test-adequacy-reviewer.agent.md', pattern: /search for `review-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/, label: 'test adequacy reviewer plugin-root shared reference resolution' },
+];
+
+const SHARED_REFERENCE_AGENT_FILES = new Set([
+  'agents/review-forge-coordinator.agent.md',
+  'agents/contextual-reviewer.agent.md',
+  'agents/independent-reviewer.agent.md',
+  'agents/security-reviewer.agent.md',
+  'agents/performance-reviewer.agent.md',
+  'agents/adversarial-reviewer.agent.md',
+  'agents/test-adequacy-reviewer.agent.md',
+]);
+
+const REQUIRED_SHARED_REFERENCE_SENTENCES = [
+  'Each is a local reference in this Review Forge plugin\'s `shared/` folder (sibling of this agent\'s `agents/` directory).',
+  'Resolve every `shared/...` reference from that plugin root and read the resolved local file directly.',
+  'If only workspace search is available, search for `review-forge/shared/<filename>`, not bare `shared/<filename>`.',
+  'Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.',
 ];
 
 const FIXTURE_ANCHORS = [
@@ -142,6 +166,24 @@ function parseTools(text) {
     .filter(Boolean);
 }
 
+function checkSharedReferenceResolution(file, text) {
+  if (!SHARED_REFERENCE_AGENT_FILES.has(file)) return;
+
+  for (const sentence of REQUIRED_SHARED_REFERENCE_SENTENCES) {
+    if (!text.includes(sentence)) errors.push(`${file}: missing shared-reference sentence: ${sentence}`);
+  }
+
+  for (const [index, line] of text.split('\n').entries()) {
+    const lineLabel = `${file}:${index + 1}`;
+    if (/\b(?:search|look|glob|match)[^\n]*`shared\/<filename>`/i.test(line) && !line.includes('not bare `shared/<filename>`')) {
+      errors.push(`${lineLabel}: contradictory bare shared-reference search guidance`);
+    }
+    if (line.includes('`.copilot/installed-plugins/**`') && !line.includes('Do not glob under `.copilot/installed-plugins/**`')) {
+      errors.push(`${lineLabel}: contradictory installed-plugin shared-reference search guidance`);
+    }
+  }
+}
+
 const errors = [];
 
 for (const file of REQUIRED_PLUGIN_FILES) {
@@ -159,6 +201,7 @@ for (const file of listDirIfPresent(join(PLUGIN, 'agents'), 'review-forge/agents
   const text = readRel(`agents/${file}`);
   const name = text.match(/^name: "([^"]+)"/m)?.[1];
   if (!KNOWN_AGENT_NAMES.has(name)) errors.push(`${file}: unknown agent name ${name || '<missing>'}`);
+  checkSharedReferenceResolution(`agents/${file}`, text);
   const tools = parseTools(text);
   const expected = EXPECTED_TOOLS.get(file);
   if (!expected) errors.push(`${file}: missing expected tool allowlist`);

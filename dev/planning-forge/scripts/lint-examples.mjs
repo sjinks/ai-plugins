@@ -19,6 +19,7 @@
 //   6. Planning Forge prompts do not reintroduce forbidden tool/invocation patterns.
 //   7. Critical publish path-safety text remains present.
 //   8. New Planning Forge relay/carry-forward contract anchors remain present.
+//   9. Agents resolve shared references from the Planning Forge plugin root.
 //
 // Exit codes:
 //   0 = all fixtures pass
@@ -66,6 +67,22 @@ const REQUIRED_AGENT_SECTIONS = [
 ];
 
 const FORBIDDEN_AGENT_ROLES = /\b(?:Builder|Implementation Agent|Coding Agent)\b/;
+
+const SHARED_REFERENCE_AGENT_FILES = new Set([
+  'planning-forge/agents/planning-forge-coordinator.agent.md',
+  'planning-forge/agents/task-spec-agent.agent.md',
+  'planning-forge/agents/architecture-planner.agent.md',
+  'planning-forge/agents/test-planner.agent.md',
+  'planning-forge/agents/prototype-spike.agent.md',
+  'planning-forge/agents/planning-document-publisher.agent.md',
+]);
+
+const REQUIRED_SHARED_REFERENCE_SENTENCES = [
+  'Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent\'s `agents/` directory.',
+  'Read the resolved local file directly.',
+  'If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`.',
+  'Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.',
+];
 
 const REQUIRED_PROMPT_TEXT = [
   {
@@ -119,6 +136,36 @@ const REQUIRED_PROMPT_TEXT = [
     path: ['planning-forge', 'shared', 'session-state.md'],
     label: 'carry-forward disposition semantics',
     pattern: /disposition: unresolved\|non-blocking\|deferred\|accepted-for-handoff/,
+  },
+  {
+    path: ['planning-forge', 'agents', 'planning-forge-coordinator.agent.md'],
+    label: 'coordinator plugin-root shared reference resolution',
+    pattern: /search for `planning-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/,
+  },
+  {
+    path: ['planning-forge', 'agents', 'task-spec-agent.agent.md'],
+    label: 'spec planner plugin-root shared reference resolution',
+    pattern: /search for `planning-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/,
+  },
+  {
+    path: ['planning-forge', 'agents', 'architecture-planner.agent.md'],
+    label: 'architecture planner plugin-root shared reference resolution',
+    pattern: /search for `planning-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/,
+  },
+  {
+    path: ['planning-forge', 'agents', 'test-planner.agent.md'],
+    label: 'test planner plugin-root shared reference resolution',
+    pattern: /search for `planning-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/,
+  },
+  {
+    path: ['planning-forge', 'agents', 'prototype-spike.agent.md'],
+    label: 'prototype spike plugin-root shared reference resolution',
+    pattern: /search for `planning-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/,
+  },
+  {
+    path: ['planning-forge', 'agents', 'planning-document-publisher.agent.md'],
+    label: 'publisher plugin-root shared reference resolution',
+    pattern: /search for `planning-forge\/shared\/<filename>`, not bare `shared\/<filename>`[\s\S]*Do not glob under `\.copilot\/installed-plugins\/\*\*`/,
   },
 ];
 
@@ -253,6 +300,31 @@ function frontmatterAgentsBlock(metadata) {
   return block.join('\n');
 }
 
+function checkSharedReferenceResolution(rel, text) {
+  const failures = [];
+  if (!SHARED_REFERENCE_AGENT_FILES.has(rel)) {
+    return failures;
+  }
+
+  for (const sentence of REQUIRED_SHARED_REFERENCE_SENTENCES) {
+    if (!text.includes(sentence)) {
+      failures.push(`${rel}: missing shared-reference sentence: ${sentence}`);
+    }
+  }
+
+  for (const [index, line] of text.split('\n').entries()) {
+    const lineLabel = `${rel}:${index + 1}`;
+    if (/\b(?:search|look|glob|match)[^\n]*`shared\/<filename>`/i.test(line) && !line.includes('not bare `shared/<filename>`')) {
+      failures.push(`${lineLabel}: contradictory bare shared-reference search guidance`);
+    }
+    if (line.includes('`.copilot/installed-plugins/**`') && !line.includes('Do not glob under `.copilot/installed-plugins/**`')) {
+      failures.push(`${lineLabel}: contradictory installed-plugin shared-reference search guidance`);
+    }
+  }
+
+  return failures;
+}
+
 function checkPromptGuardrails(repoRoot) {
   const failures = [];
   const pluginRoot = join(repoRoot, 'planning-forge');
@@ -268,6 +340,8 @@ function checkPromptGuardrails(repoRoot) {
     }
 
     if (mdPath.startsWith(`${agentsRoot}${sep}`) && mdPath.endsWith('.agent.md')) {
+      failures.push(...checkSharedReferenceResolution(rel, text));
+
       for (const { label, pattern } of REQUIRED_AGENT_SECTIONS) {
         if (!pattern.test(text)) {
           failures.push(`${rel}: missing required agent section: ${label}`);

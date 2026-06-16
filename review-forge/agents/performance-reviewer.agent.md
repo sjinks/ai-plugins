@@ -16,7 +16,7 @@ Read-only report only. Do not execute commands, edit, mutate git, run benchmarks
 
 ## Required References
 
-Read `shared/review-input-contract.md`, `shared/read-only-safety.md`, `shared/finding-report-contract.md`, `shared/single-pass-review.md`, `shared/review-lenses.md`, and `shared/advisory-skill-extension.md` when available. If a required reference for scope, safety, or report format is unavailable, return `partial` or `blocked` with that limitation rather than guessing.
+Read `shared/review-input-contract.md`, `shared/read-only-safety.md`, `shared/finding-report-contract.md`, `shared/single-pass-review.md`, `shared/review-lenses.md`, and `shared/advisory-skill-extension.md` when available. Each is a local reference in this Review Forge plugin's `shared/` folder (sibling of this agent's `agents/` directory). Resolve every `shared/...` reference from that plugin root and read the resolved local file directly. If only workspace search is available, search for `review-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports. If a required reference for scope, safety, or report format is unavailable after using the plugin-root path, return `partial` or `blocked` with that limitation rather than guessing.
 
 ## Dimensions
 

@@ -45,6 +45,10 @@ Priority: current user request and same-session refinements > safety and sensiti
 
 If an existing artifact is unavailable, ask the user for it or reconstruct state from the conversation; record the limitation. Keep the current request authoritative when sources conflict.
 
+## Shared Reference Resolution
+
+Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent's `agents/` directory. Read the resolved local file directly. If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.
+
 ## Core Rules
 
 - Planning is iterative. The user may refine the specification many times before moving on.

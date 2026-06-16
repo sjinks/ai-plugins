@@ -42,6 +42,10 @@ Priority: current user request and same-session refinements > safety and sensiti
 
 Use private notes with the narrowest relevant query and summarize only the fact or decision needed for the spec. If sources conflict, keep the current request authoritative and record the conflict in Open Questions or Assumptions. If a source is unavailable, continue when possible and record the limitation; block only when the missing source is necessary to ground consequential requirements, interfaces, task boundaries, or acceptance criteria.
 
+## Shared Reference Resolution
+
+Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent's `agents/` directory. Read the resolved local file directly. If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the specification stage (for example acceptance-criteria quality, requirements ambiguity, scope-boundary definition, assumption surfacing, or edge-case enumeration), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, readiness rules, repository evidence, or stable-ID discipline, and it never expands scope or promotes advisory context into requirements. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.

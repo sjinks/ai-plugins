@@ -79,6 +79,21 @@ The `Verification` and `Gaps / Unmet ACs` report sections are the documented han
 
 Test Smith uses `verified | partial | failed | blocked`: skipped, blocked, missing, or inconclusive required checks prevent `verified`; required failures produce `failed`; no meaningful required verification produces `blocked`.
 
+## Development Checks
+
+Run the static instruction lint before publishing Code Smith prompt changes:
+
+```bash
+node dev/code-smith/scripts/lint-code-smith.mjs
+```
+
+For cross-plugin agent-reference changes, also run the Planning Forge and Review Forge lints:
+
+```bash
+node dev/planning-forge/scripts/lint-examples.mjs
+node dev/review-forge/scripts/lint-review-forge.mjs
+```
+
 ## Scope
 
 - Implementation and run-only verification only, from supplied planning or verification inputs.

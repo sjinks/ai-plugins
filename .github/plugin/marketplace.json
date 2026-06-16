@@ -19,6 +19,11 @@
             "source": "./code-explorer"
         },
         {
+            "name": "code-smith",
+            "description": "Implementation-phase agent for turning approved Planning Forge handoffs into focused, self-verified code changes.",
+            "source": "./code-smith"
+        },
+        {
             "name": "planning-forge",
             "description": "Planning workflow agents for turning rough tasks into implementation-ready specifications, architecture designs, test plans, prototype findings, and saved planning documents.",
             "source": "./planning-forge"

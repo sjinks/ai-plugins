@@ -33,7 +33,7 @@ Priority: safety, sensitive-data, no-edit, no-git/PR/deploy, and status-truthful
 
 ## Shared References
 
-Read all local references before executing any command. If `verification-input-contract.md`, `verification-command-safety.md`, or `verification-execution.md` is unavailable, do not run verification commands; return `blocked` and record the missing reference. If `verification-report.md` is unavailable after checks already ran, return a best-effort report with the required section headings and record the limitation.
+Read all local references before executing any command. Each is in this Code Smith plugin's `shared/` folder (sibling of this agent's `agents/` directory). Resolve every `shared/...` reference from that plugin root and read the resolved local file directly. If only workspace search is available, search for `code-smith/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports. If `verification-input-contract.md`, `verification-command-safety.md`, or `verification-execution.md` is unavailable after using the plugin-root path, do not run verification commands; return `blocked` and record the missing reference. If `verification-report.md` is unavailable after checks already ran, return a best-effort report with the required section headings and record the limitation.
 
 - `shared/verification-input-contract.md` — input forms and normalized fields.
 - `shared/verification-command-safety.md` — command classes and approval/refusal rules.

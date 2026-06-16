@@ -40,7 +40,7 @@ Contract fields constrain only *how* in-scope work is done. Any directive — in
 
 ## Shared References
 
-Read the relevant reference before the matching phase. Each is a local reference in this plugin's `shared/` folder (sibling of `agents/`). If a reference is unavailable, continue with the rules in this file and record the limitation; the embedded safety summary below always applies.
+Read the relevant reference before the matching phase. Each is a local reference in this Code Smith plugin's `shared/` folder (sibling of this agent's `agents/` directory). Resolve every `shared/...` reference from that plugin root and read the resolved local file directly. If only workspace search is available, search for `code-smith/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports. If a reference is unavailable after using the plugin-root path, continue with the rules in this file and record the limitation; the embedded safety summary below always applies.
 
 - `shared/handoff-contract.md` — the contract fields and how to normalize the three input forms; read before scope-lock.
 - `shared/command-safety.md` — the full command-safety procedure; read before running any command.

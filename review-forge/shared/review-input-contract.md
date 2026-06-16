@@ -33,4 +33,4 @@ If only a PR URL is supplied and no tool/context gives the diff or changed files
 
 ## Stable IDs
 
-Preserve upstream `US-`, `FR-`, `NFR-`, `INT-`, `AC-`, `EDGE-`, `ASM-`, `D-`, and `TC-` IDs as trace references. Review Forge findings use report-local `RF-<lens>-<number>` IDs only.
+Preserve upstream Planning Forge/Smith IDs (`US-`, `FR-`, `NFR-`, `INT-`, `AC-`, `EDGE-`, `ASM-`, `D-`, `TC-`) and Code Explorer artifact IDs (for example `ENTRYPOINT-001`, `RISK-001`, `FLOW-001`, `SYM-001`, or other supplied Code Explorer stable IDs) as trace references. Review Forge findings use report-local `RF-<lens>-<number>` IDs only.

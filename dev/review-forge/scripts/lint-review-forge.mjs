@@ -132,7 +132,7 @@ for (const file of readdirSync(join(PLUGIN, 'agents'))) {
   const expected = EXPECTED_TOOLS.get(file);
   if (!expected) errors.push(`${file}: missing expected tool allowlist`);
   else if (tools.join(',') !== expected.join(',')) errors.push(`${file}: expected tools ${expected.join(', ')} but found ${tools.join(', ')}`);
-  if (/^\s+-\s+(?:edit|edit\/|web\/)/m.test(text)) errors.push(`${file}: forbidden edit/web tool`);
+  if (/^\s+-\s+(?:edit(?:\/.*)?|web(?:\/.*)?)$/m.test(text)) errors.push(`${file}: forbidden edit/web tool`);
   if (file !== 'review-forge-coordinator.agent.md' && /^\s+-\s+agent$/m.test(text)) errors.push(`${file}: agent tool is coordinator-only`);
   if (!/^user-invocable: true$/m.test(text)) errors.push(`${file}: missing user-invocable true`);
 }

@@ -1,6 +1,6 @@
 {
     "name": "code-smith",
-    "description": "Implementation-phase agent that turns an approved Planning Forge builder-handoff (specification, architecture, test plan) into focused, self-verified code changes: scope-locked edits, internal command safety, planned-test and build/lint verification, self-review, and an evidence-based completion report.",
+    "description": "Execution-phase agents for turning approved Planning Forge handoffs into focused code changes and run-only verification reports: Code Smith implements, Test Smith verifies, both with self-contained command safety and truthful reporting.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",
@@ -11,6 +11,7 @@
     "keywords": [
         "implementation",
         "builder",
+        "testing",
         "handoff",
         "verification",
         "self-review",

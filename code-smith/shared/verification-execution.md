@@ -14,7 +14,7 @@ Use it after input normalization and command-safety loading.
 
 - Run required checks first when safe.
 - Scope commands to the requested area when the repo provides a scoped command.
-- Apply `shared/command-safety.md` to every command before execution.
+- Apply `shared/verification-command-safety.md` to every command before execution.
 - A failing required command makes the overall status `failed` unless no meaningful verification could proceed, in which case use `blocked`.
 - A skipped, blocked, missing, or inconclusive required check prevents `verified`.
 - Optional check failures do not force `failed` when all required checks pass, but they must be reported.

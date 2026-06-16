@@ -33,17 +33,17 @@ Priority: safety, sensitive-data, no-edit, no-git/PR/deploy, and status-truthful
 
 ## Shared References
 
-Read all local references before executing any command. If `input-contract.md`, `command-safety.md`, or `verification-execution.md` is unavailable, do not run verification commands; return `blocked` and record the missing reference. If `verification-report.md` is unavailable after checks already ran, return a best-effort report with the required section headings and record the limitation.
+Read all local references before executing any command. If `verification-input-contract.md`, `verification-command-safety.md`, or `verification-execution.md` is unavailable, do not run verification commands; return `blocked` and record the missing reference. If `verification-report.md` is unavailable after checks already ran, return a best-effort report with the required section headings and record the limitation.
 
-- `shared/input-contract.md` — input forms and normalized fields.
-- `shared/command-safety.md` — command classes and approval/refusal rules.
+- `shared/verification-input-contract.md` — input forms and normalized fields.
+- `shared/verification-command-safety.md` — command classes and approval/refusal rules.
 - `shared/verification-execution.md` — discovery, execution, manual checks, evidence, and redaction.
 - `shared/verification-report.md` — status enum and report shape.
 
 ## Procedure
 
-1. **Intake.** Read `shared/input-contract.md` and normalize the input. Record absent fields; do not invent IDs, tests, commands, or criteria.
-2. **Load safety.** Read `shared/command-safety.md` before any command. If it cannot be read, return `blocked`.
+1. **Intake.** Read `shared/verification-input-contract.md` and normalize the input. Record absent fields; do not invent IDs, tests, commands, or criteria.
+2. **Load safety.** Read `shared/verification-command-safety.md` before any command. If it cannot be read, return `blocked`.
 3. **Discover checks.** Read/search for repo-supported commands and relevant files when needed. Do not use network or installs to discover tooling.
 4. **Classify commands.** Mark each command as `trivially-safe`, `approval-bound`, `forbidden`, or `unknown`. Ask for exact-command approval when required; refuse forbidden commands.
 5. **Execute or validate.** Run only safe or approved checks. Validate manual/review checks only with explicit confirmation or observable evidence.

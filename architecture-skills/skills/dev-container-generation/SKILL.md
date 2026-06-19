@@ -7,7 +7,7 @@ user-invocable: true
 
 # Dev Container Generation
 
-Turn an architecture specification plus repository evidence into a container setup a developer can build and work in. An architecture spec is deliberately language-agnostic; a Dockerfile must commit to a concrete runtime, version, and layout. This skill resolves that gap safely, favouring reproducibility and developer ergonomics over production hardening.
+Turn an architecture specification plus repository evidence into a container setup a developer can build and work in. An architecture spec is deliberately language-agnostic; a Dockerfile must commit to a concrete runtime, version, and layout. This skill resolves that gap safely, favoring reproducibility and developer ergonomics over production hardening.
 
 ## When to Use
 
@@ -56,7 +56,7 @@ Decide each item explicitly. Every item resolves to a concrete value or an `unkn
 
 ## Rules
 
-- Pin every image to a specific tag; `latest` is never an acceptable resolution. When a version cannot be resolved, it is `unknown` under `### Evidence needed`, not a guessed tag.
+- Pin every image to the most specific tag the evidence supports; `latest` is never an acceptable resolution. When no version can be resolved, use an explicit placeholder tag (for example `postgres:<major>`) and record the unresolved version under `### Evidence needed`; never substitute a guessed concrete tag.
 - No secrets in the image. Never bake credentials, tokens, private keys, or `.env` contents into `ARG`, `ENV`, or any layer. Secrets enter at runtime via compose `environment`/`env_file` (git-ignored) or mounted files. Build secrets that are unavoidable use BuildKit `--mount=type=secret`, never `ARG`.
 - A `.dockerignore` must exist and exclude env files and every repo-specific secret-bearing path (not just `.env*`) before any broad `COPY . .`. Scan repo evidence for secret paths beyond `.env`; a broad copy without a `.dockerignore` that covers the actual secret set is a finding, not an acceptable output.
 - The final (or only) stage runs as a non-root user unless a named dev constraint requires root; recommending root without that driver is a finding against the recommendation. This applies to single-stage Dockerfiles too.

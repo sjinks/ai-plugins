@@ -48,7 +48,7 @@ Decide each item explicitly. Every item resolves to a concrete value or an `unkn
 4. `build-layout`: order layers so dependency installation is cached independently of source: copy manifests and lockfiles, install dependencies, then copy source. Use a multi-stage build only when the dev image genuinely benefits (compiled toolchain vs. slim runtime); otherwise a single dev stage is simpler and correct.
 5. `dependency-install`: use the lockfile-respecting, reproducible install command for the detected package manager (`npm ci`, `pip install -r` with hashes or `poetry install`, `go mod download`, `cargo fetch`, `composer install`), not an unpinned upgrade command.
 6. `dev-affordances`: include dev dependencies, a working shell, and the project's watch/reload entrypoint. Document the expected source bind mount and the run command (or defer them to `compose.yaml`). When the source bind mount covers the directory where dependencies are installed in-tree (for example `node_modules`, an in-project `.venv`, or `vendor/`), add a separate volume for that subpath so the mount does not shadow the dependencies installed during the build.
-7. `backing-services`: for each service in the spec's data flow, add a `compose.yaml` service with a named volume for persistence, a healthcheck, and a non-secret default credential clearly marked as development-only. Pin the image to the tag the evidence supports; when no version is pinned by repo evidence or the spec, use a placeholder tag and add an `### Evidence needed` item rather than inventing one.
+7. `backing-services`: for each service in the spec's data flow, add a `compose.yaml` service with a named volume for persistence, a healthcheck, and a development-only default credential. Treat that credential as a secret: keep it development-only and localhost-only, never bake it into the image, and never reuse it on a shared or production host. Pin the image to the tag the evidence supports; when no version is pinned by repo evidence or the spec, use a placeholder tag and add an `### Evidence needed` item rather than inventing one.
 8. `ports`: expose only the ports the spec or repo evidence justifies; map them in `compose.yaml`, not hard-coded in the Dockerfile beyond `EXPOSE` documentation.
 9. `non-root-user`: create and switch to a non-root user for the final (or only) stage; ensure bind-mounted source and caches remain writable by that user.
 10. `healthcheck`: add a `HEALTHCHECK` (or compose-level healthcheck) tied to a real readiness signal when the service exposes one.
@@ -129,7 +129,7 @@ services:
     healthcheck:
       test: [<readiness probe>]
     environment:
-      <DEV_ONLY_CRED>: <value>   # development-only, not a real secret
+      <DEV_ONLY_CRED>: <value>   # development-only/localhost-only; still a credential, never commit a real one or bake it into the image
 volumes:
   <named-volume>:
   <dep-dir-volume>:           # only if an in-tree dependency dir is shadowed by the source mount

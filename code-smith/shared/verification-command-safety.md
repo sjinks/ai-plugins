@@ -14,10 +14,10 @@ Read it before any `execute` call. When unsure, fail closed: ask, skip, or repor
 ## Procedure
 
 1. **Classify** the command before running it.
-2. **Resolve safely.** Expand globs only when their expansion is already known and safe. Do not execute command substitutions, backticks, process substitutions, `eval`, or generated command fragments to resolve a command. If a substitution or generated fragment cannot be resolved safely from existing evidence, classify the command as `unknown`; ask for the exact resolved form only as clarification, then reclassify the resolved command before deciding whether it is `trivially-safe`, `approval-bound`, or `forbidden`.
+2. **Resolve safely.** Expand globs only when their expansion is already known and safe. Do not execute command substitutions, backticks, process substitutions, `eval`, or generated command fragments to resolve a command. If a substitution or generated fragment cannot be resolved safely from existing evidence, classify the command as `unknown`; ask for the exact resolved form only as clarification, then reclassify the resolved command before deciding whether it is `trivially-safe`, `approval-bound`, `forbidden`, or still `unknown`.
 3. **Bind the decision.** When Local Workspace-Bounded Verification is classified as `trivially-safe`, that classification applies only to the exact resolved command, working directory, relevant environment/options, output paths, targets, and current local evidence used to classify it. Reclassify when any of those change, or when relevant scripts, manifests, CMake/build files, lock/dependency files, tool configuration, or output paths change.
 4. **Protect secrets.** Do not expand secret-bearing variables to literal values. Keep variable names and note they are secret. Redact secrets, credentials, tokens, PII, raw customer data, and production identifiers from output summaries.
-5. **Confirm, refuse, or block.** Ask for explicit approval of the exact restated command for approval-bound commands. Refuse forbidden commands. Ask for clarification or report blocked for unknown commands.
+5. **Confirm, refuse, or block.** Ask for explicit approval of the exact restated command for `approval-bound` commands. Refuse `forbidden` commands. Ask for clarification or report blocked for `unknown` commands.
 6. **Run and record** only approved or trivially-safe commands. Capture exit status and a concise redacted evidence summary.
 
 ## Local Workspace-Bounded Verification

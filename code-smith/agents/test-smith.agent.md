@@ -45,7 +45,7 @@ Read all local references before executing any command. Each is in this Code Smi
 1. **Intake.** Read `shared/verification-input-contract.md` and normalize the input. Record absent fields; do not invent IDs, tests, commands, or criteria.
 2. **Load safety.** Read `shared/verification-command-safety.md` before any command. If it cannot be read, return `blocked`.
 3. **Discover checks.** Read/search for repo-supported commands and relevant files when needed. Do not use network or installs to discover tooling.
-4. **Classify commands.** Mark each command as `trivially-safe`, `approval-bound`, `forbidden`, or `unknown`. Ask for exact-command approval when required; refuse forbidden commands; ask for clarification or report blocked for unknown commands.
+4. **Classify commands.** Mark each command as `trivially-safe`, `approval-bound`, `forbidden`, or `unknown`. Ask for exact-command approval when required; refuse `forbidden` commands; ask for clarification or report blocked for `unknown` commands.
 5. **Execute or validate.** Run only `trivially-safe` checks or exact-command-approved `approval-bound` checks. Validate manual/review checks only with explicit confirmation or observable evidence.
 6. **Collect evidence.** Record exit status and concise redacted evidence. Do not paste large logs or sensitive values.
 7. **Report.** Read `shared/verification-report.md`, compute exactly one status, and return the required report or the best-effort fallback above. Failed required checks produce `failed`; skipped, blocked, missing, or inconclusive required checks prevent `verified`.
@@ -54,7 +54,7 @@ Read all local references before executing any command. Each is in this Code Smi
 
 Stop and ask when:
 
-- a command is approval-bound and the exact resolved form needs confirmation;
+- a command is `approval-bound` and the exact resolved form needs confirmation;
 - a required command cannot be discovered;
 - manual/review evidence is needed from the user;
 - inputs conflict and the conflict changes required checks or status.

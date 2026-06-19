@@ -47,7 +47,7 @@ Decide each item explicitly. Every item resolves to a concrete value or an `unkn
 3. `runtime-version`: pin from the most authoritative runtime-version signal found (version-pin file such as `.nvmrc`/`.tool-versions`/`.python-version` > manifest version directive such as `engines`/`rust-version`/the `go` line > CI/toolchain version files). Lockfiles pin dependency versions, not the runtime, so they are not a runtime-version signal. If sources disagree, the pin file wins and the conflict is a note.
 4. `build-layout`: order layers so dependency installation is cached independently of source: copy manifests and lockfiles, install dependencies, then copy source. Use a multi-stage build only when the dev image genuinely benefits (compiled toolchain vs. slim runtime); otherwise a single dev stage is simpler and correct.
 5. `dependency-install`: use the lockfile-respecting, reproducible install command for the detected package manager (`npm ci`, `pip install -r` with hashes or `poetry install`, `go mod download`, `cargo fetch`, `composer install`), not an unpinned upgrade command.
-6. `dev-affordances`: include dev dependencies, a working shell, and the project's watch/reload entrypoint. Document the expected source bind mount and the run command (or defer them to `compose.yaml`).
+6. `dev-affordances`: include dev dependencies, a working shell, and the project's watch/reload entrypoint. Document the expected source bind mount and the run command (or defer them to `compose.yaml`). When the source bind mount covers the directory where dependencies are installed in-tree (for example `node_modules`, an in-project `.venv`, or `vendor/`), add a separate volume for that subpath so the mount does not shadow the dependencies installed during the build.
 7. `backing-services`: for each service in the spec's data flow, add a `compose.yaml` service with a named volume for persistence, a healthcheck, and a non-secret default credential clearly marked as development-only. Pin the image to the tag the evidence supports; when no version is pinned by repo evidence or the spec, use a placeholder tag and add an `### Evidence needed` item rather than inventing one.
 8. `ports`: expose only the ports the spec or repo evidence justifies; map them in `compose.yaml`, not hard-coded in the Dockerfile beyond `EXPOSE` documentation.
 9. `non-root-user`: create and switch to a non-root user for the final (or only) stage; ensure bind-mounted source and caches remain writable by that user.
@@ -117,10 +117,11 @@ services:
   app:
     build: .
     volumes:
-      - .:/app        # source bind mount for hot reload
+      - .:/app                 # source bind mount for hot reload
+      - <dep-dir-volume>:/app/<in-tree-dep-dir>  # keep built deps (e.g. node_modules) from being shadowed by the mount; omit if deps install outside the mount
     ports:
       - "<host>:<container>"
-    env_file: .env    # git-ignored; never baked into the image
+    env_file: .env             # git-ignored; never baked into the image
   <service>:
     image: <image>:<pinned-tag>
     volumes:
@@ -131,13 +132,14 @@ services:
       <DEV_ONLY_CRED>: <value>   # development-only, not a real secret
 volumes:
   <named-volume>:
+  <dep-dir-volume>:           # only if an in-tree dependency dir is shadowed by the source mount
 ```
 
 Omit the `compose.yaml` section only when there are no backing services and no dev orchestration is needed; say so on the Backing services line.
 
 ### Evidence needed
 
-- <unknown>: <cheapest way to settle it (read pin file, ask for target version, check lockfile)>
+- <unknown>: <cheapest way to settle it (read a version-pin file, ask for the target version, check the service's release notes)>
 
 ### Build And Run
 
@@ -162,7 +164,7 @@ Use this reduced template only for missing or unreadable input.
 
 Verdict: BLOCK
 
-- Missing input: <no stack and no repository evidence / manifests unreadable>
+- Missing input: <no stack derivable from the request, repository evidence, or the spec / manifests unreadable>
 - Smallest addition to proceed: <name the runtime, or point to a manifest/lockfile>
 ~~~
 
@@ -185,6 +187,7 @@ Spec: a small HTTP service that reads from Postgres. Repo evidence: `package.jso
 - Running as root with no constraint requiring it.
 - `npm install`/`pip install` ignoring the lockfile, so the container drifts from the project.
 - Copying source before installing dependencies, busting the dependency cache on every code change.
+- Bind-mounting the source over an in-tree dependency directory (`node_modules`, in-project `.venv`, `vendor/`) so the mount shadows the dependencies installed during the build, leaving the container with no dependencies at runtime.
 - Emitting a production-minimized image when the request was a development environment (or vice versa) without saying which target it is.
 - Claiming the image works without naming `docker build` as the verification step.
 - Inventing a backing-service version tag instead of marking it `unknown`.

@@ -143,8 +143,9 @@ Omit the `compose.yaml` section only when there are no backing services and no d
 
 ### Build And Run
 
+- Resolve first: replace every placeholder tag and settle the `### Evidence needed` items before running; `docker compose up` will fail to pull a placeholder like `postgres:MAJOR` even though `docker compose config` parses it.
 - Build: `docker build ...` | `docker compose build`
-- Run: `docker compose up` | `docker run ...`
+- Run (after resolving placeholders): `docker compose up` | `docker run ...`
 - Verify: `docker build` succeeds and `docker compose config` is valid
 
 ### Deviations From Production

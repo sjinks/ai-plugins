@@ -15,6 +15,7 @@ Use it after input normalization and command-safety loading.
 - Run required checks first when safe.
 - Scope commands to the requested area when the repo provides a scoped command.
 - Apply `shared/verification-command-safety.md` to every command before execution.
+- For any local verification command allowed to write disposable output/cache artifacts, inspect workspace state before and after execution and confirm all changes are limited to the approved disposable directories. If source, tests, fixtures, snapshots, checked-in config, checked-in generated artifacts, lock/dependency files, or other unapproved paths change, mark the check `failed` or `blocked` and report the unexpected paths.
 - A failing required command makes the overall status `failed` unless no meaningful verification could proceed, in which case use `blocked`.
 - A skipped, blocked, missing, or inconclusive required check prevents `verified`.
 - Optional check failures do not force `failed` when all required checks pass, but they must be reported.

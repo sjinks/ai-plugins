@@ -100,5 +100,6 @@ node dev/review-forge/scripts/lint-review-forge.mjs
 - No product planning, requirements authoring, architecture decisions, or test-plan authoring.
 - No commits, branches, pushes, pull requests, or deployment.
 - No dependency installation or network access without explicit approval of the exact command.
+- Local build/test/lint/typecheck commands, including CMake configure/build/test commands, may run without repeated approval when they write only expected disposable artifacts inside workspace-local output/cache directories.
 - No raw secrets, credentials, production identifiers, customer data, or PII.
-- Test Smith v1 does not edit code, tests, fixtures, snapshots, configuration, dependency files, or generated artifacts.
+- Test Smith v1 does not edit code, tests, fixtures, snapshots, configuration, dependency files, or checked-in generated artifacts; it may create expected disposable verification artifacts inside workspace-local output/cache directories.

@@ -38,7 +38,7 @@ If local evidence shows that a command fetches dependencies, runs an install/upd
 
 ## Always Forbidden
 
-- Editing, deleting, overwriting, moving, or generating source, tests, fixtures, snapshots, checked-in configuration, checked-in generated artifacts, source-like generated files, or lock/dependency files in the workspace. Expected disposable coverage/build/test artifacts are allowed only when the command is classified `trivially-safe` under the Local Workspace-Bounded Verification criteria above.
+- Editing, deleting, overwriting, moving, or generating source, tests, fixtures, snapshots, checked-in configuration, checked-in generated artifacts, source-like generated files, or lock/dependency files in the workspace. Expected disposable coverage/build/test artifacts written inside workspace-local disposable verification output directories are allowed when the command is either classified `trivially-safe` under the Local Workspace-Bounded Verification criteria above or an exact-command-approved `approval-bound` command.
 - Creating branches, staging, committing, pushing, rewriting history, opening pull requests, or deploying.
 - Production-state or service-control commands.
 - Dependency installs, dependency publishing, and package-manager install/update commands.

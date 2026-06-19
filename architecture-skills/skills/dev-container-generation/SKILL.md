@@ -44,7 +44,7 @@ Decide each item explicitly. Every item resolves to a concrete value or an `unkn
 
 1. `base-image-selection`: choose an official or policy-approved base for the resolved runtime. Prefer the slim/bookworm-style variant a developer can still install tooling into over a fully locked-down production base.
 2. `base-image-pinning`: pin the base to the most specific tag the evidence supports (major when only a major is known; minor when a minor is known), plus a digest when a registry policy requires it. Never `latest`. Tightening below the evidence-supported level is an `### Evidence needed` item, not an invented value.
-3. `runtime-version`: pin from the most authoritative version signal found (pin file > manifest engines directive > lockfile-implied). If sources disagree, the pin file wins and the conflict is a note.
+3. `runtime-version`: pin from the most authoritative runtime-version signal found (version-pin file such as `.nvmrc`/`.tool-versions`/`.python-version` > manifest version directive such as `engines`/`rust-version`/the `go` line > CI/toolchain version files). Lockfiles pin dependency versions, not the runtime, so they are not a runtime-version signal. If sources disagree, the pin file wins and the conflict is a note.
 4. `build-layout`: order layers so dependency installation is cached independently of source: copy manifests and lockfiles, install dependencies, then copy source. Use a multi-stage build only when the dev image genuinely benefits (compiled toolchain vs. slim runtime); otherwise a single dev stage is simpler and correct.
 5. `dependency-install`: use the lockfile-respecting, reproducible install command for the detected package manager (`npm ci`, `pip install -r` with hashes or `poetry install`, `go mod download`, `cargo fetch`, `composer install`), not an unpinned upgrade command.
 6. `dev-affordances`: include dev dependencies, a working shell, and the project's watch/reload entrypoint. Document the expected source bind mount and the run command (or defer them to `compose.yaml`).
@@ -168,8 +168,8 @@ Verdict: BLOCK
 
 Spec: a small HTTP service that reads from Postgres. Repo evidence: `package.json` with `"engines": { "node": ">=22 <23" }`, `package-lock.json` present, no existing Dockerfile.
 
-- `runtime-version` resolves to Node `22` from the `engines` directive (lockfile-confirmed); base image `node:22-bookworm-slim`, pinned to the major the evidence supports, not `latest`. Tightening to a specific minor or digest is an `### Evidence needed` item, not an invented value.
-- `dependency-install` uses `npm ci` to respect `package-lock.json`, copied before source so the dependency layer caches.
+- `runtime-version` resolves to Node `22` from the `engines` directive in `package.json`; base image `node:22-bookworm-slim`, pinned to the major the evidence supports, not `latest`. Tightening to a specific minor or digest is an `### Evidence needed` item, not an invented value.
+- `dependency-install` uses `npm ci` to respect `package-lock.json` (install reproducibility only, not a runtime-version signal), copied before source so the dependency layer caches.
 - Postgres appears in the data flow with no pinned version → a `compose.yaml` `db` service using a placeholder tag `postgres:<major>` with a named volume, a healthcheck, and `POSTGRES_PASSWORD` marked development-only; the unresolved version is surfaced under `### Evidence needed` as "confirm Postgres major with the team" rather than inventing a tag.
 - `.dockerignore` excludes `node_modules`, `.git`, `.env*`, and `dist` before `COPY`.
 - Runtime stage adds a non-root `node` user; source is bind-mounted in compose for hot reload.

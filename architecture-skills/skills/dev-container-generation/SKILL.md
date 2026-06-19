@@ -1,6 +1,6 @@
 ---
 name: dev-container-generation
-description: "Use when: turning an architecture specification and repository evidence into a development-oriented container setup (Dockerfile, .dockerignore, and optional compose file): base image and pinned tag selection, dependency-layer caching, dev affordances (bind mounts, watch, dev dependencies), backing services, non-root user, healthchecks, and secret-safe configuration."
+description: "Use when: turning an architecture specification and repository evidence into a development-oriented container setup (Dockerfile, .dockerignore, and optional compose.yaml): base image and pinned tag selection, dependency-layer caching, dev affordances (bind mounts, watch, dev dependencies), backing services, non-root user, healthchecks, and secret-safe configuration."
 argument-hint: "The architecture spec or stack summary, the repository (or its manifests/lockfiles), and any dev constraints (target runtime version, backing services, registry/base-image policy)."
 user-invocable: true
 ---
@@ -34,7 +34,7 @@ Resolve conflicts in this order. Higher sources win; record overridden lower-sou
 1. Explicit current user request and dev constraints.
 2. Repository evidence: version-pin files and manifest version directives are authoritative for the runtime version; lockfiles are authoritative for dependency resolution only, not the runtime version.
 3. Architecture specification (authoritative for backing services, ports, data flow, and trust boundaries).
-4. Skill defaults below.
+4. The Decision Checklist and Rules below (their default choices when no higher source decides).
 
 When the spec names a service (for example "reads from Postgres") but no repo evidence pins a version, the service belongs in `compose.yaml` and its version is `unknown` until confirmed — surface it under `### Evidence needed` and use a syntactically valid placeholder tag (for example `postgres:MAJOR`, which keeps `docker compose config` parseable); do not invent a concrete version tag.
 
@@ -153,7 +153,7 @@ Omit the `compose.yaml` section only when there are no backing services and no d
 - Dev-only credentials and exposed ports are localhost-only; do not use the generated `compose.yaml` on shared or staging hosts.
 ~~~
 
-Empty sections are written with `None`. `Verdict: BLOCK` appears only in the insufficient-input template below.
+Empty sections are written with `None`, except `compose.yaml`, which is the one section omitted entirely when no backing services or dev orchestration are needed (per the note above). `Verdict: BLOCK` appears only in the insufficient-input template below.
 
 ## Error Handling (BLOCK Template)
 

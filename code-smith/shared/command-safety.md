@@ -4,6 +4,14 @@ This reference defines how Code Smith runs shell or terminal commands safely. It
 
 Read this before running any command. These rules are authoritative and fail-closed: when unsure, stop and ask.
 
+## Command Classes
+
+- **Trivially safe** — read-only inspection with no workspace, dependency, network, git, service, environment, or external state change.
+- **Local workspace-bounded verification** — a local verification command that satisfies every condition in the section below and is eligible to run without repeated confirmation.
+- **Approval-bound** — a command with allowed but non-trivial or unclear side effects that must be confirmed with the exact resolved command before execution.
+- **Forbidden** — a command that matches Refuse Outright or Hard Rules below, attempts a refused state mutation, or is otherwise clearly unsafe for Code Smith to run.
+- **Unknown** — a command with insufficient local evidence to classify; unknown commands do not run.
+
 ## Procedure For Every Command
 
 1. **Classify.** Decide whether the command is trivially safe, local workspace-bounded verification, approval-bound, forbidden, or unknown. Commands matching Refuse Outright or Hard Rules below, or otherwise clearly unsafe commands, are forbidden; commands matching Destructive Or Irreversible are approval-bound unless Refuse Outright or Hard Rules make them forbidden. Apply those checks before considering any no-confirm classification.

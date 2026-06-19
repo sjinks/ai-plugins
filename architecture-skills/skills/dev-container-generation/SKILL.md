@@ -48,7 +48,7 @@ Decide each item explicitly. Every item resolves to a concrete value or an `unkn
 4. `build-layout`: order layers so dependency installation is cached independently of source: copy manifests and lockfiles, install dependencies, then copy source. Use a multi-stage build only when the dev image genuinely benefits (compiled toolchain vs. slim runtime); otherwise a single dev stage is simpler and correct.
 5. `dependency-install`: use the lockfile-respecting, reproducible install command for the detected package manager (`npm ci`, `pip install -r` with hashes or `poetry install`, `go mod download`, `cargo fetch`, `composer install`), not an unpinned upgrade command.
 6. `dev-affordances`: include dev dependencies, a working shell, and the project's watch/reload entrypoint. Document the expected source bind mount and the run command (or defer them to `compose.yaml`).
-7. `backing-services`: for each service in the spec's data flow, add a `compose.yaml` service with a pinned image, a named volume for persistence, a healthcheck, and a non-secret default credential clearly marked as development-only.
+7. `backing-services`: for each service in the spec's data flow, add a `compose.yaml` service with a named volume for persistence, a healthcheck, and a non-secret default credential clearly marked as development-only. Pin the image to the tag the evidence supports; when no version is pinned by repo evidence or the spec, use a placeholder tag and add an `### Evidence needed` item rather than inventing one.
 8. `ports`: expose only the ports the spec or repo evidence justifies; map them in `compose.yaml`, not hard-coded in the Dockerfile beyond `EXPOSE` documentation.
 9. `non-root-user`: create and switch to a non-root user for the final (or only) stage; ensure bind-mounted source and caches remain writable by that user.
 10. `healthcheck`: add a `HEALTHCHECK` (or compose-level healthcheck) tied to a real readiness signal when the service exposes one.
@@ -170,7 +170,7 @@ Spec: a small HTTP service that reads from Postgres. Repo evidence: `package.jso
 
 - `runtime-version` resolves to Node `22` from the `engines` directive (lockfile-confirmed); base image `node:22-bookworm-slim`, pinned to the major the evidence supports, not `latest`. Tightening to a specific minor or digest is an `### Evidence needed` item, not an invented value.
 - `dependency-install` uses `npm ci` to respect `package-lock.json`, copied before source so the dependency layer caches.
-- Postgres appears in the data flow with no pinned version → a `compose.yaml` `db` service on `postgres:16` with a named volume, a healthcheck, and `POSTGRES_PASSWORD` marked development-only; the exact major is surfaced under `### Evidence needed` as "confirm Postgres major with the team".
+- Postgres appears in the data flow with no pinned version → a `compose.yaml` `db` service using a placeholder tag `postgres:<major>` with a named volume, a healthcheck, and `POSTGRES_PASSWORD` marked development-only; the unresolved version is surfaced under `### Evidence needed` as "confirm Postgres major with the team" rather than inventing a tag.
 - `.dockerignore` excludes `node_modules`, `.git`, `.env*`, and `dist` before `COPY`.
 - Runtime stage adds a non-root `node` user; source is bind-mounted in compose for hot reload.
 - `### Deviations From Production`: dev dependencies installed and source mounted — a production image would use `npm ci --omit=dev` and copy a built artifact instead.

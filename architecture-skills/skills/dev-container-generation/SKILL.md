@@ -36,7 +36,7 @@ Resolve conflicts in this order. Higher sources win; record overridden lower-sou
 3. Architecture specification (authoritative for backing services, ports, data flow, and trust boundaries).
 4. Skill defaults below.
 
-When the spec names a service (for example "reads from Postgres") but no repo evidence pins a version, the service belongs in `compose.yaml` and its version is `unknown` until confirmed — surface it under `### Evidence needed` and use an explicit placeholder tag (for example `postgres:<major>`); do not invent a concrete version tag.
+When the spec names a service (for example "reads from Postgres") but no repo evidence pins a version, the service belongs in `compose.yaml` and its version is `unknown` until confirmed — surface it under `### Evidence needed` and use a syntactically valid placeholder tag (for example `postgres:MAJOR`, which keeps `docker compose config` parseable); do not invent a concrete version tag.
 
 ## Decision Checklist
 
@@ -56,7 +56,7 @@ Decide each item explicitly. Every item resolves to a concrete value or an `unkn
 
 ## Rules
 
-- Pin every image to the most specific tag the evidence supports; `latest` is never an acceptable resolution. When no version can be resolved, use an explicit placeholder tag (for example `postgres:<major>`) and record the unresolved version under `### Evidence needed`; never substitute a guessed concrete tag.
+- Pin every image to the most specific tag the evidence supports; `latest` is never an acceptable resolution. When no version can be resolved, use a syntactically valid placeholder tag (for example `postgres:MAJOR`, not `postgres:<major>`, so `docker compose config` still parses) and record the unresolved version under `### Evidence needed`; never substitute a guessed concrete tag.
 - No secrets in the image. Never bake credentials, tokens, private keys, or `.env` contents into `ARG`, `ENV`, or any layer. Secrets enter at runtime via compose `environment`/`env_file` (git-ignored) or mounted files. Build secrets that are unavoidable use BuildKit `--mount=type=secret`, never `ARG`.
 - A `.dockerignore` must exist and exclude env files and every repo-specific secret-bearing path (not just `.env*`) before any broad `COPY . .`. Scan repo evidence for secret paths beyond `.env`; a broad copy without a `.dockerignore` that covers the actual secret set is a finding, not an acceptable output.
 - The final (or only) stage runs as a non-root user unless a named dev constraint requires root; recommending root without that driver is a finding against the recommendation. This applies to single-stage Dockerfiles too.
@@ -174,7 +174,7 @@ Spec: a small HTTP service that reads from Postgres. Repo evidence: `package.jso
 
 - `runtime-version` resolves to Node `22` from the `engines` directive in `package.json`; base image `node:22-bookworm-slim`, pinned to the major the evidence supports, not `latest`. Tightening to a specific minor or digest is an `### Evidence needed` item, not an invented value.
 - `dependency-install` uses `npm ci` to respect `package-lock.json` (install reproducibility only, not a runtime-version signal), copied before source so the dependency layer caches.
-- Postgres appears in the data flow with no pinned version → a `compose.yaml` `db` service using a placeholder tag `postgres:<major>` with a named volume, a healthcheck, and `POSTGRES_PASSWORD` marked development-only; the unresolved version is surfaced under `### Evidence needed` as "confirm Postgres major with the team" rather than inventing a tag.
+- Postgres appears in the data flow with no pinned version → a `compose.yaml` `db` service using a syntactically valid placeholder tag `postgres:MAJOR` with a named volume, a healthcheck, and `POSTGRES_PASSWORD` marked development-only; the unresolved version is surfaced under `### Evidence needed` as "confirm Postgres major with the team" rather than inventing a tag.
 - `.dockerignore` excludes `node_modules`, `.git`, `.env*`, and `dist` before `COPY`.
 - Runtime stage adds a non-root `node` user; source is bind-mounted in compose for hot reload.
 - `### Deviations From Production`: dev dependencies installed and source mounted — a production image would use `npm ci --omit=dev` and copy a built artifact instead.

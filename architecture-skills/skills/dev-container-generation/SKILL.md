@@ -32,7 +32,7 @@ This skill is advisory: it produces the plan. Running `docker build` / `docker c
 Resolve conflicts in this order. Higher sources win; record overridden lower-source signals as notes, not as silent drops.
 
 1. Explicit current user request and dev constraints.
-2. Repository evidence (lockfiles and version-pin files are authoritative for the runtime version).
+2. Repository evidence: version-pin files and manifest version directives are authoritative for the runtime version; lockfiles are authoritative for dependency resolution only, not the runtime version.
 3. Architecture specification (authoritative for backing services, ports, data flow, and trust boundaries).
 4. Skill defaults below.
 
@@ -87,6 +87,8 @@ Return the report below. The fenced `dockerfile`, plain, and `yaml` blocks insid
 ```dockerfile
 # pinned base; never latest
 FROM <image>:<pinned-tag>
+# working directory shared with the compose bind mount
+WORKDIR /app
 # copy manifests + lockfile first so the dependency layer caches
 COPY <manifests> <lockfile> ./
 RUN <lockfile-respecting install>

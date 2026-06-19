@@ -6,10 +6,10 @@ Read this before running any command. These rules are authoritative and fail-clo
 
 ## Procedure For Every Command
 
-1. **Classify.** Decide whether the command is trivially safe, local workspace-bounded verification, approval-bound, or forbidden.
+1. **Classify.** Decide whether the command is trivially safe, local workspace-bounded verification, approval-bound, forbidden, or unknown.
 2. **Resolve.** Expand globs only when their expansion is already known and safe. Do not execute command substitutions to resolve them; if a substitution cannot be resolved safely from existing evidence, treat the command as non-trivial and ask the user to confirm the exact resolved form. Do not expand secret-bearing variables to their literal values; keep the variable name and note it is a secret (see Hard Rules).
 3. **Bind the decision.** A no-confirm classification applies only to the exact resolved command, working directory, relevant environment/options, output paths, targets, and current local evidence used to classify it. Reclassify when any of those change, or when relevant scripts, manifests, CMake/build files, lock/dependency files, tool configuration, or output paths change.
-4. **Confirm if needed.** If the command is approval-bound, destructive, or irreversible (see list), stop and ask the user for explicit confirmation of the exact resolved command before running it.
+4. **Confirm, refuse, or block.** If the command is forbidden, refuse it. If the command is unknown, ask for clarification or report it blocked. If the command is approval-bound, destructive, or irreversible (see list), stop and ask the user for explicit confirmation of the exact resolved command before running it.
 5. **Restate.** Before running any local workspace-bounded verification or approval-bound command, restate the resolved command form you are about to execute. Mask any secret-bearing values; never echo secrets.
 6. **Run** only after the above. Trivially safe and local workspace-bounded verification commands may run without confirmation; approval-bound commands require confirmation first.
 
@@ -36,6 +36,10 @@ If local evidence shows, or cannot rule out for scripted/package-manager/languag
 ## Approval-Bound (confirm exact command first)
 
 Commands with unclear side effects, external output paths, optional network/scanner behavior, or verification effects that exceed local disposable outputs require explicit approval of the exact resolved command unless they are forbidden outright.
+
+## Unknown (ask or report blocked)
+
+Commands with insufficient local evidence to classify must not run. Ask for clarification or report the affected check blocked; do not treat an unknown command as approval-bound unless the exact command and side-effect boundaries can be resolved.
 
 ## Destructive Or Irreversible (always stop and confirm)
 

@@ -12,7 +12,7 @@ Both agents are deliberately conservative: they preserve scope, own their comman
 - `agents/code-smith.agent.md` — the implementation agent: intake → scope-lock → implement → verify → self-review → report. Does not plan, commit, push, open pull requests, or deploy.
 - `agents/test-smith.agent.md` — the run-only verification agent: intake → command safety → discovery → execution/manual validation → report. Does not edit code, tests, fixtures, snapshots, configuration, git history, pull requests, or deployments.
 - `shared/handoff-contract.md` — the canonical contract fields and how the three input forms are normalized onto them.
-- `shared/command-safety.md` — the self-contained command-safety procedure (classify → resolve → confirm → restate → run) and the destructive-action list.
+- `shared/command-safety.md` — the self-contained command-safety procedure (classify → resolve → bind → confirm/refuse/block → restate → run) and the destructive-action list.
 - `shared/self-review-checklist.md` — the done-gate self-review checklist.
 - `shared/completion-report.md` — the required completion-report shape and status rules.
 - `shared/verification-input-contract.md` — Test Smith input forms and normalized verification fields.
@@ -51,9 +51,9 @@ If no IDs are present, Test Smith uses prose result labels and does not invent I
 ## Test Smith Workflow
 
 1. **Intake** — normalize inputs and preserve existing IDs.
-2. **Command safety** — classify commands as safe, approval-bound, forbidden, or unknown.
+2. **Command safety** — classify commands as `trivially-safe`, `approval-bound`, `forbidden`, or `unknown`.
 3. **Discovery** — find local repo-supported verification commands with read/search.
-4. **Execute or validate** — run only safe or approved checks; validate manual/review checks from structured evidence.
+4. **Execute or validate** — run only `trivially-safe` checks or exact-command-approved `approval-bound` checks; validate manual/review checks from structured evidence.
 5. **Report** — return exactly one `verified | partial | failed | blocked` status with mapped results and limitations.
 
 ## Shared References
@@ -98,8 +98,8 @@ node dev/review-forge/scripts/lint-review-forge.mjs
 
 - Implementation and run-only verification only, from supplied planning or verification inputs.
 - No product planning, requirements authoring, architecture decisions, or test-plan authoring.
-- No commits, branches, pushes, pull requests, or deployment.
-- No dependency installation or network access without explicit approval of the exact command.
-- Local build/test/lint/typecheck commands, including CMake configure/build/test commands, may run without repeated approval only under the `shared/command-safety.md` Local Workspace-Bounded Verification rules, including local evidence inspection and before/after workspace-state checks.
+- No state-mutating git, pull request, or deploy actions, including branch creation/deletion, staging, committing, pushing, tagging, rebasing/history rewrite, checkout/switch/restore that changes state, reset, clean, submodule deinitialization, pull request actions, or deployment.
+- Code Smith requires exact-command approval for dependency installation or network access; Test Smith forbids dependency installs and package-manager install/update commands, while requested non-mutating network/scanner checks require exact-command approval under verification command safety.
+- Local build/test/lint/typecheck commands, including CMake configure/build/test commands, may run without repeated approval only after local evidence inspection and before/after workspace-state checks: Code Smith uses `shared/command-safety.md` Local Workspace-Bounded Verification, and Test Smith uses `shared/verification-command-safety.md` classification as `trivially-safe`.
 - No raw secrets, credentials, production identifiers, customer data, or PII.
-- Test Smith v1 does not edit code, tests, fixtures, snapshots, configuration, dependency files, or checked-in generated artifacts; it may create expected disposable verification artifacts inside workspace-local output/cache directories.
+- Test Smith v1 does not edit code, tests, fixtures, snapshots, checked-in configuration, dependency manifests, lock files, checked-in generated artifacts, or source-like generated files; it may create expected disposable verification artifacts inside workspace-local output/cache directories.

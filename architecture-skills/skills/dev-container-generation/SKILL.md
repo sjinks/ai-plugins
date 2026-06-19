@@ -36,7 +36,7 @@ Resolve conflicts in this order. Higher sources win; record overridden lower-sou
 3. Architecture specification (authoritative for backing services, ports, data flow, and trust boundaries).
 4. Skill defaults below.
 
-When the spec names a service (for example "reads from Postgres") but no repo evidence pins a version, the service belongs in `compose.yaml` and its version is `unknown` until confirmed — surface it under `### Evidence needed`, do not invent a tag.
+When the spec names a service (for example "reads from Postgres") but no repo evidence pins a version, the service belongs in `compose.yaml` and its version is `unknown` until confirmed — surface it under `### Evidence needed` and use an explicit placeholder tag (for example `postgres:<major>`); do not invent a concrete version tag.
 
 ## Decision Checklist
 

@@ -16,6 +16,7 @@
         "dependencies",
         "failure modes",
         "migrations",
+        "container",
         "containers",
         "docker",
         "plugin"

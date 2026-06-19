@@ -1,6 +1,6 @@
 {
     "name": "architecture-skills",
-    "description": "Architecture and design workflow skills for AI agents: recording decisions, comparing tradeoffs, designing interface contracts, reviewing dependency choices, designing failure behavior, building type-safe designs, and planning safe data migrations.",
+    "description": "Architecture and design workflow skills for AI agents: recording decisions, comparing tradeoffs, designing interface contracts, reviewing dependency choices, designing failure behavior, building type-safe designs, planning safe data migrations, and generating development containers.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",
@@ -16,6 +16,8 @@
         "dependencies",
         "failure modes",
         "migrations",
+        "containers",
+        "docker",
         "plugin"
     ]
 }

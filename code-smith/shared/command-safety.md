@@ -6,20 +6,21 @@ Read this before running any command. These rules are authoritative and fail-clo
 
 ## Command Classes
 
-- **`trivially-safe`** — read-only inspection with no workspace, dependency, network, git, service, environment, or external state change.
-- **`local workspace-bounded verification`** — a local verification command that satisfies every condition in the section below and is eligible to run without repeated confirmation.
+- **`trivially-safe`** — read-only inspection with no workspace, dependency, network, git, service, environment, or external state change, or a Local Workspace-Bounded Verification command that meets every condition in that section below.
 - **`approval-bound`** — a command with allowed but non-trivial or unclear side effects that must be confirmed with the exact resolved command before execution.
 - **`forbidden`** — a command that matches Refuse Outright or Hard Rules below, attempts a refused state mutation, or is otherwise clearly unsafe for Code Smith to run.
 - **`unknown`** — a command with insufficient local evidence to classify; `unknown` commands do not run.
 
+Local Workspace-Bounded Verification is not a separate classification: a command that meets every condition in that section is classified `trivially-safe`; one that does not is `approval-bound`, `forbidden`, or `unknown`.
+
 ## Procedure For Every Command
 
-1. **Classify.** Decide whether the command is `trivially-safe`, `local workspace-bounded verification`, `approval-bound`, `forbidden`, or `unknown`. Commands matching Refuse Outright or Hard Rules below, or otherwise clearly unsafe commands, are `forbidden`; commands matching Destructive Or Irreversible are `approval-bound` unless Refuse Outright or Hard Rules make them `forbidden`. Apply those checks before considering any no-confirm classification.
+1. **Classify.** Decide whether the command is `trivially-safe`, `approval-bound`, `forbidden`, or `unknown`. A command that meets every Local Workspace-Bounded Verification condition below is `trivially-safe`. Commands matching Refuse Outright or Hard Rules below, or otherwise clearly unsafe commands, are `forbidden`; commands matching Destructive Or Irreversible are `approval-bound` unless Refuse Outright or Hard Rules make them `forbidden`. Apply those checks before considering any no-confirm classification.
 2. **Resolve.** Expand globs only when their expansion is already known and safe. Do not execute command substitutions, backticks, process substitutions, `eval`, or generated command fragments to resolve a command; if a substitution or generated fragment cannot be resolved safely from existing evidence, treat the command as `unknown`. Do not expand secret-bearing variables to their literal values; keep the variable name and note it is a secret (see Hard Rules).
 3. **Bind the decision.** A no-confirm classification applies only to the exact resolved command, working directory, relevant environment/options, output paths, targets, and current local evidence used to classify it. Reclassify when any of those change, or when relevant scripts, manifests, CMake/build files, lock/dependency files, tool configuration, or output paths change.
 4. **Confirm, refuse, or block.** If the command is `forbidden`, refuse it. If the command is `unknown`, ask for clarification or report it blocked. If the command is `approval-bound`, destructive, or irreversible (see list), stop and ask the user for explicit confirmation of the exact resolved command before running it.
-5. **Restate.** Before running any `local workspace-bounded verification` or `approval-bound` command, restate the resolved command form you are about to execute. Mask any secret-bearing values; never echo secrets.
-6. **Run** only after the above. `trivially-safe` and `local workspace-bounded verification` commands may run without confirmation; `approval-bound` commands require confirmation first.
+5. **Restate.** Before running any Local Workspace-Bounded Verification command or `approval-bound` command, restate the resolved command form you are about to execute. Mask any secret-bearing values; never echo secrets.
+6. **Run** only after the above. `trivially-safe` commands, including Local Workspace-Bounded Verification commands that meet every condition below, may run without confirmation; `approval-bound` commands require confirmation first.
 
 ## Trivially Safe (run without confirmation)
 
@@ -27,15 +28,15 @@ Read-only inspection that does not modify the workspace, install anything, or co
 
 ## Local Workspace-Bounded Verification (run without confirmation)
 
-Local build, test, lint, typecheck, static-analysis, or code-generation commands may run without repeated confirmation when all of these are true:
+Local build, test, lint, typecheck, static-analysis, or code-generation commands are classified `trivially-safe` and may run without repeated confirmation when all of these are true:
 
-- The command is discovered from repository configuration or explicitly requested by the user for verification.
+- The command is discovered from repository configuration or explicitly requested by the user for verification. A user request to run a command for verification does not reduce the evidence-inspection requirement below; every other condition still applies.
 - All writes are limited to expected disposable verification outputs inside the workspace, such as `build/`, `cmake-build-*`, `.pytest_cache/`, coverage output, test caches, compiled objects, binaries, or generated project files in an explicit disposable output directory.
 - The command does not edit source files, tests, fixtures, snapshots, checked-in configuration, checked-in generated artifacts, source-like generated files, dependency manifests, lock files, git state, PR/deploy state, production/service state, or paths outside the workspace.
 - The command does not install dependencies, invoke package-manager install/update commands, publish packages, contact the network, request secrets, or print secret-bearing values.
-- Any output directory is explicit or can be safely inferred as a workspace-local disposable directory that is ignored, untracked, or documented as disposable.
+- Any output directory is explicit and confirmed to be a workspace-local disposable directory — git-ignored, untracked, or documented as disposable — rather than inferred from its name. A code-generation command qualifies only when its output lands in such a confirmed disposable directory and never in the source tree or checked-in generated files.
 - For package-manager commands, language-tool commands, build-system commands, and repository scripts, absence of known unsafe evidence is not enough. First inspect the relevant local scripts, manifests, lock/dependency files, build configuration, generated build graph when present, tool configuration, and available cache/state evidence well enough to establish that the command will not install, update, fetch, publish, contact the network, control services, use external output paths, or update checked-in files. Use `unknown` when exact side effects or boundaries cannot be established; use `approval-bound` only when the command is fully resolved and the possible side effects are known, bounded, and allowed with approval.
-- For local workspace-bounded verification commands that can write disposable outputs, inspect workspace state before and after execution. If the command changes anything outside the disposable output/cache directories identified as expected for that command during classification, treat the verification as failed or blocked and report the unexpected change.
+- For Local Workspace-Bounded Verification commands that can write disposable outputs, inspect workspace state before and after execution. If the command changes anything outside the disposable output/cache directories identified as expected for that command during classification, treat the verification as failed or blocked and report the unexpected change. This before/after check only detects in-workspace file changes; it does not detect network, service-control, secret-exposure, or external-path effects, so any residual doubt about those effects forces `unknown` rather than a no-confirm classification.
 
 Examples that may run without repeated confirmation when they satisfy the rules above: `cmake -S . -B build`, `cmake --build build`, `ctest --test-dir build`, `ninja -C build`, `make -C build`, `npm test`, `npm run lint`, `pytest`, `go test ./...`, and `cargo test`.
 

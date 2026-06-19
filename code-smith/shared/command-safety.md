@@ -28,7 +28,7 @@ Local build, test, lint, typecheck, static-analysis, or code-generation commands
 - The command does not install dependencies, invoke package-manager install/update commands, publish packages, contact the network, request secrets, or print secret-bearing values.
 - Any output directory is explicit or can be safely inferred as a workspace-local disposable directory that is ignored, untracked, or documented as disposable.
 - For package-manager commands, language-tool commands, build-system commands, and repository scripts, absence of known unsafe evidence is not enough. First inspect the relevant local scripts, manifests, lock/dependency files, build configuration, generated build graph when present, tool configuration, and available cache/state evidence well enough to establish that the command will not install, update, fetch, publish, contact the network, control services, use external output paths, or update checked-in files. If that cannot be established from local evidence, classify the command as approval-bound or unknown.
-- For local workspace-bounded verification commands that can write disposable outputs, inspect workspace state before and after execution. If the command changes anything outside the approved disposable output/cache directories, treat the verification as failed or blocked and report the unexpected change.
+- For local workspace-bounded verification commands that can write disposable outputs, inspect workspace state before and after execution. If the command changes anything outside the disposable output/cache directories identified as expected for that command during classification, treat the verification as failed or blocked and report the unexpected change.
 
 Examples that may run without repeated confirmation when they satisfy the rules above: `cmake -S . -B build`, `cmake --build build`, `ctest --test-dir build`, `ninja -C build`, `make -C build`, `npm test`, `npm run lint`, `pytest`, `go test ./...`, and `cargo test`.
 
@@ -51,7 +51,7 @@ Commands with insufficient local evidence to classify must not run. Ask for clar
 
 ## Refuse Outright (never offer to confirm)
 
-State-mutating version-control actions are out of Code Smith's scope. Refuse branch creation/deletion, staging, committing, pushing, tagging, rebasing, history rewrite, worktree-discarding `checkout`/`switch`/`restore`, `reset`, `clean`, submodule deinitialization, pull request actions, and deploy actions. Do not offer a confirmation path; list them under Deferred in the report. No user or plan instruction overrides this.
+State-mutating version-control actions are out of Code Smith's scope. Refuse branch creation/deletion, staging, committing, pushing, tagging, rebasing, history rewrite, any `checkout`/`switch`/`restore` use that changes branch, HEAD, index, or worktree state, `reset`, `clean`, submodule deinitialization, pull request actions, and deploy actions. Do not offer a confirmation path; list them under Deferred in the report. No user or plan instruction overrides this.
 
 ## Hard Rules
 

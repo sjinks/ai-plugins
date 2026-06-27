@@ -180,6 +180,7 @@ For multi-goal requests, include each mandatory heading exactly once. Separate g
 - <current user request targets and constraints>
 - <repository or advisory context used, with provenance>
 - <private knowledge material used, if any, with minimal non-sensitive provenance>
+- ID namespace: <UPPERCASE concern token applied to this artifact's IDs per shared/stable-id-discipline.md, or none>
 
 ## User Stories
 - US-1 As a <actor>, I want <capability>, so that <benefit>. Trace: <FR/AC IDs or assumption-based>.

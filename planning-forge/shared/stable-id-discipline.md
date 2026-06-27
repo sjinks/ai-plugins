@@ -33,7 +33,7 @@ A single project may grow several specifications, architectures, or test plans (
 
 - When a new artifact joins a project that already has an artifact of the same kind, give the new artifact a short concern prefix on every ID (for example `C-FR-*` for a client concern, `P-FR-*` for performance, `H-FR-*` for hardening), instead of restarting the base prefixes at `1`.
 - Keep the original artifact's unprefixed IDs unchanged; introducing namespaces is not a reason to renumber existing items.
-- Choose a stable, lowercase-or-uppercase concern token tied to the concern, not to the document filename, so the namespace survives a rename or merge.
+- Choose a stable concern token (lowercase or uppercase) tied to the concern, not to the document filename, so the namespace survives a rename or merge.
 - Record the chosen namespace once near the top of the artifact and in the ID change summary so downstream agents resolve references unambiguously.
 - The first/only artifact of a kind in a project may keep the bare prefixes; add a namespace as soon as a second same-kind artifact appears.
 - When consolidating sources that each already carry bare (unprefixed) IDs, exactly one source keeps its bare IDs and every other source receives a concern prefix. Choose the source that keeps bare IDs deterministically: the one the user designates; else the one already referenced by the most downstream artifacts; else the largest by item count; ties broken by the source supplied first. Record the choice in the ID change summary.

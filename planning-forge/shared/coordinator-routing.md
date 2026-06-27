@@ -137,7 +137,7 @@ Instructions:
   (see shared/stable-id-discipline.md, Project-Scoped ID Namespaces); never drop
   or renumber a source item to resolve a collision.
 - Reconcile against the current source tree where the artifacts claim to reflect
-  implementation (see shared/spec-discovery.md, Reconcile Against Current Source).
+  implementation (see shared/spec-discovery.md, Reconcile Against Current Source Check).
 - De-duplicate repeated rationale/sections; keep a single open-questions ledger.
 - Mark each superseded source artifact for removal and record the merge in the
   ID change summary (Consolidated: ...).

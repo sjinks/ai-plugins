@@ -120,6 +120,7 @@ Return all core sections below in order. Do not omit core sections. When a secti
 - <repository test context used, with provenance>
 - <private knowledge material used, if any, with minimal non-sensitive provenance>
 - <external public docs used, with source/version/date when relevant>
+- ID namespace: <UPPERCASE concern token applied to this artifact's IDs per shared/stable-id-discipline.md, or none>
 
 ## Coverage Matrix
 - <US/FR/NFR/AC/D-ID/interface/edge/risk>: covered by <TC IDs | manual check | review check | gap>.

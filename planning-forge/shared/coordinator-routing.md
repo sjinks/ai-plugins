@@ -122,7 +122,7 @@ Instructions:
 
 ### `consolidate-artifacts` → matching specialist
 
-Route to the specialist that owns the artifact kind being merged (Specification Planner for specs, Architecture Planner for architectures, Test Planner for test plans). Require that the artifacts to merge already exist; if only one exists, treat as `amend-spec`/an in-place revision instead.
+Route to the specialist that owns the artifact kind being merged (Specification Planner for specs, Architecture Planner for architectures, Test Planner for test plans). Require that the artifacts to merge already exist; if only one exists, treat it as an in-place revision of that artifact kind instead, routed to its owning specialist (a single spec uses `amend-spec` to the Specification Planner; a single architecture or test plan goes back to the Architecture Planner or Test Planner for an in-place revision).
 
 ```
 Consolidate the following same-kind planning artifacts into a single artifact.

@@ -31,7 +31,7 @@ Notes:
 
 A single project may grow several specifications, architectures, or test plans (for example one per feature or concern). When more than one artifact of the same kind can coexist in a project, each `FR-1`/`AC-1`/`D-1` restarting at `1` makes cross-artifact references ambiguous and makes later consolidation lossy.
 
-- When a new artifact joins a project that already has an artifact of the same kind, give the new artifact a short concern prefix on every ID (for example `C-FR-*` for a client concern, `P-FR-*` for performance, `H-FR-*` for hardening), instead of restarting the base prefixes at `1`.
+- When a new artifact joins a project that already has an artifact of the same kind, prepend a short concern token to the existing base prefix on every ID (for example `C-FR-1` for a client concern, `P-FR-1` for performance, `H-FR-1` for hardening) instead of restarting bare IDs at `1`. The concern token is a namespace prepended to a taxonomy prefix, not a new base prefix, so it does not require a taxonomy or output-format change; numbering still starts at `1` within each namespace (`<NS>-FR-1`, `<NS>-FR-2`).
 - Keep the original artifact's unprefixed IDs unchanged; introducing namespaces is not a reason to renumber existing items.
 - Choose a stable concern token (lowercase or uppercase) tied to the concern, not to the document filename, so the namespace survives a rename or merge.
 - Record the chosen namespace once near the top of the artifact and in the ID change summary so downstream agents resolve references unambiguously.

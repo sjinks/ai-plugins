@@ -158,7 +158,7 @@ If a task would likely produce an oversized review, split it by user-visible sli
 
 ## Output Format
 
-Return all sections below in order. Do not omit sections. When a section is empty, write `None - <rationale>` or `Not applicable - <rationale>`.
+Return all sections below in order. Do not omit sections, except `## ID Change Summary`, which is emitted only on revisions/consolidations as described below. When a section is empty, write `None - <rationale>` or `Not applicable - <rationale>`.
 
 For multi-goal requests, include each mandatory heading exactly once. Separate goal-specific content inside affected sections with goal-labeled bullets, and put unresolved or blocked goals under Open Questions.
 
@@ -231,9 +231,17 @@ Acceptance criteria must not introduce behavior absent from Goal, In Scope, FRs,
 - Acceptance criteria: <AC IDs covered>
 - Verification: <unit, integration, end-to-end, static, review, or manual validation expected>
 - Notes / risks: <important caveats or None>
+
+## ID Change Summary
+- Added: <ids or none>
+- Updated: <ids or none>
+- Deferred: <ids or none>
+- Superseded: <old -> new, or none>
+- Removed: <ids or none>
+- Consolidated: <which artifacts were merged into this one, or none>
 ```
 
-For `blocked`, set `Task Split Decision` to `blocked` unless a ready discovery or clarification task is useful. For `single-task`, include exactly one implementation task that covers the ready scope. For `split-tasks`, include ordered tasks with dependencies.
+Emit `## ID Change Summary` on any revision, amendment, open-question resolution, or consolidation; omit it only on the first creation of a brand-new specification. On a consolidation, emit it even when no IDs changed (see `shared/stable-id-discipline.md`). For `blocked`, set `Task Split Decision` to `blocked` unless a ready discovery or clarification task is useful. For `single-task`, include exactly one implementation task that covers the ready scope. For `split-tasks`, include ordered tasks with dependencies.
 
 ## Quality Bar
 

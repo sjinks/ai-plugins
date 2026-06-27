@@ -17,6 +17,7 @@ Classify each user message as exactly one of:
 - `new-session` — a new feature, bug, project, or product idea with no reference to an existing planning artifact.
 - `amend-spec` — adds or changes requirements, constraints, corrections, or scope clarifications for an existing spec.
 - `answer-open-questions` — answers previously listed open questions.
+- `consolidate-artifacts` — asks to merge, unify, or de-duplicate several existing same-kind artifacts (for example many specs into one), or to amend an existing artifact in place rather than create another alongside it.
 - `readiness-check` — asks whether the plan is ready, complete, blocked, or safe to hand off.
 - `architecture-request` — explicitly asks for architecture, design, technical plan, or decomposition.
 - `test-plan-request` — explicitly asks for tests, QA plan, coverage, test matrix, fixtures, mocks, or validation strategy.
@@ -37,6 +38,7 @@ When a message carries more than one intent, classify the primary actionable int
 | `new-session` | Specification Planner | none |
 | `amend-spec` | Specification Planner | none |
 | `answer-open-questions` | Specification Planner | none |
+| `consolidate-artifacts` | matching specialist for the artifact kind (Specification Planner for specs, Architecture Planner for architectures, Test Planner for test plans) | the artifacts to merge already exist |
 | `readiness-check` | (no routing) report readiness | none |
 | `architecture-request` | Architecture Planner | spec readiness gate |
 | `test-plan-request` | Test Planner | spec exists |
@@ -117,6 +119,32 @@ Instructions:
   order), plus the remaining Open Questions section and an ID change summary.
 - Do not redesign architecture. Do not implement code.
 ```
+
+### `consolidate-artifacts` → matching specialist
+
+Route to the specialist that owns the artifact kind being merged (Specification Planner for specs, Architecture Planner for architectures, Test Planner for test plans). Require that the artifacts to merge already exist; if only one exists, treat as `amend-spec`/an in-place revision instead.
+
+```
+Consolidate the following same-kind planning artifacts into a single artifact.
+
+Artifacts to merge:
+{{ARTIFACT_LIST_OR_CONTENT}}
+
+Instructions:
+- Produce one merged artifact in your standard output format; do not leave the
+  sources as separate documents.
+- Preserve every source ID. Re-namespace colliding IDs with a per-concern prefix
+  (see shared/stable-id-discipline.md, Project-Scoped ID Namespaces); never drop
+  or renumber a source item to resolve a collision.
+- Reconcile against the current source tree where the artifacts claim to reflect
+  implementation (see shared/spec-discovery.md, Reconcile Against Current Source).
+- De-duplicate repeated rationale/sections; keep a single open-questions ledger.
+- Mark each superseded source artifact for removal and record the merge in the
+  ID change summary (Consolidated: ...).
+- Do not change product scope or invent new items while merging.
+```
+
+After the merged artifact is produced and the user asks to publish, the Planning Document Publisher writes the merged file and marks the superseded sources for deletion (it does not delete unrequested files on its own).
 
 ### `architecture-request` → Architecture Planner (gated)
 

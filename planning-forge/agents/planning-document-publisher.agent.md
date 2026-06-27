@@ -60,6 +60,8 @@ If the user explicitly asks to start implementation from the planning documents,
 - Strip transient chat/tool chatter unless explicitly requested; keep substantive provenance.
 - If multiple artifacts are supplied, create separate files and an `index.md` when it improves discoverability.
 - If updating an existing artifact, preserve unrelated content and make a focused update.
+- Prefer cross-references that survive a rename: reference companion artifacts by a stable role ("the source specification") or a doc id rather than a hardcoded full path, so a later rename or merge does not break links.
+- When publishing a consolidated artifact that supersedes existing same-kind documents, write the merged file and mark each superseded source for removal in the report; remove a superseded source only when the user (or the invoking agent on the user's behalf) approved replacing that exact file. Never delete unrelated documents.
 
 ## Procedure
 

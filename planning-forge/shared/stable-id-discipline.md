@@ -27,6 +27,16 @@ Notes:
 - Risks are prose today; there is no `RISK-` prefix. Do not instruct any agent to emit risk IDs.
 - Do not introduce a new prefix without first updating the owning agent's output format.
 
+## Project-Scoped ID Namespaces
+
+A single project may grow several specifications, architectures, or test plans (for example one per feature or concern). When more than one artifact of the same kind can coexist in a project, each `FR-1`/`AC-1`/`D-1` restarting at `1` makes cross-artifact references ambiguous and makes later consolidation lossy.
+
+- When a new artifact joins a project that already has an artifact of the same kind, give the new artifact a short concern prefix on every ID (for example `C-FR-*` for a client concern, `P-FR-*` for performance, `H-FR-*` for hardening), instead of restarting the base prefixes at `1`.
+- Keep the original artifact's unprefixed IDs unchanged; introducing namespaces is not a reason to renumber existing items.
+- Choose a stable, lowercase-or-uppercase concern token tied to the concern, not to the document filename, so the namespace survives a rename or merge.
+- Record the chosen namespace once near the top of the artifact and in the ID change summary so downstream agents resolve references unambiguously.
+- The first/only artifact of a kind in a project may keep the bare prefixes; add a namespace as soon as a second same-kind artifact appears.
+
 ## Core Rules
 
 ### Preserve IDs
@@ -66,7 +76,10 @@ Every revision that changes IDs must return an ID change summary:
 - Deferred: <ids or none>
 - Superseded: <old -> new, or none>
 - Removed: <ids or none>
+- Consolidated: <which artifacts were merged into this one, or none>
 ```
+
+When merging multiple same-kind artifacts into one, preserve every source ID. Re-namespace colliding IDs per the project-scoped rules above rather than dropping or renumbering them, and record the merge in `Consolidated`.
 
 ## Required Handoff Instructions
 

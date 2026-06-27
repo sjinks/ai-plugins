@@ -12,6 +12,9 @@ Use it before returning a planning artifact. Fold fixes into the agent's normal 
 - What scope change is hidden as an assumption?
 - What verification claim is not observable through the selected seam, command, manual review, or documented invariant?
 - What artifact should be split, blocked, or marked partial instead of treated as ready?
+- What volatile literal (test count, allocation/throughput figure, file count) is baked into prose where it will rot? Prefer "the full suite" or one pinned baseline section.
+- What cross-reference uses a hardcoded file path that would break on a rename or merge? Prefer a stable role reference ("the source specification") or a doc id.
+- When the artifact claims to reflect current source, was it reconciled against the live tree (extensions, names, dependencies, enumerators) rather than copied from a prior artifact?
 
 ## Specification Checks
 

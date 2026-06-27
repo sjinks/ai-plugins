@@ -32,7 +32,7 @@ Use this check whenever a specification is amended from, or claims to reflect, a
 - Verify file extensions, target/example names, dependency lists, public type/option names, and enumerator sets against the live tree rather than copying them from a prior artifact.
 - Treat baked-in counts and figures (test counts, allocation counts, throughput numbers, file counts) as volatile; confirm against current evidence or restate them as "the full suite"/a single pinned baseline rather than a stale literal.
 - When an artifact says a dependency, example, option, or behavior is excluded/absent, confirm that is still true in the tree before preserving the claim.
-- Record reconciled corrections in the ID change summary or `Inputs From Upstream Context`; do not silently carry forward stale detail.
+- Record corrections that add, remove, supersede, or renumber items in the ID change summary; record other reconciled corrections (names, extensions, counts, excluded-behavior claims that do not change any ID) in `Inputs From Upstream Context`. Do not silently carry forward stale detail.
 
 Do not rely on memory or prior assistant summaries for facts that targeted repository inspection can confirm.
 

@@ -139,8 +139,10 @@ Instructions:
 - Reconcile against the current source tree where the artifacts claim to reflect
   implementation (see shared/spec-discovery.md, Reconcile Against Current Source Check).
 - De-duplicate repeated rationale/sections; keep a single open-questions ledger.
-- Mark each superseded source artifact for removal and record the merge in the
-  ID change summary (Consolidated: ...).
+- Mark each superseded source artifact for removal and record the merge. For
+  specifications, record `Consolidated: ...` in the ID change summary; for
+  artifact kinds without an ID change summary (architectures, test plans),
+  record the merged sources in the artifact's inputs/upstream-context section.
 - Do not change product scope or invent new items while merging.
 ```
 

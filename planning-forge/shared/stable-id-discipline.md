@@ -68,7 +68,7 @@ Example: `FR-3 superseded by FR-9 — scope changed from local validation to rem
 
 ## ID Change Summary
 
-Every revision that changes IDs must return an ID change summary. For artifact kinds whose output format includes this section (specifications), a consolidation must return it even when no IDs change, because `Consolidated` is the durable record of what was merged:
+Every revision that changes IDs must return an ID change summary. For artifact kinds whose output format includes this section (specifications), a consolidation must return it even when no IDs change, because `Consolidated:` is the durable record of what was merged:
 
 ```
 ## ID Change Summary
@@ -80,7 +80,7 @@ Every revision that changes IDs must return an ID change summary. For artifact k
 - Consolidated: <which artifacts were merged into this one, or none>
 ```
 
-When merging multiple same-kind artifacts into one, preserve every source ID. Re-namespace colliding IDs per the project-scoped rules above rather than dropping or renumbering them, and record the merge in `Consolidated`. For specifications, always emit this summary for a consolidation, even when no IDs collided or changed. Artifact kinds without an ID change summary (architectures, test plans) record the merged sources in their inputs/upstream-context section instead.
+When merging multiple same-kind artifacts into one, preserve every source ID. Re-namespace colliding IDs per the project-scoped rules above rather than dropping or renumbering them, and record the merge in `Consolidated:`. For specifications, always emit this summary for a consolidation, even when no IDs collided or changed. Artifact kinds without an ID change summary (architectures, test plans) record the merged sources in their inputs/upstream-context section instead.
 
 ## Required Handoff Instructions
 

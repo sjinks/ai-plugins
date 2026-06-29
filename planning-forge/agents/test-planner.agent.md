@@ -48,6 +48,10 @@ Resolve every `shared/...` reference relative to this Planning Forge plugin root
 
 Read `shared/traceability-graph.md` before writing coverage matrix rows or `Trace:` fields. If the file is unavailable, continue and record the limitation only when traceability is materially affected. Treat traceability as typed graph edges over stable IDs, not as an untyped adjacency list; do not store reverse edges manually.
 
+## Machine-Readable Metamodel
+
+Read `shared/metamodel.md` when the supplied specification, architecture, or current request includes a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, traceability-matrix, generated-diagram, ReqIF, OSLC, or completeness-report requirement. Treat schema-valid JSON nodes and edges as authoritative over Markdown when they disagree, and preserve `TC-` traceability through `verified_by` edges.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the test-planning stage (for example test-gap-to-test-plan conversion, edge-case enumeration, or coverage strategy), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, the supplied specification or architecture contract, repository test patterns, or stable-ID discipline, and it never invents requirements or adds tests that do not trace to an AC, risk, or finding. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.
@@ -56,7 +60,7 @@ If a host-provided skill catalog is present and a skill's domain clearly matches
 
 Use the `agent` tool only for these bounded delegations:
 
-- **Planning Document Publisher**: invoke only after producing the required test plan output format and only when the user requested saving or publishing. Prompt: `Save the completed test plan to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs.`
+- **Planning Document Publisher**: invoke only after producing the required test plan output format and only when the user requested saving or publishing. Prompt: `Save the completed test plan to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs. Preserve any supplied machine-readable metamodel JSON as the source of truth.`
 
 ## Test Contract Status
 

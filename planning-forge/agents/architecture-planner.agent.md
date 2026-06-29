@@ -49,6 +49,10 @@ Resolve every `shared/...` reference relative to this Planning Forge plugin root
 
 Read `shared/traceability-graph.md` before writing `Trace:` fields. If the file is unavailable, continue and record the limitation only when traceability is materially affected. Treat traceability as typed graph edges over stable IDs, not as an untyped adjacency list; do not store reverse edges manually.
 
+## Machine-Readable Metamodel
+
+Read `shared/metamodel.md` when the supplied planning contract or current request includes a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, generated diagram, ReqIF, OSLC, or completeness-report requirement. Treat schema-valid JSON nodes and edges as authoritative over Markdown when they disagree, and request a scope amendment instead of silently changing machine-readable requirements.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the architecture stage (for example tradeoff analysis, interface or failure-mode design, or dependency choice), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, the supplied specification contract, repository evidence, scope boundaries, readiness, or stable-ID discipline, and it never expands scope. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.
@@ -59,7 +63,7 @@ Use the `agent` tool only for these bounded delegations:
 
 - **Prototype Spike**: invoke when one unresolved architecture question needs evidence. Prompt: `Answer one unresolved architecture question with the smallest throwaway validation artifact. Preserve question, criteria, evidence, verdict, and cleanup path.`
 - **Test Planner**: invoke after completing architecture when the current user request explicitly asks to continue through test planning. Prompt: `Use the architecture output and supplied specification as the test-planning contract. Produce test cases, fixtures, assertions, priorities, seams, and coverage gaps. Do not implement or run tests. Preserve IDs.`
-- **Planning Document Publisher**: invoke only after producing the required architecture output format and only when the user requested saving or publishing. Prompt: `Save the completed architecture plan to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs.`
+- **Planning Document Publisher**: invoke only after producing the required architecture output format and only when the user requested saving or publishing. Prompt: `Save the completed architecture plan to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs. Preserve any supplied machine-readable metamodel JSON as the source of truth.`
 
 ## Design Contract Status
 

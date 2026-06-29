@@ -1,0 +1,87 @@
+{
+  "$schema": "../../../../planning-forge/shared/schemas/planning-artifact.schema.json",
+  "schema_version": "1.0",
+  "artifact_type": "planning_bundle",
+  "title": "Session revocation planning bundle",
+  "id_namespace": null,
+  "nodes": [
+    {
+      "id": "US-1",
+      "type": "user_story",
+      "title": "Recover from suspected session theft",
+      "statement": "As an account owner, I want to revoke other active sessions so that I can recover from suspected session theft.",
+      "status": "approved",
+      "rationale": "Gives the account owner a direct recovery action without ending the current authenticated session."
+    },
+    {
+      "id": "RULE-1",
+      "type": "business_rule",
+      "title": "Current session remains active",
+      "statement": "Revoking other sessions must not revoke the session authorizing the operation.",
+      "status": "approved"
+    },
+    {
+      "id": "FR-1",
+      "type": "functional_requirement",
+      "title": "Revoke other sessions",
+      "statement": "When an account owner requests revocation of all other sessions, the authentication service MUST invalidate every session belonging to the account except the session authorizing the operation.",
+      "obligation": "must",
+      "release_priority": "must-have",
+      "status": "approved",
+      "rationale": "Allows an account owner to recover from suspected session theft.",
+      "verification_method": ["test"],
+      "owner": "identity-team"
+    },
+    {
+      "id": "AC-1",
+      "type": "acceptance_criterion",
+      "title": "Other sessions are revoked",
+      "statement": "Given an account owner has multiple active sessions, when they revoke all other sessions, then every other session is invalidated and the current session remains active.",
+      "status": "approved"
+    },
+    {
+      "id": "TC-1",
+      "type": "test_case",
+      "title": "Revokes every session except current",
+      "statement": "Exercise the session revocation flow with three active sessions and assert that only the authorizing session remains valid.",
+      "status": "approved"
+    }
+  ],
+  "edges": [
+    {
+      "source": "US-1",
+      "relationship": "satisfies",
+      "target": "Goal"
+    },
+    {
+      "source": "RULE-1",
+      "relationship": "refines",
+      "target": "US-1"
+    },
+    {
+      "source": "FR-1",
+      "relationship": "refines",
+      "target": "RULE-1"
+    },
+    {
+      "source": "US-1",
+      "relationship": "demonstrated_by",
+      "target": "AC-1"
+    },
+    {
+      "source": "FR-1",
+      "relationship": "demonstrated_by",
+      "target": "AC-1"
+    },
+    {
+      "source": "AC-1",
+      "relationship": "verified_by",
+      "target": "TC-1"
+    },
+    {
+      "source": "FR-1",
+      "relationship": "verified_by",
+      "target": "TC-1"
+    }
+  ]
+}

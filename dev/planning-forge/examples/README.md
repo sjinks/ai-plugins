@@ -4,6 +4,8 @@ These fixtures are manual-review regression anchors for the Planning Forge Coord
 
 A static lint, `../scripts/lint-examples.mjs`, validates fixture structure (required files, balanced code fences, known agent names, allowed stable-ID prefixes) without running the Coordinator. Run it from the repo root: `node dev/planning-forge/scripts/lint-examples.mjs`.
 
+Machine-readable metamodel fixtures live under `../fixtures/metamodel/`. Validate one from the repo root with `node dev/planning-forge/scripts/validate-metamodel.mjs dev/planning-forge/fixtures/metamodel/minimal-planning-bundle.json`; run validator regression checks with `node dev/planning-forge/scripts/test-metamodel-validator.mjs`.
+
 ## How to use
 
 For each example:

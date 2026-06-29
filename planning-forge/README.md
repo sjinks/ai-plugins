@@ -33,6 +33,8 @@ The shared references are not standalone skills. They are read by the agents onl
 - `shared/readiness-model.md` — shared `ready`/`partial`/`blocked`/`unknown` model and ready-slice rules used by the spec, architecture, test, and coordinator agents.
 - `shared/stable-id-discipline.md` — shared stable-ID taxonomy, preservation, supersession, and ID-change-summary rules.
 - `shared/traceability-graph.md` — shared typed-edge graph model for traceability across requirements, decisions, acceptance criteria, and tests.
+- `shared/metamodel.md` — shared machine-readable metamodel rules for schema-valid JSON artifacts used as durable sources of truth.
+- `shared/schemas/planning-artifact.schema.json` — JSON Schema for Planning Forge machine-readable artifacts.
 - `shared/coordinator-routing.md` — Coordinator intent taxonomy, routing map, and per-intent handoff templates.
 - `shared/subagent-invocation.md` — optional advanced mode: how the Coordinator invokes a specialist directly, relays the result, and falls back to a manual handoff prompt.
 - `shared/session-state.md` — the Coordinator's resumable planning-session state shape, reconstructed without persistence.
@@ -51,9 +53,11 @@ Manual-review fixtures for the Planning Forge Coordinator live under `dev/planni
 
 A static lint, `dev/planning-forge/scripts/lint-examples.mjs`, checks fixture structure (required files, balanced fences, known agent names, allowed stable-ID prefixes) without running the Coordinator: `node dev/planning-forge/scripts/lint-examples.mjs`.
 
+Machine-readable metamodel fixtures live under `dev/planning-forge/fixtures/metamodel/`. Validate them with `node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json>`, and run validator regression checks with `node dev/planning-forge/scripts/test-metamodel-validator.mjs`.
+
 ## Persistence
 
-Planning Forge agents produce their planning output first. When the user explicitly asks to save, write, publish, or persist an artifact, the originating agent invokes the internal Planning Document Publisher. The publisher preserves IDs, avoids unrelated overwrites, redacts or blocks sensitive content, and stays within the requested documentation area.
+Planning Forge agents produce their planning output first. When the user explicitly asks to save, write, publish, or persist an artifact, the originating agent invokes the internal Planning Document Publisher. The publisher preserves IDs, avoids unrelated overwrites, redacts or blocks sensitive content, and stays within the requested documentation area. For durable machine-readable artifacts, schema-valid JSON is the source of truth and Markdown is a human-readable projection.
 
 ## Scope
 

@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sjinks/ai-plugins/planning-forge/shared/schemas/planning-artifact.schema.json",
+  "title": "Planning Forge machine-readable artifact",
+  "type": "object",
+  "required": ["schema_version", "artifact_type", "nodes", "edges"],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "schema_version": { "const": "1.0" },
+    "artifact_type": {
+      "type": "string",
+      "enum": ["specification", "architecture", "test_plan", "planning_bundle"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "id_namespace": { "type": ["string", "null"] },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[0-9]{1,}$"
+    },
+    "traceRef": {
+      "type": "string",
+      "pattern": "^(([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[0-9]{1,}|Goal|In Scope|risk: .+|manual check: .+|review check: .+|command: .+)$"
+    },
+    "nodeType": {
+      "type": "string",
+      "enum": [
+        "user_story",
+        "business_rule",
+        "functional_requirement",
+        "quality_requirement",
+        "interface",
+        "data_shape",
+        "acceptance_criterion",
+        "edge_case",
+        "assumption",
+        "architecture_decision",
+        "test_case"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "proposed", "approved", "deferred", "superseded", "removed", "out_of_scope"]
+    },
+    "obligation": {
+      "type": "string",
+      "enum": ["must", "should", "may"]
+    },
+    "releasePriority": {
+      "type": "string",
+      "enum": ["must-have", "should-have", "could-have", "wont-have"]
+    },
+    "verificationMethod": {
+      "type": "string",
+      "enum": ["test", "manual", "review", "static", "analysis", "not_applicable"]
+    },
+    "relationship": {
+      "type": "string",
+      "enum": [
+        "derives_from",
+        "satisfies",
+        "refines",
+        "constrains",
+        "conflicts_with",
+        "depends_on",
+        "supersedes",
+        "realized_by",
+        "demonstrated_by",
+        "verified_by",
+        "mitigates"
+      ]
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "type", "title", "statement", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/stableId" },
+        "type": { "$ref": "#/$defs/nodeType" },
+        "title": { "type": "string", "minLength": 1 },
+        "statement": { "type": "string", "minLength": 1 },
+        "obligation": { "$ref": "#/$defs/obligation" },
+        "release_priority": { "$ref": "#/$defs/releasePriority" },
+        "status": { "$ref": "#/$defs/status" },
+        "rationale": { "type": "string" },
+        "owner": { "type": "string" },
+        "verification_method": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/verificationMethod" }
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": ["source", "relationship", "target"],
+      "properties": {
+        "source": { "$ref": "#/$defs/traceRef" },
+        "relationship": { "$ref": "#/$defs/relationship" },
+        "target": { "$ref": "#/$defs/traceRef" },
+        "rationale": { "type": "string" },
+        "status": { "$ref": "#/$defs/status" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

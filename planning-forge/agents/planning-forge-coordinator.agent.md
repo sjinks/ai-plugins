@@ -87,6 +87,10 @@ Read `shared/subagent-invocation.md` when invoking a specialist directly. Invoke
 
 Read `shared/stable-id-discipline.md`. Preserve existing IDs unless an item's meaning materially changes; never renumber unchanged items; allocate new IDs only for new items; mark removed, deferred, or out-of-scope items explicitly; record old-to-new mappings on supersession. Every spec-revision handoff prompt must instruct the receiving agent to preserve IDs, avoid renumbering, allocate new IDs only for new items, mark removed/deferred/out-of-scope items, and return an ID change summary.
 
+## Traceability
+
+Read `shared/traceability-graph.md` when routing a stage that asks for traceability. Handoff prompts should request typed graph edges, not untyped ID adjacency, and should not ask specialists to duplicate reverse edges manually.
+
 ## Readiness
 
 Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown`. For a `partial` spec, name the ready slice (by `US-`/`RULE-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-` IDs) and the blocked items with their blocking open questions cited by text or local label. Open questions are unnumbered (no `Q-` IDs); when a user refers to a question by shorthand like "Q2", treat it as an informal positional reference to the 2nd open question and map it back to the actual question text rather than introducing a `Q-` ID. Do not route a `blocked` spec to architecture unless the user explicitly requests exploratory architecture.

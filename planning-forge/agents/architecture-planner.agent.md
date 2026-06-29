@@ -45,6 +45,10 @@ Use private notes with narrow queries and summarize only the fact or decision ne
 
 Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent's `agents/` directory. Read the resolved local file directly. If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.
 
+## Traceability Graph Rules
+
+Read `shared/traceability-graph.md` before writing `Trace:` fields. If the file is unavailable, continue and record the limitation only when traceability is materially affected. Treat traceability as typed graph edges over stable IDs, not as an untyped adjacency list; do not store reverse edges manually.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the architecture stage (for example tradeoff analysis, interface or failure-mode design, or dependency choice), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, the supplied specification contract, repository evidence, scope boundaries, readiness, or stable-ID discipline, and it never expands scope. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.
@@ -125,8 +129,8 @@ Return all core sections below in order. Do not omit core sections. When a secti
 ## Recommended Design
 <short summary of the architecture>
 
-- D-1 <decision>: <choice>. Rationale: <why>. Tradeoff: <accepted cost>. Trace: <RULE-/FR-/NFR-/AC-/INT-/EDGE- IDs or assumption-based>.
-- D-2 <decision>: <choice>. Rationale: <why>. Tradeoff: <accepted cost>. Trace: <RULE-/FR-/NFR-/AC-/INT-/EDGE- IDs or assumption-based>.
+- D-1 <decision>: <choice>. Rationale: <why>. Tradeoff: <accepted cost>. Trace: <FR-1 realized_by D-1; AC-1 realized_by D-1, or assumption-based>.
+- D-2 <decision>: <choice>. Rationale: <why>. Tradeoff: <accepted cost>. Trace: <RULE-1 realized_by D-2; INT-1 realized_by D-2, or assumption-based>.
 
 ## Out Of Design
 - <excluded design option or feature> - <one-line rationale>
@@ -145,7 +149,7 @@ Return all core sections below in order. Do not omit core sections. When a secti
 - <RULE/FR/AC/interface/current assumption>: propose <change>. Rationale: <why>. Blocks builder until Specification Planner/operator confirmation.
 
 ## Files Or Modules Affected
-- <new | modified | deleted> <module/file/package/component>: <change scope>. Trace: <D-ID and FR/AC IDs or assumption-based>.
+- <new | modified | deleted> <module/file/package/component>: <change scope>. Trace: <FR/AC IDs realized_by D-ID, or assumption-based>.
 
 ## Implementation Sequencing
 `single-slice | multi-step` - <one sentence on why the work fits one slice or needs ordered steps>
@@ -158,20 +162,20 @@ Single change: <the one change to build, with files and the verification seam> (
 - [ ] 1. <step title>
   Files: <files/modules touched in this step>
   Details: <what to build, which existing patterns/seams to follow>
-  Trace: <D-/RULE-/FR-/NFR-/AC-/INT-/EDGE- IDs or assumption-based>
+  Trace: <FR/AC/INT IDs realized_by D-ID, or assumption-based>
   Verify: <existing seam or check that confirms this step>
 
 ## Interfaces And Data Shapes
-- <contract/signature/schema/event/error code/config shape>. Trace: <D-ID and FR/AC IDs or assumption-based>.
+- <contract/signature/schema/event/error code/config shape>. Trace: <INT-ID realized_by D-ID; FR/AC IDs realized_by D-ID, or assumption-based>.
 
 ## Data Flow And State Model
-- <request/event/job/data flow, state transition, ownership/lifetime, concurrency, transaction, or consistency rule>. Trace: <D-ID and FR/AC IDs or assumption-based>.
+- <request/event/job/data flow, state transition, ownership/lifetime, concurrency, transaction, or consistency rule>. Trace: <FR/AC IDs realized_by D-ID, or assumption-based>.
 
 ## Error Handling And Failure Modes
-- <error, timeout, retry, rollback, idempotency, partial-success, cancellation, double-submit, double-send, or dependency-failure behavior>. Trace: <D-ID and FR/AC IDs or assumption-based>.
+- <error, timeout, retry, rollback, idempotency, partial-success, cancellation, double-submit, double-send, or dependency-failure behavior>. Trace: <EDGE/FR/AC IDs realized_by D-ID, or assumption-based>.
 
 ## Security, Privacy, And Observability
-- <trust boundary, permission check, data classification, redaction, logging, metrics, tracing, audit, or alerting decision>. Trace: <D-ID and FR/AC IDs or assumption-based>.
+- <trust boundary, permission check, data classification, redaction, logging, metrics, tracing, audit, or alerting decision>. Trace: <RULE/FR/NFR/AC IDs realized_by D-ID, or assumption-based>.
 
 ## Risks And Mitigations
 - <risk title>: Severity: `high | medium | low`. Mitigation: <specific mitigation>. Residual risk: <remaining caveat or None>.

@@ -87,7 +87,7 @@ Apply the checklist only where the concept exists in the task. For non-applicabl
    - Architecture: design decision, interface/data shape, state model, failure mode, risk, verification plan item, or scope amendment.
    - Test plan: test case, fixture, manual/review check, recommended command, coverage gap, or builder handoff note.
    - Review or audit: severity-ordered finding with concrete corrective action.
-6. Check traceability after changes. Every hardened requirement, decision, or test should point back to user scope, business rule, FR/NFR/AC/interface, risk, edge case, or an explicit assumption.
+6. Check traceability after changes. Every hardened requirement, decision, or test should point back through typed graph edges to user scope, business rule, FR/NFR/AC/interface, risk, edge case, or an explicit assumption.
 7. End with readiness: say whether the contract is ready for implementation, partial, blocked, or ready with named residual risks according to the active workflow.
 
 ## Output Expectations

@@ -10,7 +10,7 @@
   - exclude the blocked notification-on-critical scope (unnumbered, pending the
     notification-channel question);
   - forbid product-scope changes and designing excluded requirements;
-  - require tracing decisions to RULE/FR/NFR/AC/INT/EDGE IDs;
+  - require tracing decisions with typed graph edges over RULE/FR/NFR/AC/INT/EDGE IDs;
   - ask for assumptions introduced by limiting architecture to the ready slice.
 
 ## Representative response
@@ -38,7 +38,7 @@ question (unnumbered; no ID assigned while blocked).
 Instructions:
 - Do not change product scope. Do not design excluded requirements. Do not implement.
 - Design the minimal architecture sufficient for the ready slice.
-- Trace decisions to RULE/FR/NFR/AC/INT/EDGE IDs.
+- Trace decisions with typed graph edges over RULE/FR/NFR/AC/INT/EDGE IDs.
 - Identify assumptions introduced by limiting architecture to the ready slice.
 ```
 ````
@@ -48,4 +48,4 @@ Instructions:
 - Intent is `architecture-request`.
 - Routes to Architecture Planner.
 - Scope limited to the ready slice; blocked notification scope excluded and unnumbered.
-- Traceability to existing IDs required.
+- Typed graph traceability to existing IDs required.

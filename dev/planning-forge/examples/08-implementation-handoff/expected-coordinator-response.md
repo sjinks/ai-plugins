@@ -50,7 +50,7 @@ Instructions for the implementation agent:
   reality conflicts with the plan, stop and report the conflict.
 - Implement tests mapped to the provided test plan.
 - Do not silently resolve open questions.
-- Return a summary mapping code changes to FR/AC/D/TC IDs.
+- Return a summary mapping code changes with typed graph edges over FR/AC/D/TC IDs.
 ```
 ````
 
@@ -59,4 +59,4 @@ Instructions for the implementation agent:
 - Intent is `implementation-handoff-request`.
 - Gate check is performed and passes.
 - Output is a builder handoff prompt, not code, and no builder is auto-invoked.
-- Prompt names the approved scope, excludes blocked scope, includes accepted or deferred carry-forward items, and requires FR/AC/D/TC traceability.
+- Prompt names the approved scope, excludes blocked scope, includes accepted or deferred carry-forward items, and requires typed graph traceability over FR/AC/D/TC IDs.

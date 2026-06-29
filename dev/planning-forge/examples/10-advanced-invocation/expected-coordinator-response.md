@@ -40,7 +40,7 @@ Task specification:
 Instructions:
 - Do not change product scope. Do not add requirements. Do not implement code.
 - Design the minimal architecture sufficient for the specification.
-- Trace decisions to RULE/FR/NFR/AC/INT/EDGE IDs.
+- Trace decisions with typed graph edges over RULE/FR/NFR/AC/INT/EDGE IDs.
 - Identify risks, trade-offs, implementation seams, and test seams.
 ```
 ````

@@ -9,9 +9,9 @@ Triage incoming WordPress plugin vulnerability reports and assign severity.
 - FR-2 MUST let an analyst assign a severity (low/medium/high/critical).
 
 ## Acceptance Criteria
-- AC-1 verifies FR-1: a report on the source appears in the triage queue.
-- AC-2 verifies FR-2: an analyst can set and persist a severity value.
-- AC-3 verifies FR-2: an invalid severity value is rejected.
+- AC-1 a report on the source appears in the triage queue. Trace: FR-1 demonstrated_by AC-1.
+- AC-2 an analyst can set and persist a severity value. Trace: FR-2 demonstrated_by AC-2.
+- AC-3 an invalid severity value is rejected. Trace: FR-2 demonstrated_by AC-3.
 
 ## Edge Cases And Error Scenarios
 - EDGE-1 MUST-handle a malformed report payload by rejecting it and logging the reason.

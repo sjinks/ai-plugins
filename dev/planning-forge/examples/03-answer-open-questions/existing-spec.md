@@ -11,7 +11,7 @@ Let a user trigger a re-scan of a WordPress plugin for known vulnerabilities.
 - FR-1 MUST accept a re-scan request for a given plugin slug.
 
 ## Acceptance Criteria
-- AC-1 verifies FR-1: Given a valid plugin slug, when a re-scan is requested, then a scan job is recorded.
+- AC-1 Given a valid plugin slug, when a re-scan is requested, then a scan job is recorded. Trace: FR-1 demonstrated_by AC-1.
 
 ## Open Questions
 - Which vulnerability database is authoritative for results?

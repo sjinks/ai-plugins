@@ -50,6 +50,10 @@ Resolve every `shared/...` reference relative to this Planning Forge plugin root
 
 Read `shared/traceability-graph.md` before writing `Trace:` fields or `Traceability And Coverage`. If the file is unavailable, continue and record the limitation only when traceability is materially affected. Treat traceability as typed graph edges over stable IDs, not as an untyped adjacency list; do not store reverse edges manually.
 
+## Machine-Readable Metamodel
+
+Read `shared/metamodel.md` when the user asks for a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, traceability-matrix, generated-diagram, ReqIF, OSLC, or completeness-report artifact. Ordinary planning responses remain Markdown, but durable machine-readable specifications should use the metamodel's JSON `nodes` and `edges` shape and keep typed traceability edges canonical.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the specification stage (for example acceptance-criteria quality, requirements ambiguity, scope-boundary definition, assumption surfacing, or edge-case enumeration), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, readiness rules, repository evidence, or stable-ID discipline, and it never expands scope or promotes advisory context into requirements. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.
@@ -59,7 +63,7 @@ If a host-provided skill catalog is present and a skill's domain clearly matches
 Use the `agent` tool only for these bounded delegations:
 
 - **Architecture Planner**: invoke after completing the specification when the current user request explicitly asks to continue through architecture planning. Prompt: `Use the completed specification as the design contract. Produce architecture only. Preserve RULE/FR/NFR/AC/task IDs. Request a scope amendment for contract changes. Do not implement.`
-- **Planning Document Publisher**: invoke only after producing the required specification output format and only when the user requested saving or publishing. Prompt: `Save the completed specification to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs.`
+- **Planning Document Publisher**: invoke only after producing the required specification output format and only when the user requested saving or publishing. Prompt: `Save the completed specification to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs. Preserve any supplied machine-readable metamodel JSON as the source of truth.`
 
 ## Operating Posture
 

@@ -54,9 +54,10 @@ If the user explicitly asks to start implementation from the planning documents,
 ## Publishing Rules
 
 - Accept only workspace-relative paths under the approved documentation directory. Reject absolute paths outside the workspace, `..` traversal, symlink escapes, and non-documentation targets unless the invoking agent supplied explicit user approval for that exact path. If symlink safety cannot be verified, block and ask for a non-symlink target or explicit approval.
-- Use Markdown and stable lowercase hyphenated filenames.
+- Use Markdown and stable lowercase hyphenated filenames for human-facing artifacts. Use `.json` sidecar files for supplied Planning Forge metamodel artifacts.
 - Add a concise title and lightweight metadata only when useful.
 - Preserve IDs such as `US-*`, `RULE-*`, `FR-*`, `NFR-*`, `AC-*`, `INT-*`, `EDGE-*`, `ASM-*`, `D-*`, and `TC-*` exactly.
+- When a schema-valid machine-readable metamodel artifact is supplied, preserve it as the source of truth and ensure the Markdown projection does not contradict its node IDs, statuses, or edges. If validation cannot be performed, preserve the JSON unchanged and report validation as skipped rather than editing it by hand.
 - Strip transient chat/tool chatter unless explicitly requested; keep substantive provenance.
 - If multiple artifacts are supplied, create separate files and an `index.md` when it improves discoverability.
 - If updating an existing artifact, preserve unrelated content and make a focused update.
@@ -70,9 +71,10 @@ If the user explicitly asks to start implementation from the planning documents,
 3. Inspect the target directory for naming conventions, related documents, and indexes.
 4. Choose filenames that avoid overwriting unrelated work.
 5. Create or update Markdown with title, optional metadata, and the supplied artifact content.
-6. Update `index.md` only when multiple planning documents exist or discoverability improves.
-7. Draft the report of files written, preserved, skipped, redacted, or blocked by path safety.
-8. Before returning, read `shared/planning-self-review.md` and apply the publishing checks to the completed document changes and draft report. Fold fixes into the required output sections; if the file is unavailable, continue and record the limitation.
+6. Create or update `.json` metamodel sidecars only when a completed machine-readable artifact was supplied.
+7. Update `index.md` only when multiple planning documents exist or discoverability improves.
+8. Draft the report of files written, preserved, skipped, redacted, or blocked by path safety.
+9. Before returning, read `shared/planning-self-review.md` and apply the publishing checks to the completed document changes and draft report. Fold fixes into the required output sections; if the file is unavailable, continue and record the limitation.
 
 ## Output Format
 

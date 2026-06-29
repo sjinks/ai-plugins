@@ -22,6 +22,7 @@ Use it before returning a planning artifact. Fold fixes into the agent's normal 
 - Business rules, FRs, NFRs, interfaces, ACs, edge cases, assumptions, open questions, and tasks agree with each other.
 - ACs are observable or explicitly marked manual/review/judgment items.
 - Traceability uses typed graph edges and does not duplicate reverse edges manually.
+- Machine-readable artifacts, when present, are schema-valid or explicitly marked as validation-skipped, and Markdown projections do not contradict their canonical nodes or edges.
 - Assumptions are modest and do not hide decisions that change behavior, interfaces, sequencing, or verification.
 - Implementation tasks trace to ready requirements and ACs.
 
@@ -50,6 +51,7 @@ Use it before returning a planning artifact. Fold fixes into the agent's normal 
 ## Publishing Checks
 
 - The saved document preserves planning substance and IDs.
+- Machine-readable JSON sidecars are preserved as source-of-truth artifacts when supplied.
 - The target path stays inside the requested documentation area.
 - Existing unrelated content is preserved.
 - Sensitive content is redacted or blocked.

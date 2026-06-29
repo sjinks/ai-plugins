@@ -51,7 +51,7 @@ Use only these relationship names unless the user explicitly supplies an existin
 | `conflicts_with` | Source and target cannot both be true without resolution. Store once with a short reason. |
 | `depends_on` | Source cannot be implemented, evaluated, or released independently of target. |
 | `supersedes` | Source replaces target while preserving history. Use with ID change summaries when IDs change. |
-| `realized_by` | Source requirement, rule, interface, or acceptance criterion is realized by target design decision. |
+| `realized_by` | Source requirement, rule, interface, acceptance criterion, or edge case is realized by target design decision. |
 | `demonstrated_by` | Source user story, requirement, rule, edge case, or quality attribute is demonstrated by target acceptance criterion. |
 | `verified_by` | Source acceptance criterion, requirement, edge case, decision, or risk is verified by target test case, manual check, review check, or command. |
 | `mitigates` | Source decision, requirement, test, or control reduces target risk or failure mode. |

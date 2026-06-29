@@ -50,7 +50,7 @@ Instructions for the implementation agent:
   reality conflicts with the plan, stop and report the conflict.
 - Implement tests mapped to the provided test plan.
 - Do not silently resolve open questions.
-- Return a summary mapping code changes with typed graph edges over FR/AC/D/TC IDs.
+- Return a summary mapping code changes to FR/AC/D/TC IDs using typed trace edges.
 ```
 ````
 

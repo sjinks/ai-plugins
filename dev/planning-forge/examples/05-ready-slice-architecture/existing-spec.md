@@ -20,11 +20,11 @@ Triage incoming WordPress plugin vulnerability reports and notify on critical fi
 - INT-1 Report record: { plugin_slug, version, cve_id?, source, received_at }.
 
 ## Acceptance Criteria
-- AC-1 verifies FR-1: a report on the source appears in the triage queue.
-- AC-2 verifies FR-2: an analyst can set and persist a severity value.
-- AC-3 verifies FR-1: a duplicate report is de-duplicated by (plugin_slug, cve_id).
-- AC-4 verifies NFR-1: a single report is processed in under 2 seconds.
-- AC-5 verifies FR-2: an invalid severity value is rejected.
+- AC-1 a report on the source appears in the triage queue. Trace: FR-1 demonstrated_by AC-1.
+- AC-2 an analyst can set and persist a severity value. Trace: FR-2 demonstrated_by AC-2.
+- AC-3 a duplicate report is de-duplicated by (plugin_slug, cve_id). Trace: FR-1 demonstrated_by AC-3.
+- AC-4 a single report is processed in under 2 seconds. Trace: NFR-1 demonstrated_by AC-4.
+- AC-5 an invalid severity value is rejected. Trace: FR-2 demonstrated_by AC-5.
 
 ## Edge Cases And Error Scenarios
 - EDGE-1 MUST-handle a malformed report payload by rejecting it and logging the reason.

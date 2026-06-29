@@ -18,7 +18,7 @@ Triage incoming WordPress plugin vulnerability reports and record a severity dec
 - INT-1 Report record: { plugin_slug, version, cve_id?, source, received_at }.
 
 ## Acceptance Criteria
-- AC-1 verifies FR-1: Given a report on the source, when ingestion runs, then the report appears in the triage queue.
+- AC-1 Given a report on the source, when ingestion runs, then the report appears in the triage queue. Trace: FR-1 demonstrated_by AC-1.
 
 ## Edge Cases And Error Scenarios
 - EDGE-1 MUST-handle a malformed report payload by rejecting it and logging the reason.

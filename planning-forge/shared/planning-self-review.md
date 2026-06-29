@@ -21,6 +21,7 @@ Use it before returning a planning artifact. Fold fixes into the agent's normal 
 - Scope is explicit, and broad work is decomposed or marked partial/blocked.
 - Business rules, FRs, NFRs, interfaces, ACs, edge cases, assumptions, open questions, and tasks agree with each other.
 - ACs are observable or explicitly marked manual/review/judgment items.
+- Traceability uses typed graph edges and does not duplicate reverse edges manually.
 - Assumptions are modest and do not hide decisions that change behavior, interfaces, sequencing, or verification.
 - Implementation tasks trace to ready requirements and ACs.
 

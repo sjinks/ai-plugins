@@ -46,6 +46,10 @@ Use private notes with the narrowest relevant query and summarize only the fact 
 
 Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent's `agents/` directory. Read the resolved local file directly. If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.
 
+## Traceability Graph Rules
+
+Read `shared/traceability-graph.md` before writing `Trace:` fields or `Traceability And Coverage`. If the file is unavailable, continue and record the limitation only when traceability is materially affected. Treat traceability as typed graph edges over stable IDs, not as an untyped adjacency list; do not store reverse edges manually.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the specification stage (for example acceptance-criteria quality, requirements ambiguity, scope-boundary definition, assumption surfacing, or edge-case enumeration), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, readiness rules, repository evidence, or stable-ID discipline, and it never expands scope or promotes advisory context into requirements. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.
@@ -183,10 +187,10 @@ For multi-goal requests, include each mandatory heading exactly once. Separate g
 - ID namespace: <UPPERCASE concern token applied to this artifact's IDs per shared/stable-id-discipline.md, or none>
 
 ## User Stories
-- US-1 As a <actor>, I want <capability>, so that <benefit>. Trace: <FR/AC IDs or assumption-based>.
+- US-1 As a <actor>, I want <capability>, so that <benefit>. Trace: <US-1 satisfies Goal; US-1 demonstrated_by AC IDs, or assumption-based>.
 
 ## Business Rules
-- RULE-1 <stable domain policy independent of UI/API behavior>. Trace: <US/FR/AC IDs or assumption-based>.
+- RULE-1 <stable domain policy independent of UI/API behavior>. Trace: <RULE-1 refines US IDs; RULE-1 demonstrated_by AC IDs, or assumption-based>.
 
 ## Functional Requirements
 - FR-1 MUST <requirement>
@@ -202,16 +206,15 @@ For multi-goal requests, include each mandatory heading exactly once. Separate g
 Use the lightest faithful representation for interfaces and data shapes. Do not invent schemas, signatures, or payloads beyond what implementers need.
 
 ## Acceptance Criteria
-- AC-1 verifies FR-1: Given <context>, when <action>, then <observable result>.
-- AC-2 verifies FR-2 and NFR-1: <observable criterion>.
+- AC-1 Given <context>, when <action>, then <observable result>. Trace: FR-1 demonstrated_by AC-1.
+- AC-2 <observable criterion>. Trace: FR-2 demonstrated_by AC-2; NFR-1 demonstrated_by AC-2.
 
 Acceptance criteria must not introduce behavior absent from Goal, In Scope, Business Rules, FRs, NFRs, or Interfaces.
 
 ## Traceability And Coverage
-- US-1: AC-1
-- RULE-1: FR-1, AC-1
-- FR-1: AC-1
-- NFR-1: AC-2
+- US-1 demonstrated_by AC-1
+- FR-1 refines RULE-1; FR-1 demonstrated_by AC-1
+- NFR-1 constrains FR-1; NFR-1 demonstrated_by AC-2
 - <uncovered item>: not directly testable because <rationale> | not covered because <rationale>
 - Judgment items: <claims that require human/product/design/architecture review rather than mechanical verification, or None>
 
@@ -253,6 +256,7 @@ Emit `## ID Change Summary` on any revision, amendment, open-question resolution
 - User stories name real actors, capabilities, and benefits without expanding scope.
 - Business rules state stable domain policy independent of UI/API behavior and are enforced by FRs/ACs where applicable.
 - Acceptance criteria are observable and do not introduce new scope.
+- Traceability uses typed graph edges so downstream agents can answer both forward and reverse trace questions without duplicate reverse edges.
 - Interfaces and data shapes are as lightweight as possible while preserving the implementation contract.
 - Entity fields, configuration keys, public inputs, and cross-module contracts include types, defaults or absence behavior, and validation rules where applicable.
 - Material errors and edge cases name recovery, retry, cleanup, observability, or safe-stop behavior.

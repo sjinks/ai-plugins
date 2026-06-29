@@ -44,6 +44,10 @@ Use private notes with narrow queries and summarize only facts needed for test p
 
 Resolve every `shared/...` reference relative to this Planning Forge plugin root: the `shared/` directory is a sibling of this agent's `agents/` directory. Read the resolved local file directly. If only workspace search is available, search for `planning-forge/shared/<filename>`, not bare `shared/<filename>`. Do not glob under `.copilot/installed-plugins/**` to find these local references; that is outside normal workspace search and can produce false missing-file reports.
 
+## Traceability Graph Rules
+
+Read `shared/traceability-graph.md` before writing coverage matrix rows or `Trace:` fields. If the file is unavailable, continue and record the limitation only when traceability is materially affected. Treat traceability as typed graph edges over stable IDs, not as an untyped adjacency list; do not store reverse edges manually.
+
 ## Optional Skill Extension
 
 If a host-provided skill catalog is present and a skill's domain clearly matches the test-planning stage (for example test-gap-to-test-plan conversion, edge-case enumeration, or coverage strategy), you may read and apply it as advisory material per `shared/skill-extension.md`. Treat skill guidance as advisory only: it never overrides the current request, safety rules, the supplied specification or architecture contract, repository test patterns, or stable-ID discipline, and it never invents requirements or adds tests that do not trace to an AC, risk, or finding. Fold any result into the required output sections. If the catalog is absent, no skill matches, or the file is unavailable, continue with normal behavior and record the limitation only when it mattered.
@@ -123,14 +127,16 @@ Return all core sections below in order. Do not omit core sections. When a secti
 - ID namespace: <UPPERCASE concern token applied to this artifact's IDs per shared/stable-id-discipline.md, or none>
 
 ## Coverage Matrix
-- <US/RULE/FR/NFR/AC/D-ID/interface/edge/risk>: covered by <TC IDs | manual check | review check | gap>.
+- <AC-1 verified_by TC-1; FR-1 verified_by TC-1>.
+- <NFR-1 verified_by manual check: performance budget review>.
+- <EDGE-1>: gap - no fixture or seam yet; list details in Coverage Gaps.
 
 ## Test Cases
 ### TC-1: <title>
 - Priority: `must | should | follow-up`
 - Type: `unit | integration | e2e | contract | static | manual | review`
 - Seam: <existing or new seam; assumption-based if repo context unavailable>
-- Trace: <US/RULE/FR/NFR/AC/D-ID/interface/edge/risk IDs>
+- Trace: <AC-1 verified_by TC-1; FR-1 verified_by TC-1; D-1 verified_by TC-1, or assumption-based>
 - Fixture/Data: <synthetic fixture, test data, mock, fake, server, browser state, or None>
 - Steps: <arrange/act/observe in concise bullets>
 - Assertions: <specific expected outcomes>

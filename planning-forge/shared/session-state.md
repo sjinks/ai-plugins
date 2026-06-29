@@ -22,7 +22,7 @@ artifacts:
   architecture:  <path | inline | missing>
   test_plan:     <path | inline | missing>
 blocking_questions: [<question text or local label>]
-ready_slice:        [<US/FR/NFR/INT/AC/EDGE IDs>]   # when readiness is partial
+ready_slice:        [<US/RULE/FR/NFR/INT/AC/EDGE IDs>]   # when readiness is partial
 carry_forward:      [<specialist source (artifact/stage), disposition, handoff impact; include the full item text only when it is not already in blocking_questions>]
 ```
 
@@ -44,6 +44,7 @@ artifacts:
 stable_ids:        # mirror what the specialist agents emitted; do not invent IDs
   # status: active | changed | superseded | removed | deferred | out-of-scope
   user_stories:    [ { id: US-*,   status } ]
+  business_rules:  [ { id: RULE-*, status } ]
   functional:      [ { id: FR-*,   status } ]
   non_functional:  [ { id: NFR-*,  status } ]
   interfaces:      [ { id: INT-*,  status } ]
@@ -63,7 +64,7 @@ revision_log:      # the Coordinator's own session log, not an agent artifact se
 
 ## Rules
 
-- Reconstruct from the most recent supplied artifacts first, then the conversation. Each artifact type is the source of truth for the IDs it defines, using the most recent version of that artifact type: the specification owns `US-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-`/`ASM-`, the architecture owns `D-`, and the test plan owns `TC-`. Do not let a more recently supplied artifact of one type override IDs defined by another type.
+- Reconstruct from the most recent supplied artifacts first, then the conversation. Each artifact type is the source of truth for the IDs it defines, using the most recent version of that artifact type: the specification owns `US-`/`RULE-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-`/`ASM-`, the architecture owns `D-`, and the test plan owns `TC-`. Do not let a more recently supplied artifact of one type override IDs defined by another type.
 - Do not invent IDs, requirements, questions, or risks to fill the schema. Omit unknown fields.
 - Mirror stable-ID status from what the specialist agents reported; do not reconcile or renumber IDs yourself beyond what they returned (see `shared/stable-id-discipline.md`).
 - Open questions stay unnumbered (no `Q-` IDs) and risks stay prose (no `RISK-` IDs), consistent with the current agent output formats.

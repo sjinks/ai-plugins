@@ -56,7 +56,7 @@ If the user explicitly asks to start implementation from the planning documents,
 - Accept only workspace-relative paths under the approved documentation directory. Reject absolute paths outside the workspace, `..` traversal, symlink escapes, and non-documentation targets unless the invoking agent supplied explicit user approval for that exact path. If symlink safety cannot be verified, block and ask for a non-symlink target or explicit approval.
 - Use Markdown and stable lowercase hyphenated filenames.
 - Add a concise title and lightweight metadata only when useful.
-- Preserve IDs such as `US-*`, `FR-*`, `NFR-*`, `AC-*`, `INT-*`, `EDGE-*`, `ASM-*`, `D-*`, and `TC-*` exactly.
+- Preserve IDs such as `US-*`, `RULE-*`, `FR-*`, `NFR-*`, `AC-*`, `INT-*`, `EDGE-*`, `ASM-*`, `D-*`, and `TC-*` exactly.
 - Strip transient chat/tool chatter unless explicitly requested; keep substantive provenance.
 - If multiple artifacts are supplied, create separate files and an `index.md` when it improves discoverability.
 - If updating an existing artifact, preserve unrelated content and make a focused update.

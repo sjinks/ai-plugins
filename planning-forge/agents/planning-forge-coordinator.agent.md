@@ -89,7 +89,7 @@ Read `shared/stable-id-discipline.md`. Preserve existing IDs unless an item's me
 
 ## Readiness
 
-Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown`. For a `partial` spec, name the ready slice (by `US-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-` IDs) and the blocked items with their blocking open questions cited by text or local label. Open questions are unnumbered (no `Q-` IDs); when a user refers to a question by shorthand like "Q2", treat it as an informal positional reference to the 2nd open question and map it back to the actual question text rather than introducing a `Q-` ID. Do not route a `blocked` spec to architecture unless the user explicitly requests exploratory architecture.
+Read `shared/readiness-model.md`. Use `ready`, `partial`, `blocked`, or `unknown`. For a `partial` spec, name the ready slice (by `US-`/`RULE-`/`FR-`/`NFR-`/`INT-`/`AC-`/`EDGE-` IDs) and the blocked items with their blocking open questions cited by text or local label. Open questions are unnumbered (no `Q-` IDs); when a user refers to a question by shorthand like "Q2", treat it as an informal positional reference to the 2nd open question and map it back to the actual question text rather than introducing a `Q-` ID. Do not route a `blocked` spec to architecture unless the user explicitly requests exploratory architecture.
 
 ## Planning Session State
 

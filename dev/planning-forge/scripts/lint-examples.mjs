@@ -39,7 +39,7 @@ const KNOWN_AGENTS = new Set([
 ]);
 
 const ALLOWED_ID_PREFIXES = new Set([
-  'US', 'FR', 'NFR', 'INT', 'AC', 'EDGE', 'ASM', 'D', 'TC',
+  'US', 'RULE', 'FR', 'NFR', 'INT', 'AC', 'EDGE', 'ASM', 'D', 'TC',
 ]);
 
 const REQUIRED_FILES = ['input.md', 'expected-coordinator-response.md'];

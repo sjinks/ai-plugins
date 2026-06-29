@@ -20,6 +20,7 @@ Prefer `partial` over `blocked` when a conservative recommended MVP is implement
 A specification is `ready` when all of the following hold:
 
 - Core user stories are defined.
+- Business rules are explicit when stable domain policy drives behavior.
 - Functional requirements are clear.
 - Implementation-relevant non-functional requirements are clear.
 - Acceptance criteria are observable and testable.
@@ -38,7 +39,7 @@ A specification is `partial` when:
 
 For `partial`, the assessing agent must name:
 
-- the **ready slice**: the specific `US-`, `FR-`, `NFR-`, `INT-`, `AC-`, and `EDGE-` IDs that can proceed; and
+- the **ready slice**: the specific `US-`, `RULE-`, `FR-`, `NFR-`, `INT-`, `AC-`, and `EDGE-` IDs that can proceed; and
 - the **blocked items**: what cannot proceed and the specific open question(s) blocking each, cited by question text or a local label (open questions are unnumbered; see `shared/stable-id-discipline.md`).
 
 ## What `blocked` Means
@@ -58,6 +59,6 @@ A specification is `blocked` when:
 
 ## ID Assignment By Readiness
 
-- For `ready`, assign IDs to all in-scope user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases.
-- For `partial`, assign IDs to all implementation-ready items in the ready slice (user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases). Keep blocked portions unnumbered in Open Questions.
+- For `ready`, assign IDs to all in-scope user stories, business rules, FRs, NFRs, interfaces, ACs, assumptions, and edge cases.
+- For `partial`, assign IDs to all implementation-ready items in the ready slice (user stories, business rules, FRs, NFRs, interfaces, ACs, assumptions, and edge cases). Keep blocked portions unnumbered in Open Questions.
 - For `blocked`, do not assign IDs for ambiguous scope. Limit substantive content to confirmed scope, empty-state rationales, and blocking questions.

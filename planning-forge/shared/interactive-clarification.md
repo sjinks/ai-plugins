@@ -35,7 +35,7 @@ Ask exactly one question per turn. Choose the question that most reduces impleme
 
 Prefer questions about:
 
-- Product behavior that would change FRs, NFRs, ACs, interfaces, task boundaries, sequencing, or verification.
+- Product behavior that would change business rules, FRs, NFRs, ACs, interfaces, task boundaries, sequencing, or verification.
 - Domain terms whose meaning is overloaded, inconsistent, or contradicted by repository evidence.
 - Actor, permission, data ownership, lifecycle, state, failure, compatibility, migration, or observability boundaries.
 - Tradeoffs that are hard to reverse, surprising without context, or likely to affect future maintainers.

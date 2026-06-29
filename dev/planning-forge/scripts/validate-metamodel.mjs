@@ -111,6 +111,11 @@ function stablePrefix(id) {
   return match ? match[2] : null;
 }
 
+function stableNamespace(id) {
+  const match = STABLE_ID_RE.exec(id);
+  return match && match[1] ? match[1].slice(0, -1) : null;
+}
+
 function isExternalRef(ref) {
   return EXTERNAL_REF_RE.test(ref);
 }
@@ -160,6 +165,14 @@ function validateSemantics(artifact) {
     if (!prefix) {
       errors.push(`invalid stable id: ${node.id}`);
       continue;
+    }
+    const namespace = stableNamespace(node.id);
+    if (artifact.id_namespace === null || artifact.id_namespace === undefined) {
+      if (namespace !== null) {
+        errors.push(`${node.id}: namespaced id requires id_namespace ${namespace}`);
+      }
+    } else if (namespace !== artifact.id_namespace) {
+      errors.push(`${node.id}: namespace ${namespace ?? 'none'} does not match id_namespace ${artifact.id_namespace}`);
     }
     if (!TYPE_BY_PREFIX[prefix]?.has(node.type)) {
       errors.push(`${node.id}: type ${node.type} does not match ${prefix}- prefix`);

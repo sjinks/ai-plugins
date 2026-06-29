@@ -12,7 +12,10 @@
       "enum": ["specification", "architecture", "test_plan", "planning_bundle"]
     },
     "title": { "type": "string", "minLength": 1 },
-    "id_namespace": { "type": ["string", "null"] },
+    "id_namespace": {
+      "type": ["string", "null"],
+      "pattern": "^[A-Z]{1,8}$"
+    },
     "nodes": {
       "type": "array",
       "minItems": 1,

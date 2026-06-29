@@ -93,6 +93,18 @@ function main() {
     leadingZeroId.nodes[0].id = 'FR-01';
     expectCase('leading-zero-id', leadingZeroId, 1, 'string does not match pattern', tempDir);
 
+    const invalidNamespace = clone(base);
+    invalidNamespace.id_namespace = 'bad namespace';
+    expectCase('invalid-namespace', invalidNamespace, 1, 'string does not match pattern', tempDir);
+
+    const missingNamespace = clone(base);
+    missingNamespace.nodes[0].id = 'SESSION-FR-1';
+    expectCase('missing-namespace', missingNamespace, 1, 'namespaced id requires id_namespace SESSION', tempDir);
+
+    const namespaceMismatch = clone(base);
+    namespaceMismatch.id_namespace = 'SESSION';
+    expectCase('namespace-mismatch', namespaceMismatch, 1, 'FR-1: namespace none does not match id_namespace SESSION', tempDir);
+
     const missing = clone(base);
     missing.edges.push({ source: 'FR-1', relationship: 'demonstrated_by', target: 'AC-99' });
     expectCase('missing-edge-node', missing, 1, 'references missing node AC-99', tempDir);

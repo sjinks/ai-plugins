@@ -19,6 +19,8 @@ The canonical model has two main collections:
 - `nodes`: stable planning items such as user stories, business rules, requirements, acceptance criteria, architecture decisions, and test cases.
 - `edges`: typed traceability relationships using the relationship vocabulary from `shared/traceability-graph.md`.
 
+Use `id_namespace` to record the project-scoped namespace token from `shared/stable-id-discipline.md` when artifact IDs carry a concern prefix such as `SESSION-FR-1`. The namespace value is the uppercase token only, for example `SESSION`, and must match the prefix used by namespaced IDs in the artifact. Use `null` when the artifact uses bare IDs such as `FR-1`.
+
 Keep node fields compact. Prefer `statement`, `rationale`, `owner`, `obligation`, `release_priority`, `status`, and `verification_method` over broad custom metadata. Add a schema field only when it supports validation, generation, or downstream planning.
 
 ## Edge Rules

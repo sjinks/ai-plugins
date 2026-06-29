@@ -85,6 +85,14 @@ function main() {
     mismatch.nodes[0].type = 'user_story';
     expectCase('type-prefix-mismatch', mismatch, 1, 'FR-1: type user_story does not match FR- prefix', tempDir);
 
+    const zeroId = clone(base);
+    zeroId.nodes[0].id = 'FR-0';
+    expectCase('zero-id', zeroId, 1, 'string does not match pattern', tempDir);
+
+    const leadingZeroId = clone(base);
+    leadingZeroId.nodes[0].id = 'FR-01';
+    expectCase('leading-zero-id', leadingZeroId, 1, 'string does not match pattern', tempDir);
+
     const missing = clone(base);
     missing.edges.push({ source: 'FR-1', relationship: 'demonstrated_by', target: 'AC-99' });
     expectCase('missing-edge-node', missing, 1, 'references missing node AC-99', tempDir);
@@ -104,6 +112,10 @@ function main() {
     const reversedSatisfies = clone(base);
     reversedSatisfies.edges.push({ source: 'Goal', relationship: 'satisfies', target: 'US-1' });
     expectCase('reversed-satisfies', reversedSatisfies, 1, 'relationship satisfies does not allow source Goal', tempDir);
+
+    const invalidSatisfiesTarget = clone(base);
+    invalidSatisfiesTarget.edges.push({ source: 'FR-1', relationship: 'satisfies', target: 'AC-1' });
+    expectCase('invalid-satisfies-target', invalidSatisfiesTarget, 1, 'relationship satisfies does not allow target AC-1', tempDir);
 
     const invalidRefines = clone(base);
     invalidRefines.edges.push({ source: 'TC-1', relationship: 'refines', target: 'FR-1' });

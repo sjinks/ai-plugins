@@ -28,7 +28,7 @@ const ARG_SPEC = {
   },
 };
 
-const STABLE_ID_RE = /^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[0-9]{1,}$/;
+const STABLE_ID_RE = /^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[1-9][0-9]*$/;
 const EXTERNAL_REF_RE = /^(Goal|In Scope|risk: .+|manual check: .+|review check: .+|command: .+)$/;
 
 const TYPE_BY_PREFIX = {
@@ -48,11 +48,11 @@ const RELATIONSHIP_RULES = {
   satisfies: {
     source: new Set([
       'user_story', 'business_rule', 'functional_requirement',
-      'quality_requirement', 'acceptance_criterion', 'edge_case',
+      'quality_requirement',
     ]),
     target: new Set([
       'external_goal', 'external_scope', 'user_story', 'business_rule',
-      'functional_requirement', 'quality_requirement', 'acceptance_criterion',
+      'functional_requirement', 'quality_requirement',
     ]),
   },
   refines: {

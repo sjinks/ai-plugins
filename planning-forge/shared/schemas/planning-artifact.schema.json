@@ -27,11 +27,11 @@
   "$defs": {
     "stableId": {
       "type": "string",
-      "pattern": "^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[0-9]{1,}$"
+      "pattern": "^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[1-9][0-9]*$"
     },
     "traceRef": {
       "type": "string",
-      "pattern": "^(([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[0-9]{1,}|Goal|In Scope|risk: .+|manual check: .+|review check: .+|command: .+)$"
+      "pattern": "^(([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[1-9][0-9]*|Goal|In Scope|risk: .+|manual check: .+|review check: .+|command: .+)$"
     },
     "nodeType": {
       "type": "string",

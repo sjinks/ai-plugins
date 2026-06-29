@@ -1,6 +1,6 @@
 {
     "name": "commit-discipline-skills",
-    "description": "Commit and pull-request discipline skills for AI agents: cleaning branch history, drafting and auditing commit messages, and writing reviewer-ready pull request descriptions without rewriting history or posting live updates.",
+    "description": "Commit and pull request discipline skills for AI agents: cleaning branch history, drafting and auditing commit messages, and writing reviewer-ready pull request descriptions without rewriting history or posting live updates.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",

@@ -127,7 +127,9 @@ Return all core sections below in order. Do not omit core sections. When a secti
 - ID namespace: <UPPERCASE concern token applied to this artifact's IDs per shared/stable-id-discipline.md, or none>
 
 ## Coverage Matrix
-- <AC-1 verified_by TC-1; FR-1 verified_by TC-1 | manual check | review check | gap>.
+- <AC-1 verified_by TC-1; FR-1 verified_by TC-1>.
+- <NFR-1 verified_by manual check: performance budget review>.
+- <EDGE-1>: gap - no fixture or seam yet; list details in Coverage Gaps.
 
 ## Test Cases
 ### TC-1: <title>

@@ -1,6 +1,6 @@
 # Traceability Graph Reference
 
-This reference defines Planning Forge traceability as a directed graph over stable IDs. It is a local reference, not an invocable skill.
+This reference defines Planning Forge traceability as a directed graph whose preferred nodes are stable IDs. It is a local reference, not an invocable skill.
 
 Human-facing sections may render the graph as bullets, compact tables, or inline `Trace:` fields. The underlying model is typed edges. Do not require agents to manually store reverse edges; reverse questions are answered by traversing the same directed edges in the opposite direction.
 
@@ -15,7 +15,7 @@ Examples of reverse questions the graph must support:
 - Use stable IDs from `shared/stable-id-discipline.md` as graph nodes: `US-`, `RULE-`, `FR-`, `NFR-`, `INT-`, `AC-`, `EDGE-`, `ASM-`, `D-`, and `TC-`.
 - Do not introduce new prefixes solely for traceability. Use the existing `## Goal` section as prose unless the stable-ID taxonomy later adds goal IDs. Use `D-` for architecture decisions unless the taxonomy later adds `ADR-`.
 - Risks remain prose today. Reference a risk by short title text in a trace note only when needed; do not emit `RISK-` IDs.
-- Prefer direct edges between stable IDs. Use prose nodes such as `Goal`, `In Scope`, or a risk title only when no stable ID exists yet.
+- Prefer direct edges between stable IDs. Use prose nodes such as `Goal`, `In Scope`, a risk title, a manual/review check label, or a command label only when no stable ID exists yet.
 
 ## Edge Syntax
 

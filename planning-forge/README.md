@@ -7,7 +7,7 @@ It provides a small chain of focused agents for specification, architecture, tes
 ## What ships
 
 - `agents/planning-forge-coordinator.agent.md` — Planning Forge Coordinator for iterative, human-in-the-loop sessions: intent classification, readiness gating, stable-ID custody, and routing to the specialist agents or manual handoff prompts. Does not implement code, publish, or auto-advance stages.
-- `agents/task-spec-agent.agent.md` — Specification Planner for requirements, acceptance criteria, readiness assessment, and task splitting.
+- `agents/task-spec-agent.agent.md` — Specification Planner for requirements, business rules, acceptance criteria, readiness assessment, and task splitting.
 - `agents/architecture-planner.agent.md` — Architecture Planner for design decisions, contracts, interfaces, data flow, failure modes, risks, rollout notes, and verification seams.
 - `agents/test-planner.agent.md` — Test Planner for builder-ready test cases, fixtures, assertions, verification commands, and coverage gaps.
 - `agents/prototype-spike.agent.md` — Prototype Spike for small throwaway validation artifacts that answer one concrete design, dependency, state-model, protocol, or UI question.

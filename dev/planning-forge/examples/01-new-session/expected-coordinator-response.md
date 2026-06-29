@@ -4,7 +4,7 @@
 - No existing artifact referenced, so readiness is `unknown`.
 - Routes to **Specification Planner** (exact name).
 - Does **not** route to architecture, test planning, publishing, or implementation.
-- Emits an initial-spec handoff prompt that asks for user stories, FRs, NFRs,
+- Emits an initial-spec handoff prompt that asks for user stories, business rules, FRs, NFRs,
   interfaces/data shapes, ACs, edge cases, assumptions, and open questions, and that
   preserves unknowns as Open Questions instead of inventing detail.
 
@@ -29,7 +29,7 @@ Create an initial task specification for vulnerability triage for WordPress plug
 Instructions:
 - Treat this as a new planning session.
 - Do not design architecture yet. Do not implement code.
-- Identify user stories, functional requirements, non-functional requirements,
+- Identify user stories, business rules, functional requirements, non-functional requirements,
   interfaces/data shapes, acceptance criteria, edge cases, assumptions, and open
   questions.
 - Mark readiness as ready, partial, or blocked.

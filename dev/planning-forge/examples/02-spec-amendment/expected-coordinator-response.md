@@ -6,7 +6,7 @@
   - preserve stable IDs (`US-1`, `FR-1`, `FR-2`, `NFR-1`, `INT-1`, `AC-1`, `EDGE-1`,
     `ASM-1`);
   - not renumber unchanged items;
-  - allocate new IDs only for new items (e.g. a new `NFR-`, `EDGE-`, or `ASM-` for the
+  - allocate new IDs only for new items (e.g. a new `RULE-`, `NFR-`, `EDGE-`, or `ASM-` for the
     read-only filesystem constraint);
   - mark removed/deferred/out-of-scope items explicitly;
   - return an ID change summary.

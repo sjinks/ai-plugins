@@ -4,7 +4,7 @@
 - A specification exists but no architecture artifact is available.
 - Routes to **Test Planner** (exact name) for a specification-level test plan.
 - The handoff prompt must:
-  - trace test cases to AC/FR/NFR/INT/EDGE IDs;
+  - trace test cases to AC/RULE/FR/NFR/INT/EDGE IDs;
   - mark architecture-dependent tests as coverage gaps;
   - not invent architecture or new requirements.
 
@@ -30,7 +30,7 @@ Specification:
 <specification.md>
 
 Instructions:
-- Trace test cases to AC/FR/NFR/INT/EDGE IDs.
+- Trace test cases to AC/RULE/FR/NFR/INT/EDGE IDs.
 - Mark architecture-dependent tests as coverage gaps.
 - Do not invent architecture. Do not invent new requirements.
 ```

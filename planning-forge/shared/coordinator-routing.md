@@ -65,7 +65,7 @@ User request:
 Instructions:
 - Treat this as a new planning session.
 - Do not design architecture yet. Do not implement code.
-- Identify user stories, functional requirements, non-functional requirements,
+- Identify user stories, business rules, functional requirements, non-functional requirements,
   interfaces/data shapes, acceptance criteria, edge cases, assumptions, and open
   questions.
 - Mark readiness as ready, partial, or blocked.
@@ -168,7 +168,7 @@ Instructions:
 - Design the minimal architecture sufficient for the specification.
 - Avoid queues, distributed systems, caches, plugin architectures, or broad
   abstractions unless required by the specification.
-- Trace decisions to FR/NFR/AC/INT/EDGE IDs.
+- Trace decisions to RULE/FR/NFR/AC/INT/EDGE IDs.
 - Identify risks, trade-offs, implementation seams, and test seams.
 ```
 
@@ -204,7 +204,7 @@ Inputs:
 - Architecture:  {{ARCH_REFERENCE_OR_CONTENT}}
 
 Instructions:
-- Trace test cases to AC/FR/NFR/INT/D/EDGE IDs.
+- Trace test cases to AC/RULE/FR/NFR/INT/D/EDGE IDs.
 - Identify unit, integration, E2E, regression, negative, and edge-case tests where
   applicable.
 - Identify fixtures, mocks, fakes, and test data.
@@ -220,7 +220,7 @@ Specification:
 {{SPEC_REFERENCE_OR_CONTENT}}
 
 Instructions:
-- Trace test cases to AC/FR/NFR/INT/EDGE IDs.
+- Trace test cases to AC/RULE/FR/NFR/INT/EDGE IDs.
 - Mark architecture-dependent tests as coverage gaps.
 - Do not invent architecture. Do not invent new requirements.
 ```

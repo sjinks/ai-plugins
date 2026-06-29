@@ -11,6 +11,7 @@ Use only the prefixes the specialist agents actually emit:
 | Prefix | Item | Emitted by |
 |--------|------|------------|
 | `US-`  | user story | Specification Planner |
+| `RULE-`| business rule | Specification Planner |
 | `FR-`  | functional requirement | Specification Planner |
 | `NFR-` | non-functional requirement | Specification Planner |
 | `INT-` | interface / data shape | Specification Planner |
@@ -22,6 +23,7 @@ Use only the prefixes the specialist agents actually emit:
 
 Notes:
 
+- `RULE-` is for stable domain policy independent of UI/API behavior; use `FR-` for system behavior that enforces a rule.
 - `INT-` is the Interfaces And Data Shapes prefix, not "integrations".
 - Open questions are unnumbered bullets; there is no `Q-` prefix. Reference an open question by quoting its text or by a local label within a single response. Do not instruct any agent to emit `Q-` IDs.
 - Risks are prose today; there is no `RISK-` prefix. Do not instruct any agent to emit risk IDs.

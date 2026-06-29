@@ -16,7 +16,7 @@ Use it when a request is solution-shaped, broad enough to hide multiple projects
 - When there are real product or technical alternatives, compare 2-3 approaches before settling requirements.
 - Lead with the recommended approach and give the reason, accepted tradeoff, and reversibility.
 - Skip fake alternatives when the request, repository constraints, or existing architecture already make the path obvious.
-- Convert unresolved alternative choices into Open Questions when the answer would change FRs, NFRs, ACs, interfaces, task boundaries, sequencing, or verification.
+- Convert unresolved alternative choices into Open Questions when the answer would change business rules, FRs, NFRs, ACs, interfaces, task boundaries, sequencing, or verification.
 
 ## Section-Scale Design Review
 

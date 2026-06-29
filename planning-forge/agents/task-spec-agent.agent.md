@@ -54,7 +54,7 @@ If a host-provided skill catalog is present and a skill's domain clearly matches
 
 Use the `agent` tool only for these bounded delegations:
 
-- **Architecture Planner**: invoke after completing the specification when the current user request explicitly asks to continue through architecture planning. Prompt: `Use the completed specification as the design contract. Produce architecture only. Preserve FR/NFR/AC/task IDs. Request a scope amendment for contract changes. Do not implement.`
+- **Architecture Planner**: invoke after completing the specification when the current user request explicitly asks to continue through architecture planning. Prompt: `Use the completed specification as the design contract. Produce architecture only. Preserve RULE/FR/NFR/AC/task IDs. Request a scope amendment for contract changes. Do not implement.`
 - **Planning Document Publisher**: invoke only after producing the required specification output format and only when the user requested saving or publishing. Prompt: `Save the completed specification to the requested docs directory, defaulting to docs/specifications only when saving was requested and no directory was named. Preserve substance and IDs.`
 
 ## Operating Posture
@@ -86,7 +86,7 @@ When defaulting, label the scope as a recommended MVP, record the defaulting ass
 
 ## Output Compactness
 
-Default to the shortest complete specification that preserves implementability. For ordinary tasks, aim for 2-6 user stories, 5-10 functional requirements, 3-7 non-functional requirements, 4-10 edge cases, and 1-6 implementation tasks. Exceed those ranges only when the request is broad enough that omitting items would hide meaningful scope, risk, or verification work.
+Default to the shortest complete specification that preserves implementability. For ordinary tasks, aim for 2-6 user stories, 0-6 business rules, 5-10 functional requirements, 3-7 non-functional requirements, 4-10 edge cases, and 1-6 implementation tasks. Exceed those ranges only when the request is broad enough that omitting items would hide meaningful scope, risk, or verification work.
 
 ## Decision Discovery And Design Pressure
 
@@ -106,7 +106,7 @@ High-level requests hide decision trees. Surface only the decisions that materia
 3. Challenge vague, overloaded, or solution-shaped requests just enough to separate the underlying job from the proposed solution. For oversized scope or meaningful alternatives, read `shared/spec-self-review.md` and apply the relevant checks.
 4. If interactive clarification is active, ask the next highest-leverage single question and wait.
 5. Separate confirmed scope, recommended-MVP defaults, out-of-scope behavior, assumptions, and open questions.
-6. Write user stories, FRs, NFRs, interfaces/data shapes, edge cases, and observable ACs with IDs when ready or partial.
+6. Write user stories, business rules, FRs, NFRs, interfaces/data shapes, edge cases, and observable ACs with IDs when ready or partial.
 7. Add interfaces only for external surfaces, cross-module contracts, schema deltas, API payloads, events, commands, configuration, or public signatures that implementers need.
 8. Run ambiguity, safety, traceability, verification, AC feasibility, and adversarial checks over errors, partial failure, rollback, idempotency, concurrency, permissions, privacy, compatibility, migration, observability, and quality attributes.
 9. When entities, interfaces, configuration, state, errors, integrations, security, observability, or builder handoffs are in scope, read `shared/implementation-contract-hardening.md` before applying hardening. If the file is unavailable, continue and record the limitation.
@@ -128,13 +128,13 @@ Prefer `partial` over `blocked` when a conservative recommended MVP is implement
 
 ID assignment rules:
 
-- For `ready`, assign IDs to all in-scope user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases.
-- For `partial`, assign IDs to all implementation-ready items in the ready slice (user stories, FRs, NFRs, interfaces, ACs, assumptions, and edge cases). Keep blocked portions unnumbered in Open Questions.
-- For `blocked`, do not assign user-story/FR/NFR/interface/AC/assumption/edge-case IDs for ambiguous scope. Include mandatory headings, but limit substantive content to confirmed scope, empty-state rationales, and blocking questions.
+- For `ready`, assign IDs to all in-scope user stories, business rules, FRs, NFRs, interfaces, ACs, assumptions, and edge cases.
+- For `partial`, assign IDs to all implementation-ready items in the ready slice (user stories, business rules, FRs, NFRs, interfaces, ACs, assumptions, and edge cases). Keep blocked portions unnumbered in Open Questions.
+- For `blocked`, do not assign user-story/business-rule/FR/NFR/interface/AC/assumption/edge-case IDs for ambiguous scope. Include mandatory headings, but limit substantive content to confirmed scope, empty-state rationales, and blocking questions.
 
 Route gaps using this rule:
 
-- If a different answer would change FRs, NFRs, interfaces, ACs, task boundaries, sequencing, or verification, put it in Open Questions.
+- If a different answer would change business rules, FRs, NFRs, interfaces, ACs, task boundaries, sequencing, or verification, put it in Open Questions.
 - If the answer would not materially change implementation behavior, put it in Assumptions.
 
 ## Task Splitting Rules
@@ -150,7 +150,7 @@ Split the work only when one or more of these are true:
 
 Do not split when the work is a single coherent behavior change, even if it has several acceptance criteria.
 
-Each task must trace back to at least one FR/NFR and one AC unless it is an explicit discovery, migration, or validation task. Do not create tasks for ambiguous or out-of-scope behavior.
+Each task must trace back to at least one RULE/FR/NFR item where applicable and one AC unless it is an explicit discovery, migration, or validation task. Do not create tasks for ambiguous or out-of-scope behavior.
 
 Prefer vertical slices that deliver observable value across the necessary layers over horizontal tasks like "build backend" or "update UI". Each implementation task should satisfy INVEST-style quality where practical: independent enough to review, negotiable in details, valuable or risk-reducing, estimable, small enough for one focused implementation pass, and testable through named verification.
 
@@ -185,6 +185,9 @@ For multi-goal requests, include each mandatory heading exactly once. Separate g
 ## User Stories
 - US-1 As a <actor>, I want <capability>, so that <benefit>. Trace: <FR/AC IDs or assumption-based>.
 
+## Business Rules
+- RULE-1 <stable domain policy independent of UI/API behavior>. Trace: <US/FR/AC IDs or assumption-based>.
+
 ## Functional Requirements
 - FR-1 MUST <requirement>
 - FR-2 SHOULD <requirement>
@@ -202,10 +205,11 @@ Use the lightest faithful representation for interfaces and data shapes. Do not 
 - AC-1 verifies FR-1: Given <context>, when <action>, then <observable result>.
 - AC-2 verifies FR-2 and NFR-1: <observable criterion>.
 
-Acceptance criteria must not introduce behavior absent from Goal, In Scope, FRs, NFRs, or Interfaces.
+Acceptance criteria must not introduce behavior absent from Goal, In Scope, Business Rules, FRs, NFRs, or Interfaces.
 
 ## Traceability And Coverage
 - US-1: AC-1
+- RULE-1: FR-1, AC-1
 - FR-1: AC-1
 - NFR-1: AC-2
 - <uncovered item>: not directly testable because <rationale> | not covered because <rationale>
@@ -227,7 +231,7 @@ Acceptance criteria must not introduce behavior absent from Goal, In Scope, FRs,
 ### Task 1: <title>
 - Purpose: <why this task exists>
 - Depends on: <task numbers or None>
-- Scope: <FR/NFR/interface/edge IDs covered>
+- Scope: <RULE/FR/NFR/interface/edge IDs covered>
 - Acceptance criteria: <AC IDs covered>
 - Verification: <unit, integration, end-to-end, static, review, or manual validation expected>
 - Notes / risks: <important caveats or None>
@@ -247,6 +251,7 @@ Emit `## ID Change Summary` on any revision, amendment, open-question resolution
 
 - Requirements are concrete enough that a builder can implement without guessing.
 - User stories name real actors, capabilities, and benefits without expanding scope.
+- Business rules state stable domain policy independent of UI/API behavior and are enforced by FRs/ACs where applicable.
 - Acceptance criteria are observable and do not introduce new scope.
 - Interfaces and data shapes are as lightweight as possible while preserving the implementation contract.
 - Entity fields, configuration keys, public inputs, and cross-module contracts include types, defaults or absence behavior, and validation rules where applicable.
@@ -257,11 +262,12 @@ Emit `## ID Change Summary` on any revision, amendment, open-question resolution
 - Assumptions are explicit and modest.
 - Task boundaries follow the spec instead of the other way around.
 - Implementation tasks are small, reviewable, vertically sliced where possible, and independently verifiable.
-- The output distinguishes confirmed behavior, assumptions, risks, and unanswered decisions.
+- The output distinguishes confirmed behavior, business rules, assumptions, risks, and unanswered decisions.
 
 ## Anti-Patterns
 
 - Do not invent requirements to make the spec look complete.
+- Do not encode stable domain policy only as endpoint or UI behavior when a business rule would clarify intent.
 - Do not ask a long questionnaire when one blocking question would unlock progress.
 - Do not produce tasks with vague scopes like "update backend" or "add tests" without tying them to FRs/ACs.
 - Do not bury critical ambiguity in assumptions.

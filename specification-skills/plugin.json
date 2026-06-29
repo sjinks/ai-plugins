@@ -1,6 +1,6 @@
 {
     "name": "specification-skills",
-    "description": "Requirements and specification workflow skills for AI agents: auditing acceptance criteria, finding requirement ambiguity, defining scope boundaries, surfacing assumptions, enumerating edge cases, handling mid-build spec deviations, decomposing specs into implementation tasks, consolidating multiple same-kind artifacts into one, and reconciling docs against the live source tree.",
+    "description": "Requirements and specification workflow skills for AI agents: auditing acceptance criteria, finding requirement ambiguity, sharpening requirements into buildable and decidable form, defining scope boundaries, surfacing assumptions, enumerating edge cases, handling mid-build spec deviations, decomposing specs into implementation tasks, consolidating multiple same-kind artifacts into one, and reconciling docs against the live source tree.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",

@@ -210,6 +210,14 @@ const SECTION_SCOPE_FIXTURES = [
       { pattern: /only the requested model route may differ/, label: 'anchor outside required section should not satisfy check' },
     ],
   },
+  {
+    file: 'section-scope/h1-boundary.md',
+    shouldPass: false,
+    heading: 'Critical Invariants',
+    anchors: [
+      { pattern: /only the requested model route may differ/, label: 'anchor after h1 boundary should not satisfy check' },
+    ],
+  },
 ];
 
 function normalize(text) {
@@ -286,7 +294,7 @@ function sectionText(text, heading) {
   const level = lines[start].trim().match(headingPattern)[1].length;
   const out = [];
   for (let index = start + 1; index < lines.length; index += 1) {
-    const match = lines[index].match(/^(#{2,6})\s+/);
+    const match = lines[index].trim().match(/^(#{1,6})\s+/);
     if (match && match[1].length <= level) break;
     out.push(lines[index]);
   }

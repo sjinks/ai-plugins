@@ -44,6 +44,29 @@ const TYPE_BY_PREFIX = {
   TC: new Set(['test_case']),
 };
 
+const REQUIRED_EVIDENCE_SOURCES = new Set([
+  'inferred-from-repository',
+  'repository-evidence',
+  'external-reference',
+  'private-note',
+  'advisory-material',
+  'derived-from-artifact',
+]);
+
+const CLAIM_KINDS_BY_TYPE = {
+  user_story: new Set(['requirement', 'recommendation']),
+  business_rule: new Set(['requirement', 'fact']),
+  functional_requirement: new Set(['requirement', 'recommendation']),
+  quality_requirement: new Set(['requirement', 'recommendation']),
+  interface: new Set(['contract', 'fact', 'recommendation']),
+  data_shape: new Set(['contract', 'fact', 'recommendation']),
+  acceptance_criterion: new Set(['verification', 'recommendation']),
+  edge_case: new Set(['requirement', 'recommendation']),
+  assumption: new Set(['assumption']),
+  architecture_decision: new Set(['decision', 'recommendation']),
+  test_case: new Set(['verification', 'recommendation']),
+};
+
 const RELATIONSHIP_RULES = {
   satisfies: {
     source: new Set([
@@ -149,6 +172,59 @@ function checkRelationshipCompatibility(edge, index, nodeTypes, errors) {
   }
 }
 
+function hasEvidence(node) {
+  return Array.isArray(node.evidence) && node.evidence.length > 0;
+}
+
+function validateNodeProvenance(node, nodeIds, errors) {
+  const allowedClaimKinds = CLAIM_KINDS_BY_TYPE[node.type];
+  if (allowedClaimKinds) {
+    if (!node.claim_kind) {
+      errors.push(`${node.id}: ${node.type} requires claim_kind`);
+    } else if (!allowedClaimKinds.has(node.claim_kind)) {
+      errors.push(`${node.id}: claim_kind ${node.claim_kind} does not match ${node.type}`);
+    }
+  }
+
+  if (node.source && !node.confidence) {
+    errors.push(`${node.id}: source requires confidence`);
+  }
+  if (node.confidence && !node.source) {
+    errors.push(`${node.id}: confidence requires source`);
+  }
+
+  if (node.type === 'assumption') {
+    if (!node.source) errors.push(`${node.id}: assumption requires source`);
+    if (!node.confidence) errors.push(`${node.id}: assumption requires confidence`);
+    if (!Array.isArray(node.impact_if_false) || node.impact_if_false.length === 0) {
+      errors.push(`${node.id}: assumption requires impact_if_false`);
+    }
+  }
+
+  for (const [index, impact] of (node.impact_if_false || []).entries()) {
+    if (impact.trim().length === 0) {
+      errors.push(`${node.id}: impact_if_false[${index}] is blank`);
+    }
+  }
+
+  if (REQUIRED_EVIDENCE_SOURCES.has(node.source) && !hasEvidence(node)) {
+    errors.push(`${node.id}: source ${node.source} requires evidence`);
+  }
+
+  for (const [index, evidence] of (node.evidence || []).entries()) {
+    if (evidence.ref.trim().length === 0) {
+      errors.push(`${node.id}: evidence[${index}].ref is blank`);
+    }
+    if (evidence.kind === 'node') {
+      if (!STABLE_ID_RE.test(evidence.ref)) {
+        errors.push(`${node.id}: evidence[${index}] node ref must be a stable ID`);
+      } else if (!nodeIds.has(evidence.ref)) {
+        errors.push(`${node.id}: evidence[${index}] references missing node ${evidence.ref}`);
+      }
+    }
+  }
+}
+
 function validateSemantics(artifact) {
   const errors = [];
   const nodeIds = new Set();
@@ -177,6 +253,10 @@ function validateSemantics(artifact) {
     if (!TYPE_BY_PREFIX[prefix]?.has(node.type)) {
       errors.push(`${node.id}: type ${node.type} does not match ${prefix}- prefix`);
     }
+  }
+
+  for (const node of artifact.nodes || []) {
+    validateNodeProvenance(node, nodeIds, errors);
   }
 
   for (const [index, edge] of (artifact.edges || []).entries()) {

@@ -51,7 +51,7 @@ Read `shared/traceability-graph.md` before writing `Trace:` fields. If the file 
 
 ## Machine-Readable Metamodel
 
-Read `shared/metamodel.md` when the supplied planning contract or current request includes a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, generated diagram, ReqIF, OSLC, or completeness-report requirement. Treat schema-valid JSON nodes and edges as authoritative over Markdown when they disagree, and request a scope amendment instead of silently changing machine-readable requirements.
+Read `shared/metamodel.md` when the supplied planning contract or current request includes a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, generated diagram, ReqIF, OSLC, or completeness-report requirement. Treat schema-valid JSON nodes and edges as authoritative over Markdown when they disagree, and request a scope amendment instead of silently changing machine-readable requirements. Preserve provenance fields, and keep architecture decisions distinct from assumptions, facts, and recommendations.
 
 ## Optional Skill Extension
 

@@ -93,7 +93,7 @@ Read `shared/traceability-graph.md` when routing a stage that asks for traceabil
 
 ## Machine-Readable Metamodel
 
-Read `shared/metamodel.md` when a request mentions machine-readable artifacts, schema validation, YAML/JSON source-of-truth, traceability matrices, generated diagrams, ReqIF, OSLC, completeness reports, or durable export formats. Route the planning stage normally, but include a handoff instruction to preserve or produce schema-valid metamodel JSON when that is in scope.
+Read `shared/metamodel.md` when a request mentions machine-readable artifacts, schema validation, YAML/JSON source-of-truth, traceability matrices, generated diagrams, ReqIF, OSLC, completeness reports, or durable export formats. Route the planning stage normally, but include a handoff instruction to preserve or produce schema-valid metamodel JSON when that is in scope, including provenance fields for facts, assumptions, decisions, and recommendations.
 
 ## Readiness
 

@@ -8,6 +8,7 @@
     {
       "id": "US-1",
       "type": "user_story",
+      "claim_kind": "requirement",
       "title": "Recover from suspected session theft",
       "statement": "As an account owner, I want to revoke other active sessions so that I can recover from suspected session theft.",
       "status": "approved",
@@ -16,6 +17,7 @@
     {
       "id": "RULE-1",
       "type": "business_rule",
+      "claim_kind": "requirement",
       "title": "Current session remains active",
       "statement": "Revoking other sessions must not revoke the session authorizing the operation.",
       "status": "approved"
@@ -23,6 +25,7 @@
     {
       "id": "FR-1",
       "type": "functional_requirement",
+      "claim_kind": "requirement",
       "title": "Revoke other sessions",
       "statement": "When an account owner requests revocation of all other sessions, the authentication service MUST invalidate every session belonging to the account except the session authorizing the operation.",
       "obligation": "must",
@@ -33,8 +36,42 @@
       "owner": "identity-team"
     },
     {
+      "id": "ASM-1",
+      "type": "assumption",
+      "claim_kind": "assumption",
+      "title": "Sessions are centrally stored",
+      "statement": "Existing sessions are stored centrally.",
+      "status": "unconfirmed",
+      "source": "inferred-from-repository",
+      "evidence": [
+        {
+          "kind": "file",
+          "ref": "src/session/store.ts"
+        }
+      ],
+      "confidence": "medium",
+      "impact_if_false": ["D-1 must be revisited"]
+    },
+    {
+      "id": "D-1",
+      "type": "architecture_decision",
+      "claim_kind": "decision",
+      "title": "Use central session store",
+      "statement": "Implement session revocation against the central session store.",
+      "status": "proposed",
+      "source": "derived-from-artifact",
+      "evidence": [
+        {
+          "kind": "node",
+          "ref": "ASM-1"
+        }
+      ],
+      "confidence": "medium"
+    },
+    {
       "id": "AC-1",
       "type": "acceptance_criterion",
+      "claim_kind": "verification",
       "title": "Other sessions are revoked",
       "statement": "Given an account owner has multiple active sessions, when they revoke all other sessions, then every other session is invalidated and the current session remains active.",
       "status": "approved"
@@ -42,6 +79,7 @@
     {
       "id": "TC-1",
       "type": "test_case",
+      "claim_kind": "verification",
       "title": "Revokes every session except current",
       "statement": "Exercise the session revocation flow with three active sessions and assert that only the authorizing session remains valid.",
       "status": "approved"
@@ -62,6 +100,16 @@
       "source": "FR-1",
       "relationship": "refines",
       "target": "RULE-1"
+    },
+    {
+      "source": "D-1",
+      "relationship": "depends_on",
+      "target": "ASM-1"
+    },
+    {
+      "source": "FR-1",
+      "relationship": "realized_by",
+      "target": "D-1"
     },
     {
       "source": "US-1",

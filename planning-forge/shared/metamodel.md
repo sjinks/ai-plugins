@@ -57,7 +57,7 @@ The validator checks JSON parsing, JSON Schema conformance, stable-ID shape, dup
 
 ```json
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "artifact_type": "specification",
   "nodes": [
     {

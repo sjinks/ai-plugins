@@ -6,7 +6,7 @@
   "required": ["schema_version", "artifact_type", "nodes", "edges"],
   "properties": {
     "$schema": { "type": "string", "minLength": 1 },
-    "schema_version": { "const": "1.0" },
+    "schema_version": { "const": "1.1" },
     "artifact_type": {
       "type": "string",
       "enum": ["specification", "architecture", "test_plan", "planning_bundle"]

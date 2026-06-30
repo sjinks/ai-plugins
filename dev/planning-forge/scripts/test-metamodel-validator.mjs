@@ -15,7 +15,7 @@ const VALID_FIXTURE = resolve(
 );
 
 const base = {
-  schema_version: '1.0',
+  schema_version: '1.1',
   artifact_type: 'planning_bundle',
   nodes: [
     {
@@ -83,6 +83,10 @@ function main() {
     const duplicate = clone(base);
     duplicate.nodes.push(clone(duplicate.nodes[0]));
     expectCase('duplicate-id', duplicate, 1, 'duplicate node id: FR-1', tempDir);
+
+    const oldSchemaVersion = clone(base);
+    oldSchemaVersion.schema_version = '1.0';
+    expectCase('old-schema-version', oldSchemaVersion, 1, 'value must equal "1.1"', tempDir);
 
     const mismatch = clone(base);
     mismatch.nodes[0].type = 'user_story';

@@ -10,12 +10,12 @@
 // (no allOf/anyOf/oneOf/if-then-else, no format assertions). The artifact
 // schemas are written to stay inside this subset.
 
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 
 function hasOwn(value, key) {
   return Object.prototype.hasOwnProperty.call(value, key);
 }
-import { readFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
 
 /**
  * Load a schema file and all sibling schemas it may $ref by relative filename.

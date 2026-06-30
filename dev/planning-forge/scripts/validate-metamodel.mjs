@@ -17,7 +17,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadSchema, validate } from '../../../code-explorer/scripts/lib/json-schema.mjs';
 import { parseArgs } from '../../../code-explorer/scripts/lib/cli.mjs';
-import { loadArtifact } from './lib/artifact.mjs';
+import { EXTERNAL_REF_RE, loadArtifact, STABLE_ID_RE } from './lib/artifact.mjs';
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const DEFAULT_SCHEMA = resolve(
@@ -31,9 +31,6 @@ const ARG_SPEC = {
     '--schema': { type: 'value', default: DEFAULT_SCHEMA },
   },
 };
-
-const STABLE_ID_RE = /^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[1-9][0-9]*$/;
-const EXTERNAL_REF_RE = /^(Goal|In Scope|risk: .+|manual check: .+|review check: .+|command: .+)$/;
 
 const TYPE_BY_PREFIX = {
   US: new Set(['user_story']),

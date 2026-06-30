@@ -22,7 +22,7 @@
 import { existsSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseArgs } from '../../../code-explorer/scripts/lib/cli.mjs';
-import { loadArtifact, indexArtifact } from './lib/artifact.mjs';
+import { loadArtifact, indexArtifact, STABLE_ID_RE } from './lib/artifact.mjs';
 
 const ARG_SPEC = {
   positionals: [{ name: 'artifact', required: true }],
@@ -166,7 +166,7 @@ function checkCompleteness(artifact) {
     const impacts = Array.isArray(node.impact_if_false) ? node.impact_if_false : [];
     for (const impact of impacts) {
       const token = String(impact).split(/\s+/)[0];
-      if (/^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[1-9][0-9]*$/.test(token) && !nodesById.has(token)) {
+      if (STABLE_ID_RE.test(token) && !nodesById.has(token)) {
         warnings.push(`${node.id}: impact_if_false references unknown node ${token}`);
       }
     }

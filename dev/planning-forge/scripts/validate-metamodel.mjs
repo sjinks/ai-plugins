@@ -2,18 +2,22 @@
 // Validate a Planning Forge machine-readable metamodel artifact.
 //
 // Usage:
-//   node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json> [--schema <schema.json>]
+//   node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.(json|yaml|yml)> [--schema <schema.json>]
+//
+// JSON is the canonical validated format; YAML (.yaml/.yml) is accepted as an
+// authoring convenience and parsed into the same shape before validation.
 //
 // Exit codes:
 //   0 = valid
 //   1 = validation errors
 //   2 = invalid usage or missing files
 
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadSchema, validate } from '../../../code-explorer/scripts/lib/json-schema.mjs';
 import { parseArgs } from '../../../code-explorer/scripts/lib/cli.mjs';
+import { loadArtifact } from './lib/artifact.mjs';
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const DEFAULT_SCHEMA = resolve(
@@ -125,7 +129,7 @@ const RELATIONSHIP_RULES = {
 
 function usageError(message) {
   process.stderr.write(`error: ${message}\n`);
-  process.stderr.write('usage: node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json> [--schema <schema.json>]\n');
+  process.stderr.write('usage: node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.(json|yaml|yml)> [--schema <schema.json>]\n');
   process.exit(2);
 }
 
@@ -294,9 +298,13 @@ function main() {
 
   let artifact;
   try {
-    artifact = JSON.parse(readFileSync(artifactPath, 'utf8'));
+    artifact = loadArtifact(artifactPath);
   } catch (err) {
-    process.stderr.write(`Planning Forge metamodel validation failed:\n- JSON parse error: ${err.message}\n`);
+    process.stderr.write(`Planning Forge metamodel validation failed:\n- ${err.message}\n`);
+    process.exit(1);
+  }
+  if (artifact === null || typeof artifact !== 'object' || Array.isArray(artifact)) {
+    process.stderr.write('Planning Forge metamodel validation failed:\n- artifact root must be a mapping/object\n');
     process.exit(1);
   }
 

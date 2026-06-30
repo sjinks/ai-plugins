@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../../planning-forge/shared/schemas/planning-artifact.schema.json",
+  "schema_version": "1.1",
+  "artifact_type": "architecture",
+  "title": "Session revocation architecture",
+  "id_namespace": null,
+  "nodes": [
+    {
+      "id": "FR-1",
+      "type": "functional_requirement",
+      "claim_kind": "requirement",
+      "title": "Revoke other sessions",
+      "statement": "When an account owner requests revocation of all other sessions, the authentication service MUST invalidate every session belonging to the account except the session authorizing the operation.",
+      "obligation": "must",
+      "status": "approved"
+    },
+    {
+      "id": "AC-1",
+      "type": "acceptance_criterion",
+      "claim_kind": "verification",
+      "title": "Other sessions are revoked",
+      "statement": "Given an account owner has multiple active sessions, when they revoke all other sessions, then every other session is invalidated and the current session remains active.",
+      "status": "approved"
+    },
+    {
+      "id": "INT-1",
+      "type": "interface",
+      "claim_kind": "contract",
+      "title": "Revoke-other-sessions command",
+      "statement": "POST /sessions/revoke-others with the authorizing session token; returns the count of revoked sessions.",
+      "status": "approved"
+    },
+    {
+      "id": "ASM-1",
+      "type": "assumption",
+      "claim_kind": "assumption",
+      "title": "Sessions are centrally stored",
+      "statement": "Existing sessions are stored centrally.",
+      "status": "unconfirmed",
+      "source": "inferred-from-repository",
+      "evidence": [{ "kind": "file", "ref": "src/session/store.ts" }],
+      "confidence": "medium",
+      "impact_if_false": ["D-1 must be revisited"]
+    },
+    {
+      "id": "D-1",
+      "type": "architecture_decision",
+      "claim_kind": "decision",
+      "title": "Revoke via central session store",
+      "statement": "Implement revocation by deleting all session records for the account except the authorizing session id in the central store, inside a single transaction.",
+      "status": "proposed",
+      "source": "derived-from-artifact",
+      "evidence": [{ "kind": "node", "ref": "ASM-1" }],
+      "confidence": "medium"
+    },
+    {
+      "id": "D-2",
+      "type": "architecture_decision",
+      "claim_kind": "decision",
+      "title": "Expose a dedicated command endpoint",
+      "statement": "Add a dedicated revoke-others endpoint rather than overloading the logout endpoint, so the authorizing session is unambiguous.",
+      "status": "proposed",
+      "source": "planner-inference",
+      "confidence": "high"
+    }
+  ],
+  "edges": [
+    { "source": "FR-1", "relationship": "demonstrated_by", "target": "AC-1" },
+    { "source": "FR-1", "relationship": "realized_by", "target": "D-1" },
+    { "source": "INT-1", "relationship": "realized_by", "target": "D-2" },
+    { "source": "D-1", "relationship": "depends_on", "target": "ASM-1" }
+  ]
+}

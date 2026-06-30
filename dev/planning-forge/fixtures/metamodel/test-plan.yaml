@@ -1,0 +1,50 @@
+schema_version: "1.1"
+artifact_type: test_plan
+title: Session revocation test plan
+id_namespace: null
+nodes:
+  - id: AC-1
+    type: acceptance_criterion
+    claim_kind: verification
+    title: Other sessions are revoked
+    statement: Given an account owner has multiple active sessions, when they revoke all other sessions, then every other session is invalidated and the current session remains active.
+    status: approved
+  - id: AC-2
+    type: acceptance_criterion
+    claim_kind: verification
+    title: Revocation is timely
+    statement: Given an account with 50 active sessions, when revocation runs, then it completes within 2 seconds.
+    status: approved
+  - id: TC-1
+    type: test_case
+    claim_kind: verification
+    title: Revokes every session except current
+    statement: Exercise the revoke-others flow with three active sessions and assert only the authorizing session remains valid.
+    status: approved
+  - id: TC-2
+    type: test_case
+    claim_kind: verification
+    title: Revocation completes within budget
+    statement: With 50 seeded sessions, assert the revoke-others call returns within 2 seconds.
+    status: approved
+  - id: ASM-1
+    type: assumption
+    claim_kind: assumption
+    title: Test environment mirrors production session store
+    statement: The integration test environment uses the same central session store as production.
+    status: unconfirmed
+    source: inferred-from-repository
+    evidence:
+      - kind: file
+        ref: test/fixtures/session-store.ts
+    confidence: low
+    impact_if_false:
+      - TC-2 latency budget may not reflect production
+    verification_method: ["test"]
+edges:
+  - source: AC-1
+    relationship: verified_by
+    target: TC-1
+  - source: AC-2
+    relationship: verified_by
+    target: TC-2

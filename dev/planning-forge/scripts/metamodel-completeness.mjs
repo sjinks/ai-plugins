@@ -65,7 +65,11 @@ function checkCompleteness(artifact) {
   const expectsTests = type === 'test_plan' || type === 'planning_bundle';
   const expectsDemonstration = type === 'specification' || type === 'planning_bundle';
 
-  for (const node of artifact.nodes || []) {
+  // Defensive: tolerate an unvalidated artifact whose nodes are missing or not
+  // an array rather than throwing a TypeError mid-report.
+  const nodes = Array.isArray(artifact.nodes) ? artifact.nodes : [];
+
+  for (const node of nodes) {
     if (!isActive(node)) continue;
 
     // Functional/quality requirements must be demonstrated by an acceptance
@@ -136,8 +140,9 @@ function checkCompleteness(artifact) {
   }
 
   // Every impact_if_false entry that looks like a stable ID should resolve.
-  for (const node of artifact.nodes || []) {
-    for (const impact of node.impact_if_false || []) {
+  for (const node of nodes) {
+    const impacts = Array.isArray(node.impact_if_false) ? node.impact_if_false : [];
+    for (const impact of impacts) {
       const token = String(impact).split(/\s+/)[0];
       if (/^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[1-9][0-9]*$/.test(token) && !nodesById.has(token)) {
         warnings.push(`${node.id}: impact_if_false references unknown node ${token}`);

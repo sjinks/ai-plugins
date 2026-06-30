@@ -185,12 +185,35 @@ function testGenerator(tempDir) {
   writeFileSync(danglingFile, JSON.stringify(dangling, null, 2));
   const danglingOut = expectRun('generate dangling source', GENERATOR, [danglingFile, '--view', 'matrix'], 0, '## Traceability Matrix');
   assert(danglingOut.includes('| FR-9 | `demonstrated_by` | AC-1 |'), 'generator: matrix keeps edges with nodeless sources');
+
+  // A title containing a newline must not break the generated heading.
+  const titled = {
+    schema_version: '1.1',
+    artifact_type: 'specification',
+    title: 'Line one\n# Injected heading',
+    nodes: [{ id: 'FR-1', type: 'functional_requirement', claim_kind: 'requirement', title: 'T', statement: 'S.', status: 'approved' }],
+    edges: [],
+  };
+  const titledFile = join(tempDir, 'titled.json');
+  writeFileSync(titledFile, JSON.stringify(titled, null, 2));
+  const titledOut = expectRun('generate escaped title', GENERATOR, [titledFile, '--view', 'markdown'], 0, '# Line one');
+  assert(!titledOut.includes('\n# Injected heading'), 'generator: title newline collapsed');
+
+  // A non-array nodes/edges shape fails with a usage error, not a crash.
+  const badNodes = join(tempDir, 'bad-nodes.json');
+  writeFileSync(badNodes, JSON.stringify({ schema_version: '1.1', artifact_type: 'specification', nodes: {}, edges: [] }, null, 2));
+  expectRun('generate non-array nodes', GENERATOR, [badNodes, '--view', 'all'], 2, '`nodes` must be an array');
 }
 
 function testCompleteness(tempDir) {
   for (const fixture of ['specification.json', 'architecture.json', 'test-plan.yaml', 'minimal-planning-bundle.json']) {
     expectRun(`completeness ${fixture}`, COMPLETENESS, [join(FIXTURES, fixture)], 0, 'completeness passed');
   }
+
+  // Malformed (non-array) nodes must report gaps, not throw a TypeError.
+  const badShape = join(tempDir, 'bad-shape.json');
+  writeFileSync(badShape, JSON.stringify({ schema_version: '1.1', artifact_type: 'specification', nodes: { id: 'FR-1' }, edges: [] }, null, 2));
+  expectRun('completeness non-array nodes', COMPLETENESS, [badShape], 0, 'completeness passed');
 
   // A test plan missing a verified_by edge fails with an error.
   const gap = {

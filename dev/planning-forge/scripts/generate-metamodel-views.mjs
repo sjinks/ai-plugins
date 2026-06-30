@@ -154,7 +154,7 @@ function renderMermaid(artifact) {
 }
 
 function renderTitle(artifact) {
-  const title = artifact.title || 'Planning Forge artifact';
+  const title = escapeCell(artifact.title || 'Planning Forge artifact');
   return [`# ${title}`, '', `_Generated view — source of truth is the machine-readable artifact (\`${artifact.artifact_type}\`, schema ${artifact.schema_version})._`].join('\n');
 }
 
@@ -178,6 +178,12 @@ function main() {
   }
   if (artifact === null || typeof artifact !== 'object' || Array.isArray(artifact)) {
     usageError('artifact root must be a mapping/object');
+  }
+  if (artifact.nodes !== undefined && !Array.isArray(artifact.nodes)) {
+    usageError('artifact `nodes` must be an array');
+  }
+  if (artifact.edges !== undefined && !Array.isArray(artifact.edges)) {
+    usageError('artifact `edges` must be an array');
   }
 
   const sections = [renderTitle(artifact)];

@@ -51,8 +51,13 @@ export function isExternalRef(ref) {
  * node id to an array of { relationship, other } records.
  */
 export function indexArtifact(artifact) {
+  // Defensive: nodes/edges may be missing or the wrong shape on an unvalidated
+  // artifact. Coerce to empty arrays so this shared helper never throws.
+  const nodes = Array.isArray(artifact.nodes) ? artifact.nodes : [];
+  const edges = Array.isArray(artifact.edges) ? artifact.edges : [];
+
   const nodesById = new Map();
-  for (const node of artifact.nodes || []) {
+  for (const node of nodes) {
     if (node && typeof node === 'object' && typeof node.id === 'string') {
       nodesById.set(node.id, node);
     }
@@ -60,7 +65,7 @@ export function indexArtifact(artifact) {
 
   const outgoing = new Map();
   const incoming = new Map();
-  for (const edge of artifact.edges || []) {
+  for (const edge of edges) {
     if (!edge || typeof edge !== 'object') continue;
     const { source, relationship, target } = edge;
     if (!outgoing.has(source)) outgoing.set(source, []);

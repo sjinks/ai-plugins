@@ -6,7 +6,7 @@
   "required": ["schema_version", "artifact_type", "nodes", "edges"],
   "properties": {
     "$schema": { "type": "string", "minLength": 1 },
-    "schema_version": { "const": "1.0" },
+    "schema_version": { "const": "1.1" },
     "artifact_type": {
       "type": "string",
       "enum": ["specification", "architecture", "test_plan", "planning_bundle"]
@@ -54,7 +54,41 @@
     },
     "status": {
       "type": "string",
-      "enum": ["draft", "proposed", "approved", "deferred", "superseded", "removed", "out_of_scope"]
+      "enum": ["draft", "proposed", "approved", "confirmed", "unconfirmed", "rejected", "deferred", "superseded", "removed", "out_of_scope"]
+    },
+    "claimKind": {
+      "type": "string",
+      "enum": ["fact", "assumption", "decision", "recommendation", "requirement", "verification", "contract"]
+    },
+    "sourceKind": {
+      "type": "string",
+      "enum": [
+        "user-stated",
+        "inferred-from-repository",
+        "repository-evidence",
+        "external-reference",
+        "private-note",
+        "planner-inference",
+        "advisory-material",
+        "derived-from-artifact"
+      ]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "evidenceItem": {
+      "type": "object",
+      "required": ["kind", "ref"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["file", "doc", "url", "command", "node", "note"]
+        },
+        "ref": { "type": "string", "minLength": 1 },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
     },
     "obligation": {
       "type": "string",
@@ -86,15 +120,26 @@
     },
     "node": {
       "type": "object",
-      "required": ["id", "type", "title", "statement", "status"],
+      "required": ["id", "type", "claim_kind", "title", "statement", "status"],
       "properties": {
         "id": { "$ref": "#/$defs/stableId" },
         "type": { "$ref": "#/$defs/nodeType" },
         "title": { "type": "string", "minLength": 1 },
         "statement": { "type": "string", "minLength": 1 },
+        "claim_kind": { "$ref": "#/$defs/claimKind" },
         "obligation": { "$ref": "#/$defs/obligation" },
         "release_priority": { "$ref": "#/$defs/releasePriority" },
         "status": { "$ref": "#/$defs/status" },
+        "source": { "$ref": "#/$defs/sourceKind" },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceItem" }
+        },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "impact_if_false": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
         "rationale": { "type": "string" },
         "owner": { "type": "string" },
         "verification_method": {

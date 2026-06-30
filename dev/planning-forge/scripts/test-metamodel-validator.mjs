@@ -15,12 +15,13 @@ const VALID_FIXTURE = resolve(
 );
 
 const base = {
-  schema_version: '1.0',
+  schema_version: '1.1',
   artifact_type: 'planning_bundle',
   nodes: [
     {
       id: 'FR-1',
       type: 'functional_requirement',
+      claim_kind: 'requirement',
       title: 'Requirement',
       statement: 'The system MUST do the thing.',
       status: 'approved',
@@ -28,6 +29,7 @@ const base = {
     {
       id: 'AC-1',
       type: 'acceptance_criterion',
+      claim_kind: 'verification',
       title: 'Criterion',
       statement: 'The thing is observable.',
       status: 'approved',
@@ -35,6 +37,7 @@ const base = {
     {
       id: 'TC-1',
       type: 'test_case',
+      claim_kind: 'verification',
       title: 'Test',
       statement: 'Verify the thing.',
       status: 'approved',
@@ -81,9 +84,17 @@ function main() {
     duplicate.nodes.push(clone(duplicate.nodes[0]));
     expectCase('duplicate-id', duplicate, 1, 'duplicate node id: FR-1', tempDir);
 
+    const oldSchemaVersion = clone(base);
+    oldSchemaVersion.schema_version = '1.0';
+    expectCase('old-schema-version', oldSchemaVersion, 1, 'value must equal "1.1"', tempDir);
+
     const mismatch = clone(base);
     mismatch.nodes[0].type = 'user_story';
     expectCase('type-prefix-mismatch', mismatch, 1, 'FR-1: type user_story does not match FR- prefix', tempDir);
+
+    const missingClaimKind = clone(base);
+    delete missingClaimKind.nodes[0].claim_kind;
+    expectCase('missing-claim-kind', missingClaimKind, 1, 'missing required property "claim_kind"', tempDir);
 
     const zeroId = clone(base);
     zeroId.nodes[0].id = 'FR-0';
@@ -104,6 +115,151 @@ function main() {
     const namespaceMismatch = clone(base);
     namespaceMismatch.id_namespace = 'SESSION';
     expectCase('namespace-mismatch', namespaceMismatch, 1, 'FR-1: namespace none does not match id_namespace SESSION', tempDir);
+
+    const factNode = clone(base);
+    factNode.nodes.push({
+      id: 'RULE-1',
+      type: 'business_rule',
+      claim_kind: 'fact',
+      title: 'Fact rule',
+      statement: 'Only one active trial exists per customer and product.',
+      status: 'confirmed',
+    });
+    expectCase('fact-claim-kind', factNode, 0, 'Planning Forge metamodel validation passed', tempDir);
+
+    const recommendationNode = clone(base);
+    recommendationNode.nodes.push({
+      id: 'D-1',
+      type: 'architecture_decision',
+      claim_kind: 'recommendation',
+      title: 'Recommended decision',
+      statement: 'Prefer the central session store unless repository evidence changes.',
+      status: 'proposed',
+    });
+    expectCase('recommendation-claim-kind', recommendationNode, 0, 'Planning Forge metamodel validation passed', tempDir);
+
+    const assumptionMissingSource = clone(base);
+    assumptionMissingSource.nodes.push({
+      id: 'ASM-1',
+      type: 'assumption',
+      claim_kind: 'assumption',
+      title: 'Assumption',
+      statement: 'The store is central.',
+      status: 'unconfirmed',
+      confidence: 'medium',
+      impact_if_false: ['D-1 must be revisited'],
+    });
+    expectCase('assumption-missing-source', assumptionMissingSource, 1, 'ASM-1: assumption requires source', tempDir);
+
+    const inferredWithoutEvidence = clone(base);
+    inferredWithoutEvidence.nodes.push({
+      id: 'ASM-1',
+      type: 'assumption',
+      claim_kind: 'assumption',
+      title: 'Assumption',
+      statement: 'The store is central.',
+      status: 'unconfirmed',
+      source: 'inferred-from-repository',
+      confidence: 'medium',
+      impact_if_false: ['D-1 must be revisited'],
+    });
+    expectCase('inferred-without-evidence', inferredWithoutEvidence, 1, 'ASM-1: source inferred-from-repository requires evidence', tempDir);
+
+    const derivedWithoutEvidence = clone(base);
+    derivedWithoutEvidence.nodes.push({
+      id: 'D-1',
+      type: 'architecture_decision',
+      claim_kind: 'decision',
+      title: 'Decision',
+      statement: 'Use the central store.',
+      status: 'proposed',
+      source: 'derived-from-artifact',
+      confidence: 'medium',
+    });
+    expectCase('derived-without-evidence', derivedWithoutEvidence, 1, 'D-1: source derived-from-artifact requires evidence', tempDir);
+
+    const assumptionMissingImpact = clone(base);
+    assumptionMissingImpact.nodes.push({
+      id: 'ASM-1',
+      type: 'assumption',
+      claim_kind: 'assumption',
+      title: 'Assumption',
+      statement: 'The store is central.',
+      status: 'unconfirmed',
+      source: 'user-stated',
+      confidence: 'medium',
+    });
+    expectCase('assumption-missing-impact', assumptionMissingImpact, 1, 'ASM-1: assumption requires impact_if_false', tempDir);
+
+    const blankImpact = clone(base);
+    blankImpact.nodes.push({
+      id: 'ASM-1',
+      type: 'assumption',
+      claim_kind: 'assumption',
+      title: 'Assumption',
+      statement: 'The store is central.',
+      status: 'unconfirmed',
+      source: 'user-stated',
+      confidence: 'medium',
+      impact_if_false: ['  '],
+    });
+    expectCase('blank-impact', blankImpact, 1, 'ASM-1: impact_if_false[0] is blank', tempDir);
+
+    const claimKindMismatch = clone(base);
+    claimKindMismatch.nodes.push({
+      id: 'ASM-1',
+      type: 'assumption',
+      claim_kind: 'fact',
+      title: 'Assumption',
+      statement: 'The store is central.',
+      status: 'unconfirmed',
+      source: 'user-stated',
+      confidence: 'low',
+    });
+    expectCase('claim-kind-mismatch', claimKindMismatch, 1, 'ASM-1: claim_kind fact does not match assumption', tempDir);
+
+    const missingEvidenceNode = clone(base);
+    missingEvidenceNode.nodes.push({
+      id: 'D-1',
+      type: 'architecture_decision',
+      claim_kind: 'decision',
+      title: 'Decision',
+      statement: 'Use the central store.',
+      status: 'proposed',
+      source: 'derived-from-artifact',
+      confidence: 'medium',
+      evidence: [{ kind: 'node', ref: 'ASM-99' }],
+    });
+    expectCase('missing-evidence-node', missingEvidenceNode, 1, 'D-1: evidence[0] references missing node ASM-99', tempDir);
+
+    const malformedNodeEvidence = clone(base);
+    malformedNodeEvidence.nodes.push({
+      id: 'D-1',
+      type: 'architecture_decision',
+      claim_kind: 'decision',
+      title: 'Decision',
+      statement: 'Use the central store.',
+      status: 'proposed',
+      source: 'derived-from-artifact',
+      confidence: 'medium',
+      evidence: [{ kind: 'node', ref: 'source spec' }],
+    });
+    expectCase('malformed-node-evidence', malformedNodeEvidence, 1, 'D-1: evidence[0] node ref must be a stable ID', tempDir);
+
+    const blankEvidenceRef = clone(base);
+    blankEvidenceRef.nodes.push({
+      id: 'ASM-1',
+      type: 'assumption',
+      claim_kind: 'assumption',
+      title: 'Assumption',
+      statement: 'The store is central.',
+      status: 'unconfirmed',
+      source: 'inferred-from-repository',
+      confidence: 'medium',
+      evidence: [{ kind: 'file', ref: '   ' }],
+      impact_if_false: ['D-1 must be revisited'],
+    });
+    expectCase('blank-evidence-ref', blankEvidenceRef, 1, 'ASM-1: evidence[0].ref is blank', tempDir);
 
     const missing = clone(base);
     missing.edges.push({ source: 'FR-1', relationship: 'demonstrated_by', target: 'AC-99' });

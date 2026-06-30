@@ -23,6 +23,19 @@ Use `id_namespace` to record the project-scoped namespace token from `shared/sta
 
 Keep node fields compact. Prefer `statement`, `rationale`, `owner`, `obligation`, `release_priority`, `status`, and `verification_method` over broad custom metadata. Add a schema field only when it supports validation, generation, or downstream planning.
 
+## Provenance Rules
+
+Separate facts, assumptions, decisions, and recommendations in machine-readable artifacts. Use `claim_kind` to classify the information claim alongside the planning node `type`; for example, an `ASM-` node has `type: "assumption"` and `claim_kind: "assumption"`, while a `D-` node may use `claim_kind: "decision"` for a chosen path or `claim_kind: "recommendation"` for a proposed path. The validator allows only claim kinds that make sense for each node type.
+
+Use provenance fields whenever a node depends on user input, repository evidence, inference, advisory material, or a prior planning artifact:
+
+- `source`: where the claim came from, such as `user-stated`, `inferred-from-repository`, `repository-evidence`, `external-reference`, `private-note`, `planner-inference`, `advisory-material`, or `derived-from-artifact`.
+- `evidence`: concrete supporting references. Prefer file paths, stable node IDs, command labels, document names, or URLs over prose-only evidence.
+- `confidence`: `low`, `medium`, or `high` confidence in the claim.
+- `impact_if_false`: downstream IDs or short consequences that must be revisited if the claim is wrong.
+
+When either `source` or `confidence` is present, both fields must be present. Assumption nodes must include `source`, `confidence`, and `impact_if_false`. Any node with `source` set to `inferred-from-repository`, `repository-evidence`, `external-reference`, `private-note`, `advisory-material`, or `derived-from-artifact` must also include at least one `evidence` item; `user-stated` and `planner-inference` may omit evidence when no concrete reference exists. This mirrors W3C PROV's useful distinction between what was produced, how it was produced, and what evidence or agent activity produced it, without requiring full PROV-O internally.
+
 ## Edge Rules
 
 - Use the canonical edge direction: `<source> <relationship> <target>`.
@@ -38,18 +51,19 @@ Validate a Planning Forge machine-readable artifact from the repository root:
 node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json>
 ```
 
-The validator checks JSON parsing, JSON Schema conformance, stable-ID shape, duplicate node IDs, node type/prefix consistency, allowed external edge labels, and edge references to known stable nodes.
+The validator checks JSON parsing, JSON Schema conformance, stable-ID shape, duplicate node IDs, node type/prefix consistency, allowed external edge labels, edge references to known stable nodes, namespace consistency, relationship compatibility, claim-kind compatibility, paired `source`/`confidence`, evidence requirements for evidence-backed sources, and required assumption provenance.
 
 ## Minimal Example
 
 ```json
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "artifact_type": "specification",
   "nodes": [
     {
       "id": "FR-1",
       "type": "functional_requirement",
+      "claim_kind": "requirement",
       "title": "Revoke other sessions",
       "statement": "The authentication service MUST invalidate every session belonging to the account except the session authorizing the operation.",
       "obligation": "must",
@@ -59,9 +73,22 @@ The validator checks JSON parsing, JSON Schema conformance, stable-ID shape, dup
     {
       "id": "AC-1",
       "type": "acceptance_criterion",
+      "claim_kind": "verification",
       "title": "Other sessions are revoked",
       "statement": "Given an account owner has multiple active sessions, when they revoke all other sessions, then only the current session remains active.",
       "status": "approved"
+    },
+    {
+      "id": "ASM-1",
+      "type": "assumption",
+      "claim_kind": "assumption",
+      "title": "Sessions are centrally stored",
+      "statement": "Existing sessions are stored centrally.",
+      "status": "unconfirmed",
+      "source": "inferred-from-repository",
+      "evidence": [{ "kind": "file", "ref": "src/session/store.ts" }],
+      "confidence": "medium",
+      "impact_if_false": ["D-1 must be revisited"]
     }
   ],
   "edges": [

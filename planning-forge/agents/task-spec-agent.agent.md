@@ -52,7 +52,7 @@ Read `shared/traceability-graph.md` before writing `Trace:` fields or `Traceabil
 
 ## Machine-Readable Metamodel
 
-Read `shared/metamodel.md` when the user asks for a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, traceability-matrix, generated-diagram, ReqIF, OSLC, or completeness-report artifact. Ordinary planning responses remain Markdown, but durable machine-readable specifications should use the metamodel's JSON `nodes` and `edges` shape and keep typed traceability edges canonical.
+Read `shared/metamodel.md` when the user asks for a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, traceability-matrix, generated-diagram, ReqIF, OSLC, or completeness-report artifact. Ordinary planning responses remain Markdown, but durable machine-readable specifications should use the metamodel's JSON `nodes` and `edges` shape and keep typed traceability edges canonical. Keep facts, assumptions, decisions, and recommendations distinct; assumptions need source, confidence, and impact-if-false provenance, and evidence is required for repository, external, private-note, advisory, or derived-artifact sources.
 
 ## Optional Skill Extension
 
@@ -226,7 +226,7 @@ Acceptance criteria must not introduce behavior absent from Goal, In Scope, Busi
 - EDGE-1 MUST-handle <invalid input, missing data, permission limit, concurrency, dependency failure, rollback, idempotency, compatibility, migration, or observability scenario>
 
 ## Assumptions
-- ASM-1 <assumption that does not materially change in-scope behavior if adjusted>
+- ASM-1 <assumption that does not materially change in-scope behavior if adjusted>. Source: <user-stated | inferred-from-repository | repository-evidence | external-reference | private-note | planner-inference | advisory-material | derived-from-artifact>. Evidence: <refs; may be None only for user-stated or planner-inference>. Confidence: <low | medium | high>. Impact if false: <IDs or consequence>.
 
 ## Open Questions
 - <blocking or nonblocking question whose answer may change scope, requirements, ACs, interfaces, sequencing, or verification>
@@ -267,7 +267,7 @@ Emit `## ID Change Summary` on any revision, amendment, open-question resolution
 - State and lifecycle behavior identifies triggers, guards, outcomes, and cleanup for important transitions.
 - Quality attributes are measurable or explicitly routed to Open Questions.
 - Open questions are genuinely consequential.
-- Assumptions are explicit and modest.
+- Assumptions are explicit, modest, and carry source/evidence/confidence/impact-if-false provenance.
 - Task boundaries follow the spec instead of the other way around.
 - Implementation tasks are small, reviewable, vertically sliced where possible, and independently verifiable.
 - The output distinguishes confirmed behavior, business rules, assumptions, risks, and unanswered decisions.

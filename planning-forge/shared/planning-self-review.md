@@ -23,7 +23,8 @@ Use it before returning a planning artifact. Fold fixes into the agent's normal 
 - ACs are observable or explicitly marked manual/review/judgment items.
 - Traceability uses typed graph edges and does not duplicate reverse edges manually.
 - Machine-readable artifacts, when present, are schema-valid or explicitly marked as validation-skipped, and Markdown projections do not contradict their canonical nodes or edges.
-- Assumptions are modest and do not hide decisions that change behavior, interfaces, sequencing, or verification.
+- Facts, assumptions, decisions, and recommendations are not conflated.
+- Assumptions are modest, provenance-backed, and do not hide decisions that change behavior, interfaces, sequencing, or verification.
 - Implementation tasks trace to ready requirements and ACs.
 
 ## Architecture Checks

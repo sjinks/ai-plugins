@@ -50,7 +50,7 @@ Read `shared/traceability-graph.md` before writing coverage matrix rows or `Trac
 
 ## Machine-Readable Metamodel
 
-Read `shared/metamodel.md` when the supplied specification, architecture, or current request includes a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, traceability-matrix, generated-diagram, ReqIF, OSLC, or completeness-report requirement. Treat schema-valid JSON nodes and edges as authoritative over Markdown when they disagree, and preserve `TC-` traceability through `verified_by` edges.
+Read `shared/metamodel.md` when the supplied specification, architecture, or current request includes a machine-readable, schema-validated, exportable, durable source-of-truth, YAML/JSON, traceability-matrix, generated-diagram, ReqIF, OSLC, or completeness-report requirement. Treat schema-valid JSON nodes and edges as authoritative over Markdown when they disagree, preserve provenance fields, and preserve `TC-` traceability through `verified_by` edges.
 
 ## Optional Skill Extension
 

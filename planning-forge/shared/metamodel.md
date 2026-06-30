@@ -34,7 +34,7 @@ Use provenance fields whenever a node depends on user input, repository evidence
 - `confidence`: `low`, `medium`, or `high` confidence in the claim.
 - `impact_if_false`: downstream IDs or short consequences that must be revisited if the claim is wrong.
 
-Assumption nodes must include `source`, `confidence`, and `impact_if_false`. Assumptions inferred from repository, external, or private-note evidence must also include at least one `evidence` item. This mirrors W3C PROV's useful distinction between what was produced, how it was produced, and what evidence or agent activity produced it, without requiring full PROV-O internally.
+Assumption nodes must include `source`, `confidence`, and `impact_if_false`. Any node with `source` set to `inferred-from-repository`, `repository-evidence`, `external-reference`, `private-note`, `advisory-material`, or `derived-from-artifact` must also include at least one `evidence` item; `user-stated` and `planner-inference` may omit evidence when no concrete reference exists. This mirrors W3C PROV's useful distinction between what was produced, how it was produced, and what evidence or agent activity produced it, without requiring full PROV-O internally.
 
 ## Edge Rules
 

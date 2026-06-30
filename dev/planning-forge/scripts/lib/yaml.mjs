@@ -30,12 +30,12 @@ function tokenize(text) {
   const rawLines = text.split('\n');
   for (let i = 0; i < rawLines.length; i++) {
     const line = rawLines[i].replace(/\r$/, '');
-    if (/^\s*$/.test(line)) continue;
-    if (/^\s*#/.test(line)) continue;
-    const indentMatch = /^[ ]*/.exec(line)[0];
-    if (/^\s*\t/.test(line) || line.slice(0, indentMatch.length + 1).includes('\t')) {
+    const indentMatch = /^[ \t]*/.exec(line)[0];
+    if (indentMatch.includes('\t')) {
       throw new Error(`YAML line ${i + 1}: tabs are not allowed in indentation`);
     }
+    if (/^\s*$/.test(line)) continue;
+    if (/^\s*#/.test(line)) continue;
     const indent = indentMatch.length;
     tokens.push({ indent, content: line.slice(indent), line: i + 1 });
   }

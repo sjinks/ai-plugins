@@ -82,6 +82,8 @@ function testYamlParser() {
   assert(parseYaml('# only a comment\n') === null, 'yaml: comment-only document');
 
   expectThrow(() => parseYaml('a:\n\tb: 1\n'), 'yaml: tabs rejected');
+  expectThrow(() => parseYaml('\t# comment\n'), 'yaml: tab-indented comment rejected');
+  expectThrow(() => parseYaml(' \t\n'), 'yaml: tab-indented blank line rejected');
   expectThrow(() => parseYaml('status: must\nstatus: should\n'), 'yaml: duplicate key rejected');
   expectThrow(() => parseYaml('a: &x 1\n'), 'yaml: anchor rejected');
   expectThrow(() => parseYaml('a: *x\n'), 'yaml: alias rejected');

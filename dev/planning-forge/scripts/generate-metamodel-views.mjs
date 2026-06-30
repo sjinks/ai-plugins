@@ -83,7 +83,10 @@ function renderNodeSummary(artifact) {
     lines.push(`### ${TYPE_LABELS[type]}`, '');
     for (const node of nodes) {
       const claim = node.claim_kind ? ` _(${escapeCell(node.claim_kind)})_` : '';
-      lines.push(`- **${escapeCell(node.id)}** ${escapeCell(nodeTitle(node))}${claim} — status: \`${node.status}\``);
+      // status is escaped (not wrapped in a code span) because backslash
+      // escaping does not work inside Markdown code spans, so an unvalidated
+      // status containing a backtick could otherwise break the line.
+      lines.push(`- **${escapeCell(node.id)}** ${escapeCell(nodeTitle(node))}${claim} — status: ${escapeCell(node.status)}`);
     }
     lines.push('');
   }
@@ -157,7 +160,11 @@ function renderMermaid(artifact) {
 
 function renderTitle(artifact) {
   const title = escapeCell(artifact.title || 'Planning Forge artifact');
-  return [`# ${title}`, '', `_Generated view — source of truth is the machine-readable artifact (\`${artifact.artifact_type}\`, schema ${artifact.schema_version})._`].join('\n');
+  // artifact_type/schema_version are escaped and not placed in a code span, so
+  // backticks/newlines in malformed input cannot break the generated Markdown.
+  const type = escapeCell(artifact.artifact_type);
+  const schema = escapeCell(artifact.schema_version);
+  return [`# ${title}`, '', `_Generated view — source of truth is the machine-readable artifact (${type}, schema ${schema})._`].join('\n');
 }
 
 function main() {

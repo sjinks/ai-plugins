@@ -202,6 +202,20 @@ function testGenerator(tempDir) {
   const titledOut = expectRun('generate escaped title', GENERATOR, [titledFile, '--view', 'markdown'], 0, '# Line one');
   assert(!titledOut.includes('\n# Injected heading'), 'generator: title newline collapsed');
 
+  // status and artifact_type/schema_version are escaped and not in code spans.
+  const backticky = {
+    schema_version: '1.1`x',
+    artifact_type: 'specification`y',
+    nodes: [{ id: 'FR-1', type: 'functional_requirement', claim_kind: 'requirement', title: 'T', statement: 'S.', status: 'approved`z' }],
+    edges: [],
+  };
+  const backtickyFile = join(tempDir, 'backticky.json');
+  writeFileSync(backtickyFile, JSON.stringify(backticky, null, 2));
+  const backtickyOut = expectRun('generate escaped status/meta', GENERATOR, [backtickyFile, '--view', 'markdown'], 0, '# Planning Forge artifact');
+  assert(backtickyOut.includes('status: approved\\`z'), 'generator: status backtick escaped');
+  assert(backtickyOut.includes('specification\\`y'), 'generator: artifact_type backtick escaped');
+  assert(!backtickyOut.includes('`approved`z`'), 'generator: status not wrapped in code span');
+
   // A non-array nodes/edges shape fails with a usage error, not a crash.
   const badNodes = join(tempDir, 'bad-nodes.json');
   writeFileSync(badNodes, JSON.stringify({ schema_version: '1.1', artifact_type: 'specification', nodes: {}, edges: [] }, null, 2));

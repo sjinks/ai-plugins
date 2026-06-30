@@ -116,10 +116,12 @@ function checkCompleteness(artifact) {
       }
     }
 
-    // Architecture decisions should realize at least one requirement.
+    // Architecture decisions should realize at least one upstream item (a
+    // requirement, interface, business rule, etc.) via an incoming realized_by
+    // edge; the check is the presence of that edge, not the source's type.
     if (node.type === 'architecture_decision') {
       if (!hasIncoming(incoming, node.id, 'realized_by')) {
-        warnings.push(`${node.id}: decision does not realize any requirement (no realized_by edge points to it)`);
+        warnings.push(`${node.id}: decision realizes nothing (no realized_by edge points to it)`);
       }
     }
 

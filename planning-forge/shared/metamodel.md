@@ -2,7 +2,7 @@
 
 This reference defines the first Planning Forge machine-readable artifact model. It is a local reference, not an invocable skill.
 
-Markdown remains the required human-facing planning format. For durable artifacts that need validation, export, reporting, or generated views, the machine-readable JSON artifact is the source of truth and Markdown is a readable projection of the same content.
+Markdown remains the required human-facing planning format. For durable artifacts that need validation, export, reporting, or generated views, the machine-readable artifact (JSON canonical; YAML accepted) is the source of truth and Markdown is a readable projection of the same content.
 
 ## Source Of Truth
 

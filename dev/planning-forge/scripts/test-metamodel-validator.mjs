@@ -72,6 +72,12 @@ function expectCase(label, artifact, expectedStatus, expectedText, tempDir) {
   }
 }
 
+function withNode(artifact, node) {
+  const next = clone(artifact);
+  next.nodes.push(node);
+  return next;
+}
+
 function main() {
   const tempDir = mkdtempSync(join(tmpdir(), 'planning-forge-metamodel-'));
   try {
@@ -288,6 +294,51 @@ function main() {
     const invalidRefines = clone(base);
     invalidRefines.edges.push({ source: 'TC-1', relationship: 'refines', target: 'FR-1' });
     expectCase('invalid-refines-source', invalidRefines, 1, 'relationship refines does not allow source TC-1', tempDir);
+
+    const invalidDerivesSource = clone(base);
+    invalidDerivesSource.edges.push({ source: 'Goal', relationship: 'derives_from', target: 'FR-1' });
+    expectCase('invalid-derives-source', invalidDerivesSource, 1, 'relationship derives_from does not allow source Goal', tempDir);
+
+    const invalidConstrainsSource = clone(base);
+    invalidConstrainsSource.edges.push({ source: 'TC-1', relationship: 'constrains', target: 'FR-1' });
+    expectCase('invalid-constrains-source', invalidConstrainsSource, 1, 'relationship constrains does not allow source TC-1', tempDir);
+
+    const invalidConflictsExternal = clone(base);
+    invalidConflictsExternal.edges.push({ source: 'command: npm test', relationship: 'conflicts_with', target: 'FR-1' });
+    expectCase('invalid-conflicts-external-source', invalidConflictsExternal, 1, 'relationship conflicts_with does not allow source command: npm test', tempDir);
+
+    const invalidDependsSource = clone(base);
+    invalidDependsSource.edges.push({ source: 'Goal', relationship: 'depends_on', target: 'FR-1' });
+    expectCase('invalid-depends-source', invalidDependsSource, 1, 'relationship depends_on does not allow source Goal', tempDir);
+
+    const invalidSupersedesExternal = clone(base);
+    invalidSupersedesExternal.edges.push({ source: 'FR-1', relationship: 'supersedes', target: 'Goal' });
+    expectCase('invalid-supersedes-target', invalidSupersedesExternal, 1, 'relationship supersedes does not allow target Goal', tempDir);
+
+    const validAdditionalRelationships = withNode(base, {
+      id: 'NFR-1',
+      type: 'quality_requirement',
+      claim_kind: 'requirement',
+      title: 'Latency',
+      statement: 'The operation SHOULD complete quickly.',
+      status: 'approved',
+    });
+    validAdditionalRelationships.nodes.push({
+      id: 'D-1',
+      type: 'architecture_decision',
+      claim_kind: 'decision',
+      title: 'Decision',
+      statement: 'Use the central store.',
+      status: 'proposed',
+    });
+    validAdditionalRelationships.edges.push(
+      { source: 'FR-1', relationship: 'derives_from', target: 'Goal' },
+      { source: 'NFR-1', relationship: 'constrains', target: 'FR-1' },
+      { source: 'NFR-1', relationship: 'conflicts_with', target: 'FR-1' },
+      { source: 'D-1', relationship: 'depends_on', target: 'FR-1' },
+      { source: 'D-1', relationship: 'supersedes', target: 'FR-1' },
+    );
+    expectCase('valid-additional-relationships', validAdditionalRelationships, 0, 'Planning Forge metamodel validation passed', tempDir);
 
     const invalidDemonstratedTarget = clone(base);
     invalidDemonstratedTarget.edges.push({ source: 'FR-1', relationship: 'demonstrated_by', target: 'TC-1' });

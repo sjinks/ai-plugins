@@ -1,0 +1,88 @@
+{
+  "$schema": "../../../../planning-forge/shared/schemas/planning-artifact.schema.json",
+  "schema_version": "1.1",
+  "artifact_type": "specification",
+  "title": "Session revocation specification",
+  "id_namespace": null,
+  "nodes": [
+    {
+      "id": "US-1",
+      "type": "user_story",
+      "claim_kind": "requirement",
+      "title": "Recover from suspected session theft",
+      "statement": "As an account owner, I want to revoke other active sessions so that I can recover from suspected session theft.",
+      "status": "approved"
+    },
+    {
+      "id": "RULE-1",
+      "type": "business_rule",
+      "claim_kind": "requirement",
+      "title": "Current session remains active",
+      "statement": "Revoking other sessions must not revoke the session authorizing the operation.",
+      "status": "approved"
+    },
+    {
+      "id": "FR-1",
+      "type": "functional_requirement",
+      "claim_kind": "requirement",
+      "title": "Revoke other sessions",
+      "statement": "When an account owner requests revocation of all other sessions, the authentication service MUST invalidate every session belonging to the account except the session authorizing the operation.",
+      "obligation": "must",
+      "release_priority": "must-have",
+      "status": "approved"
+    },
+    {
+      "id": "NFR-1",
+      "type": "quality_requirement",
+      "claim_kind": "requirement",
+      "title": "Revocation latency",
+      "statement": "Revocation of all other sessions MUST complete within 2 seconds for an account with up to 50 active sessions.",
+      "obligation": "must",
+      "status": "approved"
+    },
+    {
+      "id": "AC-1",
+      "type": "acceptance_criterion",
+      "claim_kind": "verification",
+      "title": "Other sessions are revoked",
+      "statement": "Given an account owner has multiple active sessions, when they revoke all other sessions, then every other session is invalidated and the current session remains active.",
+      "status": "approved"
+    },
+    {
+      "id": "AC-2",
+      "type": "acceptance_criterion",
+      "claim_kind": "verification",
+      "title": "Revocation is timely",
+      "statement": "Given an account with 50 active sessions, when revocation runs, then it completes within 2 seconds.",
+      "status": "approved"
+    },
+    {
+      "id": "EDGE-1",
+      "type": "edge_case",
+      "claim_kind": "requirement",
+      "title": "Concurrent revocation request",
+      "statement": "A second revocation request that arrives while the first is in progress MUST be idempotent and MUST NOT revoke the authorizing session.",
+      "status": "approved"
+    },
+    {
+      "id": "ASM-1",
+      "type": "assumption",
+      "claim_kind": "assumption",
+      "title": "Sessions are centrally stored",
+      "statement": "Existing sessions are stored centrally.",
+      "status": "unconfirmed",
+      "source": "inferred-from-repository",
+      "evidence": [{ "kind": "file", "ref": "src/session/store.ts" }],
+      "confidence": "medium",
+      "impact_if_false": ["FR-1 must be re-evaluated against per-node session storage"]
+    }
+  ],
+  "edges": [
+    { "source": "RULE-1", "relationship": "refines", "target": "US-1" },
+    { "source": "FR-1", "relationship": "refines", "target": "RULE-1" },
+    { "source": "FR-1", "relationship": "demonstrated_by", "target": "AC-1" },
+    { "source": "NFR-1", "relationship": "constrains", "target": "FR-1" },
+    { "source": "NFR-1", "relationship": "demonstrated_by", "target": "AC-2" },
+    { "source": "EDGE-1", "relationship": "refines", "target": "FR-1" }
+  ]
+}

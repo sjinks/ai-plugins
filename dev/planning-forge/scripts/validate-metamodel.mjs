@@ -2,18 +2,22 @@
 // Validate a Planning Forge machine-readable metamodel artifact.
 //
 // Usage:
-//   node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json> [--schema <schema.json>]
+//   node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.(json|yaml|yml)> [--schema <schema.json>]
+//
+// JSON is the canonical validated format; YAML (.yaml/.yml) is accepted as an
+// authoring convenience and parsed into the same shape before validation.
 //
 // Exit codes:
 //   0 = valid
 //   1 = validation errors
 //   2 = invalid usage or missing files
 
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadSchema, validate } from '../../../code-explorer/scripts/lib/json-schema.mjs';
 import { parseArgs } from '../../../code-explorer/scripts/lib/cli.mjs';
+import { EXTERNAL_REF_RE, loadArtifact, STABLE_ID_RE } from './lib/artifact.mjs';
 
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const DEFAULT_SCHEMA = resolve(
@@ -27,9 +31,6 @@ const ARG_SPEC = {
     '--schema': { type: 'value', default: DEFAULT_SCHEMA },
   },
 };
-
-const STABLE_ID_RE = /^([A-Z]{1,8}-)?(US|RULE|FR|NFR|INT|AC|EDGE|ASM|D|TC)-[1-9][0-9]*$/;
-const EXTERNAL_REF_RE = /^(Goal|In Scope|risk: .+|manual check: .+|review check: .+|command: .+)$/;
 
 const TYPE_BY_PREFIX = {
   US: new Set(['user_story']),
@@ -67,7 +68,18 @@ const CLAIM_KINDS_BY_TYPE = {
   test_case: new Set(['verification', 'recommendation']),
 };
 
+const ALL_NODE_TYPES = new Set(Object.values(TYPE_BY_PREFIX).flatMap((types) => [...types]));
+const DESIGNABLE_NODE_TYPES = new Set([
+  'business_rule', 'functional_requirement', 'quality_requirement', 'interface',
+  'data_shape', 'acceptance_criterion', 'edge_case', 'architecture_decision',
+]);
+const INTERNAL_CONTEXT_TYPES = new Set([...ALL_NODE_TYPES, 'external_goal', 'external_scope', 'external_risk']);
+
 const RELATIONSHIP_RULES = {
+  derives_from: {
+    source: ALL_NODE_TYPES,
+    target: INTERNAL_CONTEXT_TYPES,
+  },
   satisfies: {
     source: new Set([
       'user_story', 'business_rule', 'functional_requirement',
@@ -89,6 +101,25 @@ const RELATIONSHIP_RULES = {
       'functional_requirement', 'quality_requirement', 'interface',
       'data_shape', 'acceptance_criterion', 'edge_case', 'assumption',
     ]),
+  },
+  constrains: {
+    source: new Set([
+      'business_rule', 'quality_requirement', 'edge_case', 'assumption',
+      'architecture_decision',
+    ]),
+    target: DESIGNABLE_NODE_TYPES,
+  },
+  conflicts_with: {
+    source: new Set([...ALL_NODE_TYPES, 'external_risk']),
+    target: new Set([...ALL_NODE_TYPES, 'external_risk']),
+  },
+  depends_on: {
+    source: ALL_NODE_TYPES,
+    target: INTERNAL_CONTEXT_TYPES,
+  },
+  supersedes: {
+    source: ALL_NODE_TYPES,
+    target: ALL_NODE_TYPES,
   },
   realized_by: {
     source: new Set([
@@ -125,7 +156,7 @@ const RELATIONSHIP_RULES = {
 
 function usageError(message) {
   process.stderr.write(`error: ${message}\n`);
-  process.stderr.write('usage: node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json> [--schema <schema.json>]\n');
+  process.stderr.write('usage: node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.(json|yaml|yml)> [--schema <schema.json>]\n');
   process.exit(2);
 }
 
@@ -294,9 +325,12 @@ function main() {
 
   let artifact;
   try {
-    artifact = JSON.parse(readFileSync(artifactPath, 'utf8'));
+    artifact = loadArtifact(artifactPath);
   } catch (err) {
-    process.stderr.write(`Planning Forge metamodel validation failed:\n- JSON parse error: ${err.message}\n`);
+    usageError(err.message);
+  }
+  if (artifact === null || typeof artifact !== 'object' || Array.isArray(artifact)) {
+    process.stderr.write('Planning Forge metamodel validation failed:\n- artifact root must be a mapping/object\n');
     process.exit(1);
   }
 

@@ -2,11 +2,11 @@
 
 This reference defines the first Planning Forge machine-readable artifact model. It is a local reference, not an invocable skill.
 
-Markdown remains the required human-facing planning format. For durable artifacts that need validation, export, reporting, or generated views, the machine-readable JSON artifact is the source of truth and Markdown is a readable projection of the same content.
+Markdown remains the required human-facing planning format. For durable artifacts that need validation, export, reporting, or generated views, the machine-readable artifact (JSON canonical; YAML accepted) is the source of truth and Markdown is a readable projection of the same content.
 
 ## Source Of Truth
 
-- Use JSON for the first supported machine-readable format. YAML may be accepted later, but JSON is the validated format today.
+- JSON is the canonical validated format. YAML (`.yaml`/`.yml`) is accepted as an authoring convenience and is parsed into the same shape before validation; quote any value that must stay a string (for example `schema_version: "1.1"`).
 - Validate artifacts against `shared/schemas/planning-artifact.schema.json`.
 - Store traceability relationships in the top-level `edges` array. Do not duplicate relationships as reverse fields on nodes.
 - Generate Markdown, traceability matrices, Mermaid diagrams, test-planning inputs, completeness reports, and future ReqIF/OSLC exports from the validated model.
@@ -48,10 +48,28 @@ When either `source` or `confidence` is present, both fields must be present. As
 Validate a Planning Forge machine-readable artifact from the repository root:
 
 ```sh
-node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json>
+node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.(json|yaml|yml)>
 ```
 
-The validator checks JSON parsing, JSON Schema conformance, stable-ID shape, duplicate node IDs, node type/prefix consistency, allowed external edge labels, edge references to known stable nodes, namespace consistency, relationship compatibility, claim-kind compatibility, paired `source`/`confidence`, evidence requirements for evidence-backed sources, and required assumption provenance.
+The validator checks JSON/YAML parsing, JSON Schema conformance, stable-ID shape, duplicate node IDs, node type/prefix consistency, allowed external edge labels, edge references to known stable nodes, namespace consistency, relationship compatibility, claim-kind compatibility, paired `source`/`confidence`, evidence requirements for evidence-backed sources, and required assumption provenance.
+
+## Derived Views And Reports
+
+Views are generated projections of the validated model; the JSON/YAML artifact stays the source of truth and views are never authored by hand.
+
+```sh
+# Markdown node summary + traceability matrix + Mermaid diagram
+node dev/planning-forge/scripts/generate-metamodel-views.mjs <artifact> --view all
+
+# Traceability completeness report (stage-aware coverage gaps)
+node dev/planning-forge/scripts/metamodel-completeness.mjs <artifact> [--strict]
+```
+
+The completeness report is coverage-focused, not structural: run the validator first for well-formedness, then the completeness report to find missing `demonstrated_by`/`verified_by` coverage, unverified edge cases, unrealized decisions, and assumptions without `impact_if_false`. Coverage expectations are stage-aware — a `specification` is not expected to contain its own test cases, a `test_plan` is.
+
+## Interchange Export
+
+`shared/metamodel-export-mapping.md` records the planned mapping from the metamodel to ReqIF and OSLC. It is a design note for a future exporter, not an implemented feature; JSON/YAML remains authoritative.
 
 ## Minimal Example
 

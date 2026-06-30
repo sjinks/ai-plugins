@@ -22,7 +22,11 @@ node dev/planning-forge/scripts/generate-metamodel-views.mjs dev/planning-forge/
 # Report traceability completeness (coverage gaps), stage-aware
 node dev/planning-forge/scripts/metamodel-completeness.mjs dev/planning-forge/fixtures/metamodel/specification.json
 
+# Export a one-way ReqIF 1.0 document (publish)
+node dev/planning-forge/scripts/export-metamodel-reqif.mjs dev/planning-forge/fixtures/metamodel/minimal-planning-bundle.json --out bundle.reqif
+
 # Regression tests
 node dev/planning-forge/scripts/test-metamodel-validator.mjs
 node dev/planning-forge/scripts/test-metamodel-views.mjs
+node dev/planning-forge/scripts/test-metamodel-reqif.mjs
 ```

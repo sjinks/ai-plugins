@@ -69,7 +69,12 @@ The completeness report is coverage-focused, not structural: run the validator f
 
 ## Interchange Export
 
-`shared/metamodel-export-mapping.md` records the planned mapping from the metamodel to ReqIF and OSLC. It is a design note for a future exporter, not an implemented feature; JSON/YAML remains authoritative.
+`shared/metamodel-export-mapping.md` records the mapping from the metamodel to ReqIF and OSLC. ReqIF export is implemented as a one-way publish; OSLC remains a design note. JSON/YAML remains authoritative.
+
+```sh
+# One-way ReqIF 1.0 export (publish)
+node dev/planning-forge/scripts/export-metamodel-reqif.mjs <artifact> [--out <file>]
+```
 
 ## Minimal Example
 

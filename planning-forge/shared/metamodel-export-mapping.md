@@ -1,10 +1,24 @@
 # Planning Forge Metamodel Export Mapping (ReqIF / OSLC)
 
-This reference is a design note, not an implemented exporter. It records how the
-Planning Forge machine-readable metamodel (`shared/metamodel.md`) would map to
-two interchange standards so a future exporter has a stable target. Nothing here
-changes validation or authoring today; JSON/YAML remains the source of truth and
-Markdown/Mermaid/matrix views remain derived projections.
+This reference records how the Planning Forge machine-readable metamodel
+(`shared/metamodel.md`) maps to two interchange standards. The ReqIF mapping is
+now implemented as a one-way exporter
+(`dev/planning-forge/scripts/export-metamodel-reqif.mjs`); the OSLC mapping
+remains a design note for a future exporter. Nothing here changes validation or
+authoring; JSON/YAML remains the source of truth and ReqIF/Markdown/Mermaid/
+matrix outputs remain derived projections.
+
+## ReqIF exporter status
+
+- Implemented: one-way ReqIF 1.0 export (publish). Nodes become `SPEC-OBJECT`s
+  typed by `SPEC-OBJECT-TYPE`, typed edges become `SPEC-RELATION`s in canonical
+  direction, and `status`/`claim_kind`/`obligation`/`confidence` become
+  pre-declared enumeration datatypes. External edge endpoints (`Goal`,
+  `In Scope`, `risk:`, `manual check:`, `review check:`, `command:`) are
+  materialized as `SPEC-OBJECT`s of a dedicated `external` type so every edge is
+  expressible without inventing reverse links.
+- Not implemented yet: ReqIF import/round-trip, the OSLC exporter, and the
+  custom `pf:` OSLC predicates. The open questions below still apply to those.
 
 ## Why record this now
 

@@ -10,6 +10,10 @@
 // (no allOf/anyOf/oneOf/if-then-else, no format assertions). The artifact
 // schemas are written to stay inside this subset.
 
+
+function hasOwn(value, key) {
+  return Object.prototype.hasOwnProperty.call(value, key);
+}
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
@@ -166,20 +170,20 @@ function validateNode(value, schema, ctx, path, errors) {
   if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
     if (Array.isArray(schema.required)) {
       for (const key of schema.required) {
-        if (!(key in value)) {
+        if (!hasOwn(value, key)) {
           errors.push(`${path}: missing required property "${key}"`);
         }
       }
     }
     const props = schema.properties || {};
     for (const [key, sub] of Object.entries(props)) {
-      if (key in value) {
+      if (hasOwn(value, key)) {
         validateNode(value[key], sub, ctx, `${path}.${key}`, errors);
       }
     }
     if (schema.additionalProperties === false) {
       for (const key of Object.keys(value)) {
-        if (!(key in props)) {
+        if (!hasOwn(props, key)) {
           errors.push(`${path}: additional property "${key}" is not allowed`);
         }
       }

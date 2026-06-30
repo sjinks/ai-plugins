@@ -77,10 +77,114 @@ function readQuoted(content, line) {
   return out;
 }
 
+function checkFlowDuplicateKeys(content, line) {
+  let index = 0;
+
+  function fail(message) {
+    throw new Error(`YAML line ${line}: ${message}`);
+  }
+
+  function skipWhitespace() {
+    while (/\s/.test(content[index] || '')) index++;
+  }
+
+  function readJsonString() {
+    const start = index;
+    index++;
+    while (index < content.length) {
+      if (content[index] === '\\') {
+        index += 2;
+        continue;
+      }
+      if (content[index] === '"') {
+        index++;
+        return JSON.parse(content.slice(start, index));
+      }
+      index++;
+    }
+    fail('unterminated string in flow value');
+  }
+
+  function parsePrimitive() {
+    const start = index;
+    while (index < content.length && !/[\s,}\]]/.test(content[index])) index++;
+    if (start === index) fail(`unsupported flow value ${content}`);
+  }
+
+  function parseValue() {
+    skipWhitespace();
+    if (content[index] === '{') return parseObject();
+    if (content[index] === '[') return parseArray();
+    if (content[index] === '"') return readJsonString();
+    return parsePrimitive();
+  }
+
+  function parseObject() {
+    const keys = new Set();
+    index++;
+    skipWhitespace();
+    if (content[index] === '}') {
+      index++;
+      return;
+    }
+    while (index < content.length) {
+      skipWhitespace();
+      if (content[index] !== '"') fail(`unsupported flow value ${content} (object keys must be quoted)`);
+      const key = readJsonString();
+      if (keys.has(key)) fail(`duplicate key '${key}' in flow mapping`);
+      keys.add(key);
+      skipWhitespace();
+      if (content[index] !== ':') fail(`unsupported flow value ${content} (expected ':' after key)`);
+      index++;
+      parseValue();
+      skipWhitespace();
+      if (content[index] === ',') {
+        index++;
+        continue;
+      }
+      if (content[index] === '}') {
+        index++;
+        return;
+      }
+      fail(`unsupported flow value ${content}`);
+    }
+    fail('unterminated flow mapping');
+  }
+
+  function parseArray() {
+    index++;
+    skipWhitespace();
+    if (content[index] === ']') {
+      index++;
+      return;
+    }
+    while (index < content.length) {
+      parseValue();
+      skipWhitespace();
+      if (content[index] === ',') {
+        index++;
+        continue;
+      }
+      if (content[index] === ']') {
+        index++;
+        return;
+      }
+      fail(`unsupported flow value ${content}`);
+    }
+    fail('unterminated flow sequence');
+  }
+
+  parseValue();
+  skipWhitespace();
+  if (index !== content.length) fail(`unsupported flow value ${content}`);
+}
+
 function parseFlow(content, line) {
   try {
+    checkFlowDuplicateKeys(content, line);
     return JSON.parse(content);
-  } catch {
+  } catch (err) {
+    if (err.message.startsWith(`YAML line ${line}:`)) throw err;
     throw new Error(`YAML line ${line}: unsupported flow value ${content} (use JSON-compatible flow or block style)`);
   }
 }
@@ -90,6 +194,9 @@ function parseScalar(content, line) {
   if (content === 'true') return true;
   if (content === 'false') return false;
   if (content[0] === '"' || content[0] === "'") return readQuoted(content, line);
+  if (content[0] === '|' || content[0] === '>') {
+    throw new Error(`YAML line ${line}: block scalars are not supported (quote the value to keep it literal)`);
+  }
   // Anchors (&x), aliases (*x), and tags (!x) are unsupported; reject them
   // rather than mis-parsing them as plain strings. A literal value that must
   // start with one of these characters can be quoted.
@@ -132,7 +239,7 @@ function parseBlock(tokens, start, indent) {
 }
 
 function parseMapping(tokens, start, indent) {
-  const map = {};
+  const map = Object.create(null);
   let i = start;
   while (i < tokens.length) {
     const tok = tokens[i];

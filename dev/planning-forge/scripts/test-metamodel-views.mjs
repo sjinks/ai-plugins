@@ -86,6 +86,14 @@ function testYamlParser() {
   expectThrow(() => parseYaml('a: &x 1\n'), 'yaml: anchor rejected');
   expectThrow(() => parseYaml('a: *x\n'), 'yaml: alias rejected');
   expectThrow(() => parseYaml('a: !tag value\n'), 'yaml: tag rejected');
+  expectThrow(() => parseYaml('a: |\n'), 'yaml: literal block scalar rejected');
+  expectThrow(() => parseYaml('a: >2\n'), 'yaml: folded block scalar rejected');
+  expectThrow(() => parseYaml('a: {"k": 1, "k": 2}\n'), 'yaml: duplicate flow key rejected');
+  expectThrow(() => parseYaml('a: [{"id": "FR-1", "id": "FR-2"}]\n'), 'yaml: nested duplicate flow key rejected');
+
+  const prototypeKey = parseYaml('__proto__:\n  hidden: true\n');
+  assert(Object.getPrototypeOf(prototypeKey) === null, 'yaml: mappings have no prototype');
+  assert(prototypeKey.__proto__.hidden === true, 'yaml: __proto__ is an own data key');
 }
 
 function testYamlRoundTrip() {
@@ -144,11 +152,19 @@ function testValidatorYaml(tempDir) {
   const badYaml = join(tempDir, 'bad.yaml');
   writeFileSync(badYaml, 'schema_version: "1.1"\nartifact_type: test_plan\nnodes: []\nedges: []\n');
   expectRun('validate yaml empty nodes', VALIDATOR, [badYaml], 1, 'array shorter than minItems');
+
+  const blockScalar = join(tempDir, 'block-scalar.yaml');
+  writeFileSync(blockScalar, 'schema_version: "1.1"\nartifact_type: |\nnodes: []\nedges: []\n');
+  expectRun('validate yaml block scalar usage', VALIDATOR, [blockScalar], 2, 'block scalars are not supported');
+
+  const protoYaml = join(tempDir, 'proto.yaml');
+  writeFileSync(protoYaml, '__proto__:\n  schema_version: "1.1"\n  artifact_type: planning_bundle\n  nodes: []\n  edges: []\n');
+  expectRun('validate yaml prototype key', VALIDATOR, [protoYaml], 1, 'missing required property "schema_version"');
 }
 
 function testGenerator(tempDir) {
   const out = expectRun('generate matrix', GENERATOR, [join(FIXTURES, 'minimal-planning-bundle.json'), '--view', 'matrix'], 0, '## Traceability Matrix');
-  assert(out.includes('| FR-1 | `verified_by` | TC-1 |'), 'generator: matrix row present');
+  assert(out.includes('| FR-1 | verified\\_by | TC-1 |'), 'generator: matrix row present');
   assert(!out.includes('## Diagram'), 'generator: matrix view omits diagram');
 
   const mermaid = expectRun('generate mermaid', GENERATOR, [join(FIXTURES, 'specification.json'), '--view', 'mermaid'], 0, '```mermaid');
@@ -187,7 +203,21 @@ function testGenerator(tempDir) {
   const danglingFile = join(tempDir, 'dangling.json');
   writeFileSync(danglingFile, JSON.stringify(dangling, null, 2));
   const danglingOut = expectRun('generate dangling source', GENERATOR, [danglingFile, '--view', 'matrix'], 0, '## Traceability Matrix');
-  assert(danglingOut.includes('| FR-9 | `demonstrated_by` | AC-1 |'), 'generator: matrix keeps edges with nodeless sources');
+  assert(danglingOut.includes('| FR-9 | demonstrated\\_by | AC-1 |'), 'generator: matrix keeps edges with nodeless sources');
+
+  const relationInjection = {
+    schema_version: '1.1',
+    artifact_type: 'planning_bundle',
+    nodes: [
+      { id: 'AC-1', type: 'acceptance_criterion', claim_kind: 'verification', title: 'AC', statement: 'S.', status: 'approved' },
+      { id: 'TC-1', type: 'test_case', claim_kind: 'verification', title: 'TC', statement: 'S.', status: 'approved' },
+    ],
+    edges: [{ source: 'AC-1', relationship: 'verified_by`\n| injected |', target: 'TC-1' }],
+  };
+  const relationInjectionFile = join(tempDir, 'relation-injection.json');
+  writeFileSync(relationInjectionFile, JSON.stringify(relationInjection, null, 2));
+  const relationInjectionOut = expectRun('generate escaped relationship', GENERATOR, [relationInjectionFile, '--view', 'matrix'], 0, 'verified\\_by\\`');
+  assert(!relationInjectionOut.includes('\n| injected |'), 'generator: relationship newline collapsed');
 
   // A title containing a newline must not break the generated heading.
   const titled = {
@@ -306,6 +336,26 @@ function testCompleteness(tempDir) {
   const lonelyTestFile = join(tempDir, 'lonely-test.json');
   writeFileSync(lonelyTestFile, JSON.stringify(lonelyTest, null, 2));
   expectRun('completeness lonely test strict', COMPLETENESS, [lonelyTestFile, '--strict'], 1, 'test case verifies nothing');
+
+  // A non-requirement `refines` edge must not count as coverage for a rule/story.
+  const weakRefines = {
+    schema_version: '1.1',
+    artifact_type: 'specification',
+    nodes: [
+      { id: 'US-1', type: 'user_story', claim_kind: 'requirement', title: 'US', statement: 'S.', status: 'approved' },
+      { id: 'RULE-1', type: 'business_rule', claim_kind: 'requirement', title: 'Rule', statement: 'S.', status: 'approved' },
+      { id: 'AC-1', type: 'acceptance_criterion', claim_kind: 'verification', title: 'AC', statement: 'S.', status: 'approved' },
+      { id: 'ASM-1', type: 'assumption', claim_kind: 'assumption', title: 'A', statement: 'S.', status: 'unconfirmed', source: 'user-stated', confidence: 'low', impact_if_false: ['FR-1 required'] },
+    ],
+    edges: [
+      { source: 'ASM-1', relationship: 'refines', target: 'RULE-1' },
+      { source: 'AC-1', relationship: 'refines', target: 'US-1' },
+    ],
+  };
+  const weakRefinesFile = join(tempDir, 'weak-refines.json');
+  writeFileSync(weakRefinesFile, JSON.stringify(weakRefines, null, 2));
+  const weakRefinesOut = expectRun('completeness weak refines strict', COMPLETENESS, [weakRefinesFile, '--strict'], 1, 'business rule is neither demonstrated_by');
+  assert(weakRefinesOut.includes('user story is neither demonstrated_by'), 'completeness: AC refines does not cover user story');
 }
 
 function main() {

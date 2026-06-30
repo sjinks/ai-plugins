@@ -101,9 +101,7 @@ function renderMatrix(artifact) {
   const lines = ['## Traceability Matrix', '', '| Source | Relationship | Target |', '| --- | --- | --- |'];
   const edges = artifact.edges || [];
   for (const edge of edges) {
-    // relationship is a controlled-vocabulary identifier; render it verbatim in
-    // a code span. source/target may be external labels, so escape those.
-    lines.push(`| ${escapeCell(edge.source)} | \`${edge.relationship}\` | ${escapeCell(edge.target)} |`);
+    lines.push(`| ${escapeCell(edge.source)} | ${escapeCell(edge.relationship)} | ${escapeCell(edge.target)} |`);
   }
   if (edges.length === 0) {
     lines.push('| _none_ | | |');

@@ -71,7 +71,21 @@ const CLAIM_KINDS_BY_TYPE = {
   test_case: new Set(['verification', 'recommendation']),
 };
 
+const ALL_NODE_TYPES = new Set(Object.values(TYPE_BY_PREFIX).flatMap((types) => [...types]));
+const REQUIREMENT_NODE_TYPES = new Set([
+  'user_story', 'business_rule', 'functional_requirement', 'quality_requirement',
+]);
+const DESIGNABLE_NODE_TYPES = new Set([
+  'business_rule', 'functional_requirement', 'quality_requirement', 'interface',
+  'data_shape', 'acceptance_criterion', 'edge_case', 'architecture_decision',
+]);
+const INTERNAL_CONTEXT_TYPES = new Set([...ALL_NODE_TYPES, 'external_goal', 'external_scope', 'external_risk']);
+
 const RELATIONSHIP_RULES = {
+  derives_from: {
+    source: ALL_NODE_TYPES,
+    target: INTERNAL_CONTEXT_TYPES,
+  },
   satisfies: {
     source: new Set([
       'user_story', 'business_rule', 'functional_requirement',
@@ -93,6 +107,25 @@ const RELATIONSHIP_RULES = {
       'functional_requirement', 'quality_requirement', 'interface',
       'data_shape', 'acceptance_criterion', 'edge_case', 'assumption',
     ]),
+  },
+  constrains: {
+    source: new Set([
+      'business_rule', 'quality_requirement', 'edge_case', 'assumption',
+      'architecture_decision',
+    ]),
+    target: DESIGNABLE_NODE_TYPES,
+  },
+  conflicts_with: {
+    source: new Set([...ALL_NODE_TYPES, 'external_risk']),
+    target: new Set([...ALL_NODE_TYPES, 'external_risk']),
+  },
+  depends_on: {
+    source: ALL_NODE_TYPES,
+    target: INTERNAL_CONTEXT_TYPES,
+  },
+  supersedes: {
+    source: ALL_NODE_TYPES,
+    target: ALL_NODE_TYPES,
   },
   realized_by: {
     source: new Set([
@@ -300,8 +333,7 @@ function main() {
   try {
     artifact = loadArtifact(artifactPath);
   } catch (err) {
-    process.stderr.write(`Planning Forge metamodel validation failed:\n- ${err.message}\n`);
-    process.exit(1);
+    usageError(err.message);
   }
   if (artifact === null || typeof artifact !== 'object' || Array.isArray(artifact)) {
     process.stderr.write('Planning Forge metamodel validation failed:\n- artifact root must be a mapping/object\n');

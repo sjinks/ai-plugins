@@ -52,6 +52,14 @@ function hasIncoming(incoming, id, relationship) {
   return (incoming.get(id) || []).some((e) => e.relationship === relationship);
 }
 
+function hasIncomingFromTypes(incoming, nodesById, id, relationship, sourceTypes) {
+  return (incoming.get(id) || []).some((e) => {
+    if (e.relationship !== relationship) return false;
+    const source = nodesById.get(e.other);
+    return source ? sourceTypes.has(source.type) : false;
+  });
+}
+
 function checkCompleteness(artifact) {
   const { nodesById, outgoing, incoming } = indexArtifact(artifact);
   const errors = [];
@@ -86,7 +94,13 @@ function checkCompleteness(artifact) {
     // when a refining requirement enforces them (an FR `refines` the rule).
     if (node.type === 'business_rule') {
       const demonstrated = hasOutgoing(outgoing, node.id, 'demonstrated_by');
-      const refinedByRequirement = hasIncoming(incoming, node.id, 'refines');
+      const refinedByRequirement = hasIncomingFromTypes(
+        incoming,
+        nodesById,
+        node.id,
+        'refines',
+        new Set(['functional_requirement', 'quality_requirement']),
+      );
       if (!demonstrated && !refinedByRequirement) {
         warnings.push(`${node.id}: business rule is neither demonstrated_by an AC nor refined by a requirement`);
       }
@@ -95,7 +109,13 @@ function checkCompleteness(artifact) {
     // User stories should be demonstrated or refined into requirements.
     if (node.type === 'user_story') {
       const demonstrated = hasOutgoing(outgoing, node.id, 'demonstrated_by');
-      const refined = hasIncoming(incoming, node.id, 'refines');
+      const refined = hasIncomingFromTypes(
+        incoming,
+        nodesById,
+        node.id,
+        'refines',
+        new Set(['business_rule', 'functional_requirement', 'quality_requirement']),
+      );
       if (!demonstrated && !refined) {
         warnings.push(`${node.id}: user story is neither demonstrated_by an AC nor refined into a requirement`);
       }

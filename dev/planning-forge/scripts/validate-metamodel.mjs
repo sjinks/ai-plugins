@@ -72,9 +72,6 @@ const CLAIM_KINDS_BY_TYPE = {
 };
 
 const ALL_NODE_TYPES = new Set(Object.values(TYPE_BY_PREFIX).flatMap((types) => [...types]));
-const REQUIREMENT_NODE_TYPES = new Set([
-  'user_story', 'business_rule', 'functional_requirement', 'quality_requirement',
-]);
 const DESIGNABLE_NODE_TYPES = new Set([
   'business_rule', 'functional_requirement', 'quality_requirement', 'interface',
   'data_shape', 'acceptance_criterion', 'edge_case', 'architecture_decision',

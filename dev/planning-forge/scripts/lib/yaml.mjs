@@ -90,6 +90,12 @@ function parseScalar(content, line) {
   if (content === 'true') return true;
   if (content === 'false') return false;
   if (content[0] === '"' || content[0] === "'") return readQuoted(content, line);
+  // Anchors (&x), aliases (*x), and tags (!x) are unsupported; reject them
+  // rather than mis-parsing them as plain strings. A literal value that must
+  // start with one of these characters can be quoted.
+  if (content[0] === '&' || content[0] === '*' || content[0] === '!') {
+    throw new Error(`YAML line ${line}: anchors, aliases, and tags are not supported (quote the value to keep it literal)`);
+  }
   if (content[0] === '[' || content[0] === '{') return parseFlow(content, line);
   if (/^-?[0-9]+$/.test(content)) return Number.parseInt(content, 10);
   if (/^-?[0-9]+\.[0-9]+$/.test(content)) return Number.parseFloat(content);

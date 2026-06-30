@@ -83,6 +83,9 @@ function testYamlParser() {
 
   expectThrow(() => parseYaml('a:\n\tb: 1\n'), 'yaml: tabs rejected');
   expectThrow(() => parseYaml('status: must\nstatus: should\n'), 'yaml: duplicate key rejected');
+  expectThrow(() => parseYaml('a: &x 1\n'), 'yaml: anchor rejected');
+  expectThrow(() => parseYaml('a: *x\n'), 'yaml: alias rejected');
+  expectThrow(() => parseYaml('a: !tag value\n'), 'yaml: tag rejected');
 }
 
 function testYamlRoundTrip() {
@@ -169,7 +172,7 @@ function testGenerator(tempDir) {
   writeFileSync(trickyFile, JSON.stringify(tricky, null, 2));
   const trickyOut = expectRun('generate tricky labels', GENERATOR, [trickyFile, '--view', 'all'], 0, '## Diagram');
   assert(!trickyOut.includes('["risk: leak via "redirect" [x]"]'), 'generator: mermaid label neutralizes quotes/brackets');
-  assert(trickyOut.includes('#quot;'), 'generator: mermaid uses entity escaping for quotes');
+  assert(trickyOut.includes('#34;'), 'generator: mermaid uses numeric character reference for quotes');
   assert(trickyOut.includes('Guard \\| redirect'), 'generator: markdown cell escapes pipe');
 
   // A dangling stable-ID edge source still appears in the matrix (not dropped).

@@ -115,12 +115,14 @@ function mermaidId(ref, idMap) {
   return safe;
 }
 
-// Mermaid uses HTML entities, not backslash escapes; neutralize quotes and the
-// structural characters that would break a node label or the diagram.
+// Mermaid escapes special characters with numeric character references of the
+// form `#NN;` (its own entity syntax, not HTML `&...;`); use the numeric code
+// for a double quote and neutralize the structural characters that would
+// otherwise break a node label or the diagram.
 function mermaidLabel(ref) {
   return String(ref)
     .replace(/\r?\n/g, ' ')
-    .replace(/"/g, '#quot;')
+    .replace(/"/g, '#34;')
     .replace(/[[\]{}<>|]/g, ' ')
     .trim();
 }

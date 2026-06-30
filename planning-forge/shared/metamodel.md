@@ -34,7 +34,7 @@ Use provenance fields whenever a node depends on user input, repository evidence
 - `confidence`: `low`, `medium`, or `high` confidence in the claim.
 - `impact_if_false`: downstream IDs or short consequences that must be revisited if the claim is wrong.
 
-Assumption nodes must include `source`, `confidence`, and `impact_if_false`. Any node with `source` set to `inferred-from-repository`, `repository-evidence`, `external-reference`, `private-note`, `advisory-material`, or `derived-from-artifact` must also include at least one `evidence` item; `user-stated` and `planner-inference` may omit evidence when no concrete reference exists. This mirrors W3C PROV's useful distinction between what was produced, how it was produced, and what evidence or agent activity produced it, without requiring full PROV-O internally.
+When either `source` or `confidence` is present, both fields must be present. Assumption nodes must include `source`, `confidence`, and `impact_if_false`. Any node with `source` set to `inferred-from-repository`, `repository-evidence`, `external-reference`, `private-note`, `advisory-material`, or `derived-from-artifact` must also include at least one `evidence` item; `user-stated` and `planner-inference` may omit evidence when no concrete reference exists. This mirrors W3C PROV's useful distinction between what was produced, how it was produced, and what evidence or agent activity produced it, without requiring full PROV-O internally.
 
 ## Edge Rules
 
@@ -51,7 +51,7 @@ Validate a Planning Forge machine-readable artifact from the repository root:
 node dev/planning-forge/scripts/validate-metamodel.mjs <artifact.json>
 ```
 
-The validator checks JSON parsing, JSON Schema conformance, stable-ID shape, duplicate node IDs, node type/prefix consistency, allowed external edge labels, edge references to known stable nodes, namespace consistency, relationship compatibility, and required provenance for assumptions.
+The validator checks JSON parsing, JSON Schema conformance, stable-ID shape, duplicate node IDs, node type/prefix consistency, allowed external edge labels, edge references to known stable nodes, namespace consistency, relationship compatibility, claim-kind compatibility, paired `source`/`confidence`, evidence requirements for evidence-backed sources, and required assumption provenance.
 
 ## Minimal Example
 

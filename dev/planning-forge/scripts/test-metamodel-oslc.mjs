@@ -232,6 +232,13 @@ function testCli(tempDir) {
   assert(badBase.status === 2, 'cli: IRI-illegal --base exits 2');
   assert(badBase.stderr.includes('valid IRI prefix'), 'cli: IRI-illegal --base reports reason');
 
+  const badPercent = run(EXPORTER, [join(FIXTURES, 'specification.json'), '--base', 'http://example.com/%']);
+  assert(badPercent.status === 2, 'cli: malformed percent --base exits 2');
+  assert(badPercent.stderr.includes('percent-encoding'), 'cli: malformed percent --base reports reason');
+
+  const okPercent = run(EXPORTER, [join(FIXTURES, 'specification.json'), '--base', 'http://example.com/a%20b/']);
+  assert(okPercent.status === 0, 'cli: valid percent-encoded --base exits 0');
+
   const missing = run(EXPORTER, [join(tempDir, 'nope.json')]);
   assert(missing.status === 2, 'cli: missing file exits 2');
 

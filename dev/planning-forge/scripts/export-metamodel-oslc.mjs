@@ -60,11 +60,17 @@ function main() {
     usageError('artifact `edges` must be an array');
   }
   // The base is concatenated with node ids to form rdf:about/rdf:resource IRIs.
-  // Reject characters that are illegal in an IRI reference so the output is a
-  // valid IRI, not just well-formed XML (attribute escaping already prevents
-  // any breakout, but cannot make an invalid IRI valid).
-  if (args.base && /[\s<>"{}|\\^`]/.test(args.base)) {
-    usageError('`--base` must be a valid IRI prefix (no spaces or <>"{}|\\^` characters)');
+  // Reject the characters an IRI reference forbids and malformed percent-escapes
+  // so a bad base is caught here rather than emitted as an invalid IRI. This is
+  // a sanity check, not a full RFC 3987 validation; attribute escaping already
+  // prevents any XML breakout.
+  if (args.base) {
+    if (/[\s<>"{}|\\^`]/.test(args.base)) {
+      usageError('`--base` must be a valid IRI prefix (no spaces or <>"{}|\\^` characters)');
+    }
+    if (/%(?![0-9A-Fa-f]{2})/.test(args.base)) {
+      usageError('`--base` has malformed percent-encoding (a `%` must be followed by two hex digits)');
+    }
   }
 
   let output;

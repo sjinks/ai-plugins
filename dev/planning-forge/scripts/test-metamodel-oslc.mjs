@@ -128,6 +128,30 @@ function testExternalEndpoints() {
   assert((xml.match(/#External"/g) || []).length === 3, 'oslc: three external resources typed');
 }
 
+function testMalformedEdgesAreSkipped() {
+  const artifact = {
+    schema_version: '1.1',
+    artifact_type: 'specification',
+    nodes: [
+      { id: 'FR-1', type: 'functional_requirement', claim_kind: 'requirement', title: 'FR', statement: 'S.', status: 'approved' },
+    ],
+    edges: [
+      { source: 'FR-1', relationship: 'satisfies' },
+      { source: 'FR-1', relationship: 'satisfies', target: undefined },
+      { source: 'FR-1', relationship: 'satisfies', target: 42 },
+      null,
+      'not an edge',
+      { source: 'FR-1', relationship: 'satisfies', target: 'Goal' },
+    ],
+  };
+  const xml = buildOslc(artifact, { base: 'urn:pf:' });
+
+  assert(xml.includes('<pf:externalKind>external_goal</pf:externalKind>'), 'oslc: valid external endpoint still rendered');
+  assert((xml.match(/#External"/g) || []).length === 1, 'oslc: malformed endpoints do not create external resources');
+  assert(!xml.includes('<dcterms:title>undefined</dcterms:title>'), 'oslc: missing endpoint not rendered as external');
+  assert(!xml.includes('<dcterms:title>42</dcterms:title>'), 'oslc: non-string endpoint not rendered as external');
+}
+
 function testProvenanceEvidence() {
   const artifact = {
     schema_version: '1.1',
@@ -257,6 +281,7 @@ function main() {
     testStructure();
     testReverseEdges();
     testExternalEndpoints();
+    testMalformedEdgesAreSkipped();
     testProvenanceEvidence();
     testEscaping();
     testIllegalAndAstral();

@@ -113,15 +113,20 @@ function nodeFieldValue(value) {
   return String(value);
 }
 
+function isRecord(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
 function indexArtifact(artifact, base) {
   const nodes = Array.isArray(artifact.nodes) ? artifact.nodes : [];
-  const edges = Array.isArray(artifact.edges) ? artifact.edges : [];
+  const edges = Array.isArray(artifact.edges) ? artifact.edges.filter(isRecord) : [];
   const nodeIds = new Set(nodes.map((n) => n.id));
 
   const externals = new Map(); // ref -> synthetic IRI
   let externalCounter = 0;
   for (const edge of edges) {
     for (const endpoint of [edge.source, edge.target]) {
+      if (typeof endpoint !== 'string') continue;
       if (!nodeIds.has(endpoint) && !externals.has(endpoint)) {
         externalCounter += 1;
         externals.set(endpoint, `${base}external:${externalCounter}`);

@@ -117,8 +117,12 @@ function isRecord(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
+function isNode(value) {
+  return isRecord(value) && typeof value.id === 'string';
+}
+
 function indexArtifact(artifact, base) {
-  const nodes = Array.isArray(artifact.nodes) ? artifact.nodes : [];
+  const nodes = Array.isArray(artifact.nodes) ? artifact.nodes.filter(isNode) : [];
   const edges = Array.isArray(artifact.edges) ? artifact.edges.filter(isRecord) : [];
   const nodeIds = new Set(nodes.map((n) => n.id));
 

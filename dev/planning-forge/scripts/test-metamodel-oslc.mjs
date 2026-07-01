@@ -152,6 +152,32 @@ function testMalformedEdgesAreSkipped() {
   assert(!xml.includes('<dcterms:title>42</dcterms:title>'), 'oslc: non-string endpoint not rendered as external');
 }
 
+function testMalformedNodesAreSkipped() {
+  const artifact = {
+    schema_version: '1.1',
+    artifact_type: 'specification',
+    nodes: [
+      null,
+      'not a node',
+      { type: 'functional_requirement', title: 'Missing ID' },
+      { id: undefined, type: 'functional_requirement', title: 'Undefined ID' },
+      { id: 42, type: 'functional_requirement', title: 'Numeric ID' },
+      { id: 'FR-1', type: 'functional_requirement', claim_kind: 'requirement', title: 'FR', statement: 'S.', status: 'approved' },
+    ],
+    edges: [
+      { source: 'FR-1', relationship: 'satisfies', target: 'Goal' },
+    ],
+  };
+  const xml = buildOslc(artifact, { base: 'urn:pf:' });
+
+  assert(xml.includes('rdf:about="urn:pf:FR-1"'), 'oslc: valid string-id node still rendered');
+  assert(xml.includes('<pf:externalKind>external_goal</pf:externalKind>'), 'oslc: valid edge from kept node still rendered');
+  assert(!xml.includes('urn:pf:undefined'), 'oslc: missing node id does not create undefined IRI');
+  assert(!xml.includes('rdf:about="urn:pf:42"'), 'oslc: non-string node id does not create node IRI');
+  assert(!xml.includes('<dcterms:title>Missing ID</dcterms:title>'), 'oslc: missing-id node not rendered');
+  assert(!xml.includes('<dcterms:title>Numeric ID</dcterms:title>'), 'oslc: numeric-id node not rendered');
+}
+
 function testProvenanceEvidence() {
   const artifact = {
     schema_version: '1.1',
@@ -282,6 +308,7 @@ function main() {
     testReverseEdges();
     testExternalEndpoints();
     testMalformedEdgesAreSkipped();
+    testMalformedNodesAreSkipped();
     testProvenanceEvidence();
     testEscaping();
     testIllegalAndAstral();

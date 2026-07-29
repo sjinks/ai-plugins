@@ -24,6 +24,16 @@
             "source": "./code-smith"
         },
         {
+            "name": "commit-discipline-skills",
+            "description": "Commit and pull request discipline skills for AI agents: cleaning branch history, drafting and auditing commit messages, and writing reviewer-ready pull request descriptions without rewriting history or posting live updates.",
+            "source": "./commit-discipline-skills"
+        },
+        {
+            "name": "model-panel",
+            "description": "Multi-model agent orchestration harnesses for running the same arbitrary agent task through multiple model routes, checking output compatibility, preserving raw outputs, and synthesizing evidence-grounded combined results.",
+            "source": "./model-panel"
+        },
+        {
             "name": "planning-forge",
             "description": "Planning workflow agents for turning rough tasks into implementation-ready specifications, architecture designs, test plans, prototype findings, and saved planning documents.",
             "source": "./planning-forge"

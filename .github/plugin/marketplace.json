@@ -29,6 +29,11 @@
             "source": "./commit-discipline-skills"
         },
         {
+            "name": "instructions-authoring",
+            "description": "Instruction authoring skills for building, auditing, and adapting cross-model agent instructions and skill packages.",
+            "source": "./instructions-authoring"
+        },
+        {
             "name": "model-panel",
             "description": "Multi-model agent orchestration harnesses for running the same arbitrary agent task through multiple model routes, checking output compatibility, preserving raw outputs, and synthesizing evidence-grounded combined results.",
             "source": "./model-panel"

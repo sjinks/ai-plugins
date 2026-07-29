@@ -1,6 +1,6 @@
 # ai-plugins
 
-A collection of AI plugins for different agent workflows. Each plugin is self-contained and ships its own README, manifest, and skills or agents.
+A collection of AI plugins for different agent workflows. Each plugin is self-contained and ships its own README and skills or agents.
 
 ## Plugins
 

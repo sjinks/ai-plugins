@@ -1,0 +1,22 @@
+{
+    "name": "instructions-authoring",
+    "description": "Instruction-authoring workflow skills for AI agents: creating portable instruction packages, auditing agent skills for readiness, and finding ambiguity, contradictions, authority conflicts, and output-contract defects.",
+    "author": {
+        "name": "Volodymyr Kolesnykov",
+        "email": "volodymyr@wildwolf.name",
+        "url": "https://wildwolf.name/"
+    },
+    "repository": "https://github.com/sjinks/ai-plugins",
+    "license": "MIT",
+    "keywords": [
+        "instructions",
+        "instruction authoring",
+        "agent skills",
+        "agent prompts",
+        "prompt engineering",
+        "cross-model",
+        "portability",
+        "quality audit",
+        "plugin"
+    ]
+}

@@ -1,6 +1,7 @@
 {
+    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
     "name": "instructions-authoring",
-    "description": "Instruction-authoring workflow skills for AI agents: creating portable instruction packages, auditing agent skills for readiness, and finding ambiguity, contradictions, authority conflicts, and output-contract defects.",
+    "description": "Instruction-authoring workflow skills for AI agents: creating portable instruction packages, writing and auditing controlled-English agent instructions, assessing agent skills for readiness, and diagnosing instruction defects.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",
@@ -17,6 +18,7 @@
         "cross-model",
         "portability",
         "quality audit",
+        "controlled English",
         "plugin"
     ]
 }

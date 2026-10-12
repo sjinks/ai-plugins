@@ -1,11 +1,13 @@
 # code-smith
 
-Code Smith is the execution-phase plugin for turning approved planning artifacts into implemented and verified work. It ships two focused agents:
+Code Smith ships two custom agents for scoped implementation and verification from Planning Forge handoffs, raw plans, or ad-hoc requests:
 
-- **Code Smith** implements an approved Planning Forge builder-handoff into focused, self-verified code changes.
+- **Code Smith** implements a scoped task into focused code changes and reports the verification it actually ran.
 - **Test Smith** runs or validates verification checks from a Planning Forge Test Plan, Code Smith completion report, raw verification instructions, or ad-hoc request.
 
 Both agents are deliberately conservative: they preserve scope, own their command-safety rules, avoid foreign-skill dependencies, and report gaps instead of hiding them.
+
+The `agents/*.agent.md` files are host-specific custom-agent prompts, not portable Agent Skills. The plugin manifest identifies the package; it does not itself register agents or grant file-editing and command-execution tools. Implementation and verification require those host permissions and the agents' command-safety checks.
 
 ## What ships
 
@@ -42,9 +44,9 @@ If no IDs are present, Test Smith uses prose result labels and does not invent I
 ## Code Smith Workflow
 
 1. **Intake** — map the input onto the contract fields; record absent fields.
-2. **Scope lock** — freeze the approved ready slice as the only writable scope; keep excluded scope read-only.
-3. **Implement** — make the smallest correct changes that satisfy the ready-slice IDs and follow the architecture decisions.
-4. **Verify** — run the planned `TC-` tests plus the project's targeted build/lint, scoped to the changed area; record restated commands and results.
+2. **Scope lock** — freeze the approved ready slice or clearly scoped raw/ad-hoc task as the only writable scope; keep excluded scope read-only.
+3. **Implement** — make the smallest correct changes for the locked scope, following supplied architecture decisions and IDs when present.
+4. **Verify** — run planned `TC-` tests when present plus the project's targeted build/lint, scoped to the changed area; record restated commands and results or gaps when checks cannot run.
 5. **Self-review** — run the embedded checklist over the full change set and fold in fixes.
 6. **Report** — return the completion report with exactly one `done | partial | blocked` status.
 

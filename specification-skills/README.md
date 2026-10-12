@@ -1,8 +1,8 @@
 # specification-skills
 
-A plugin that ships a set of requirements and specification workflow skills for AI agents. Each skill targets a specific failure mode that surfaces after coding has started: unverifiable acceptance criteria, ambiguous requirements, undefined scope, hidden assumptions, missed edge cases, mid-build spec surprises, and monolithic work items that cannot be verified independently.
+A plugin that ships requirements and specification workflow skills for AI agents. The skills cover acceptance criteria, ambiguity, requirement precision, scope, assumptions, edge cases, artifact consolidation, and reconciliation of documentation with source code.
 
-The skills are not hooks and do not intercept anything. They load by description-trigger matching: when the agent works on a requirements or specification task, the matching skill's vocabulary triggers and its checklist is loaded into context. Each skill is also user-invocable as a slash command.
+The skills are not hooks and do not intercept anything. Their descriptions state when each skill applies; a compatible host can use those descriptions for discovery.
 
 ## What ships
 
@@ -12,22 +12,22 @@ The skills are not hooks and do not intercept anything. They load by description
 - `skills/scope-boundary-definition/` — make a work item's boundaries explicit before planning: in-scope, out-of-scope, non-goal, and deferred lists, a smallest valuable slice, surfaced boundary decisions, and scope-creep risks with pre-empting boundary statements.
 - `skills/assumption-surfacing/` — sweep a spec, plan, design, or estimate for implicit assumptions across data, ordering, scale, auth-context, environment, compatibility, dependency-behavior, and people-process categories, classifying each as verify-before-build or accept-with-risk.
 - `skills/spec-edge-case-enumeration/` — sweep a feature spec across eight edge-case dimensions (empty/boundary, error paths, permissions, concurrency, time, locale and text, limits, lifecycle) and separate spec decisions from implementation details and deep-review flags.
-- `skills/artifact-consolidation/` — merge several same-kind planning artifacts (multiple specs, architectures, or test plans) into one without losing or renumbering stable IDs: namespace colliding IDs by concern, de-duplicate sections, build a single open-questions ledger, and mark superseded sources for removal.
+- `skills/artifact-consolidation/` — merge several same-kind planning artifacts (multiple specs, architectures, or test plans) into one without losing or renumbering stable IDs: preserve the base source IDs, namespace every non-base source in full by concern, de-duplicate sections, build a single open-questions ledger, and mark superseded sources without deleting them.
 - `skills/doc-source-reconciliation/` — verify a doc that claims to reflect the current implementation actually matches it: reconcile file extensions, target/example names, dependency lists, public type/option/enumerator names, behavioral defaults, and volatile counts against the live tree before the doc is trusted or merged.
 
-## Slash commands
+## Skill names
 
-After installation, each skill is invocable on demand:
+Use these names to select a skill where the host supports explicit invocation:
 
 ```
-/acceptance-criteria-quality
-/requirements-ambiguity-audit
-/requirement-sharpening
-/scope-boundary-definition
-/assumption-surfacing
-/spec-edge-case-enumeration
-/artifact-consolidation
-/doc-source-reconciliation
+acceptance-criteria-quality
+requirements-ambiguity-audit
+requirement-sharpening
+scope-boundary-definition
+assumption-surfacing
+spec-edge-case-enumeration
+artifact-consolidation
+doc-source-reconciliation
 ```
 
 ## Where each skill fits
@@ -41,5 +41,5 @@ After installation, each skill is invocable on demand:
 
 ## Scope
 
-- Documentation + checklist skills only. No hooks. No execution interception.
-- Skills load when their description vocabulary matches, and can be invoked explicitly as slash commands.
+- Skill instructions and references only. No hooks or execution interception.
+- Actual discovery and explicit invocation syntax depend on the host.

@@ -1,8 +1,10 @@
 # review-forge
 
-Review Forge is a read-only multi-lens review workflow plugin. It reviews diffs and changed files through focused lenses, then returns actionable findings and a synthesized quality-gate report.
+Review Forge ships custom agents for report-only multi-lens review. With a reviewable diff or local target, it examines changed code through focused lenses and returns evidence-anchored findings and a synthesized quality-gate report.
 
 It does not edit code, post PR comments, resolve threads, mutate git, deploy, install dependencies, or depend on external skills. Optional host-provided skills may be used only as advisory data.
+
+The `agents/*.agent.md` files are host-specific custom-agent prompts, not portable Agent Skills. The plugin manifest identifies the package; it does not itself register agents or grant read, search, execute, or specialist-invocation tools. The Coordinator may run read-only local inspection commands to obtain diffs; specialist reviewers do not execute commands.
 
 ## What ships
 
@@ -27,15 +29,15 @@ Review Forge can use:
 - Test Smith verification reports;
 - Code Explorer artifacts.
 
-A PR URL alone is not enough review context unless a tool or user supplies the diff/content.
+A PR URL alone is insufficient. Version 1 does not fetch PR content through network tools or CLI commands; supply the diff/content or a reviewable local target.
 
 ## Workflow
 
 1. Normalize review inputs and missing context.
-2. Select requested lenses or default applicable lenses.
+2. Default to all six lenses unless the user explicitly excludes one; record thin or unavailable lens context as partial or blocked.
 3. Build scoped specialist packets.
-4. Preserve independent-review isolation.
-5. Run specialist reviewers.
+4. Preserve independent-review isolation. If the Coordinator conversation already contains specifications, architecture, Smith reports, Code Explorer artifacts, reviewer discussion, or other lens findings, mark the independent lens blocked and request a separate diff-only review.
+5. Invoke selected specialist reviewers when the host supports agent invocation; mark unavailable required lenses blocked or partial.
 6. Synthesize findings, conflicts, limitations, residual risk, and a recommendation.
 
 ## Findings

@@ -1,8 +1,8 @@
 # review-skills
 
-A plugin that ships a set of code-review workflow skills for AI agents. Each skill targets a specific failure mode that turns a single review into a multi-round cycle: oversized PRs, low-hygiene changes, incremental reviews, single-lens blind spots, vague findings, unpropagated defect classes, stalled disagreements, symptom-only fixes, regression-prone patches, and superficial thread closure.
+A plugin that ships code-review workflow skills for AI agents. The skills cover PR scope, pre-review checks, review coverage, finding quality, equivalent defects, disagreements, fix planning, regression risks, and merge-readiness assessment.
 
-The skills are not hooks and do not intercept anything. They load by description-trigger matching: when the agent works on a review-related task, the matching skill's vocabulary triggers and its checklist is loaded into context. Each skill is also user-invocable as a slash command.
+The skills are not hooks and do not intercept anything. Their descriptions state when each skill applies; a compatible host can use those descriptions for discovery.
 
 ## What ships
 
@@ -13,25 +13,25 @@ The skills are not hooks and do not intercept anything. They load by description
 - `skills/review-finding-quality/` — enforce a quality contract on findings (severity, evidence anchor, expected fix, acceptance condition) so each one is actionable and closable in one round.
 - `skills/equivalence-class-audit/` — turn one confirmed defect into a locked-scope audit for equivalent defects across sibling fields, mirror use sites, bounds, contracts, paths, modes, tests, and docs.
 - `skills/review-disagreement-resolution/` — resolve a stalled reviewer/author dispute by classifying it as fact, standard, or preference, anchoring it to a source, and applying a decision rule.
-- `skills/fix-batching-and-root-cause/` — plan a fix batch so the next review round is the last: cluster findings by shared root cause, fix the cause once, and label each fix's depth honestly.
+- `skills/fix-batching-and-root-cause/` — plan a fix batch by clustering findings with a demonstrated shared cause, proposing changes and verification, and labeling the planned fix depth. It does not implement or verify the fixes.
 - `skills/fix-blast-radius/` — before a fix is pushed, identify what it could newly break and which resolved findings it could regress, with one verification step per risk.
-- `skills/review-cycle-gatekeeper/` — enforce closure quality across iterative rounds, verify findings are closed with evidence, audit unresolved threads, and produce a go/no-go pre-merge gate decision.
+- `skills/review-cycle-gatekeeper/` — assess closure quality across review rounds using supplied finding states and verification evidence, audit unresolved threads, and report a pre-merge gate decision.
 
-## Slash commands
+## Skill names
 
-After installation, each skill is invocable on demand:
+Use these names to select a skill where the host supports explicit invocation:
 
 ```
-/pr-scope-slicer
-/pre-review-self-audit
-/single-pass-review-completeness
-/multi-lens-review
-/review-finding-quality
-/equivalence-class-audit
-/review-disagreement-resolution
-/fix-batching-and-root-cause
-/fix-blast-radius
-/review-cycle-gatekeeper
+pr-scope-slicer
+pre-review-self-audit
+single-pass-review-completeness
+multi-lens-review
+review-finding-quality
+equivalence-class-audit
+review-disagreement-resolution
+fix-batching-and-root-cause
+fix-blast-radius
+review-cycle-gatekeeper
 ```
 
 ## Where each skill fits in a review cycle
@@ -47,5 +47,5 @@ After installation, each skill is invocable on demand:
 
 ## Scope
 
-- Documentation + checklist skills only. No hooks. No execution interception.
-- Skills load when their description vocabulary matches, and can be invoked explicitly as slash commands.
+- Skill instructions and references only. No hooks or execution interception.
+- Actual discovery and explicit invocation syntax depend on the host.

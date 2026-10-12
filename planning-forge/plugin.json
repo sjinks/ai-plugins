@@ -1,6 +1,6 @@
 {
     "name": "planning-forge",
-    "description": "Planning workflow agents for turning rough tasks into implementation-ready specifications, architecture designs, test plans, prototype findings, and saved planning documents.",
+    "description": "Custom planning agents for specifications, architecture, test plans, scoped prototype spikes, and user-requested documentation persistence where host tools permit.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",

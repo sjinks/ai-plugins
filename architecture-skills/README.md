@@ -1,8 +1,12 @@
 # architecture-skills
 
-A plugin that ships a set of architecture and design workflow skills for AI agents. Each skill targets a specific design-time decision that is expensive to get wrong: undocumented decisions, unweighed tradeoffs, leaky interfaces, risky dependency choices, undesigned failure behavior, type designs that allow invalid states, and unsafe data migrations.
+A plugin that ships architecture and design workflow skills for AI agents. The skills cover decision records, tradeoffs, interface contracts, dependency choices, failure behavior, type-safe design, and development container planning.
 
-The skills are not hooks and do not intercept anything. They load by description-trigger matching: when the agent works on an architecture or design task, the matching skill's vocabulary triggers and its checklist is loaded into context. Each skill is also user-invocable as a slash command.
+## Packaging
+
+The root `plugin.json` declares this package using the portable Agent Plugins 1.0 schema. Skill definitions live in the shared `skills/` directory. Host discovery and invocation behavior depend on the installed client and its configuration.
+
+The skills are not hooks and do not intercept anything. Their descriptions state when each skill applies; a compatible host can use those descriptions for discovery.
 
 ## What ships
 
@@ -12,20 +16,20 @@ The skills are not hooks and do not intercept anything. They load by description
 - `skills/dependency-choice-review/` — make design-time build-vs-adopt decisions on libraries, frameworks, services, and platforms across maintenance health, API stability, fit, lock-in and exit, operational burden, and license/policy, with exit paths and reversal triggers.
 - `skills/failure-mode-design/` — decide failure behavior at design time: sweep each component→dependency edge across slow, down, wrong, and partial failure shapes, assign one degradation policy per edge with a concrete blast radius and observability signal, and settle idempotency under retry for every mutating flow.
 - `skills/type-safe-design/` — design, review, refactor, and test-plan type-safe architecture where contracts, validation states, generics, reflection, factories, and compiler feedback affect correctness and change locality.
-- `skills/dev-container-generation/` — turn an architecture spec plus repository evidence into a development container setup (Dockerfile, `.dockerignore`, optional `compose.yaml`): pinned base image, cache-friendly layers, reproducible installs, non-root user, dev affordances, backing services, and secret-safe configuration, verified by `docker build`.
+- `skills/dev-container-generation/` — plan a development container setup (Dockerfile, `.dockerignore`, optional `compose.yaml`) from an architecture spec and repository evidence, covering base-image pins, dependency caching, dev affordances, backing services, non-root use, and secret-safe configuration. Build and configuration checks are recommended follow-up actions, not checks the skill executes.
 
-## Slash commands
+## Skill names
 
-After installation, each skill is invocable on demand:
+Use these names to select a skill where the host supports explicit invocation:
 
 ```
-/architecture-decision-record
-/architecture-tradeoff-analysis
-/interface-contract-design
-/dependency-choice-review
-/failure-mode-design
-/type-safe-design
-/dev-container-generation
+architecture-decision-record
+architecture-tradeoff-analysis
+interface-contract-design
+dependency-choice-review
+failure-mode-design
+type-safe-design
+dev-container-generation
 ```
 
 ## Where each skill fits
@@ -40,5 +44,5 @@ After installation, each skill is invocable on demand:
 
 ## Scope
 
-- Documentation + checklist skills only. No hooks. No execution interception.
-- Skills load when their description vocabulary matches, and can be invoked explicitly as slash commands.
+- Skill instructions and references only. No hooks or execution interception.
+- Actual discovery and explicit invocation syntax depend on the host.

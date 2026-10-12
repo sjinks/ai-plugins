@@ -1,4 +1,5 @@
 {
+    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
     "name": "commit-discipline-skills",
     "description": "Commit and pull request discipline skills for AI agents: cleaning branch history, drafting and auditing commit messages, and writing reviewer-ready pull request descriptions without rewriting history or posting live updates.",
     "author": {

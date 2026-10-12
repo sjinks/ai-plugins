@@ -1,6 +1,6 @@
 {
     "name": "code-smith",
-    "description": "Execution-phase agents for turning approved Planning Forge handoffs into focused code changes and run-only verification reports: Code Smith implements, Test Smith verifies, both with self-contained command safety and truthful reporting.",
+    "description": "Custom execution agents for scoped code changes and run-only verification from Planning Forge handoffs, raw plans, or ad-hoc tasks, with command-safety and reporting contracts.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",

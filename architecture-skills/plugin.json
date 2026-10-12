@@ -1,11 +1,13 @@
 {
+    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
     "name": "architecture-skills",
-    "description": "Architecture and design workflow skills for AI agents: recording decisions, comparing tradeoffs, designing interface contracts, reviewing dependency choices, designing failure behavior, building type-safe designs, planning safe data migrations, and generating development containers.",
+    "description": "Architecture and design workflow skills for AI agents: recording decisions, comparing tradeoffs, designing interface contracts, reviewing dependency choices, designing failure behavior, building type-safe designs, and planning development containers.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",
         "url": "https://wildwolf.name/"
     },
+    "homepage": "https://github.com/sjinks/ai-plugins/blob/master/architecture-skills/",
     "repository": "https://github.com/sjinks/ai-plugins",
     "license": "MIT",
     "keywords": [
@@ -15,7 +17,6 @@
         "interfaces",
         "dependencies",
         "failure modes",
-        "migrations",
         "container",
         "containers",
         "docker",

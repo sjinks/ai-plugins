@@ -1,0 +1,68 @@
+{
+  "name": "ai-plugins",
+  "interface": {
+    "displayName": "AI Plugins"
+  },
+  "plugins": [
+    {
+      "name": "architecture-skills",
+      "source": {
+        "source": "local",
+        "path": "./architecture-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools"
+    },
+    {
+      "name": "commit-discipline-skills",
+      "source": {
+        "source": "local",
+        "path": "./commit-discipline-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools"
+    },
+    {
+      "name": "instructions-authoring",
+      "source": {
+        "source": "local",
+        "path": "./instructions-authoring"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools"
+    },
+    {
+      "name": "review-skills",
+      "source": {
+        "source": "local",
+        "path": "./review-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools"
+    },
+    {
+      "name": "specification-skills",
+      "source": {
+        "source": "local",
+        "path": "./specification-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools"
+    }
+  ]
+}

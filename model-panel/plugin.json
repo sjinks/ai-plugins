@@ -1,6 +1,6 @@
 {
     "name": "model-panel",
-    "description": "Multi-model agent orchestration harnesses for running the same arbitrary agent task through multiple model routes, checking output compatibility, preserving raw outputs, and synthesizing evidence-grounded combined results.",
+    "description": "Custom agents for conditional, read-only multi-model routing, output comparison, raw-output retention, and evidence-grounded synthesis when the host supports the requested routes.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",

@@ -13,9 +13,10 @@ A collection of AI plugins for different agent workflows. Each plugin is self-co
 - [planning-forge](planning-forge/README.md) — planning workflow agents for specification, architecture, test planning, and publishing.
 - [review-forge](review-forge/README.md) — multi-lens review workflow agents for evidence-based code review.
 - [review-skills](review-skills/README.md) — review workflow skills for scoping, findings quality, fix planning, and merge gating.
-- [shell-safety](shell-safety/README.md) — dangerous shell command patterns and safe rewrites for AI agents.
 - [specification-skills](specification-skills/README.md) — requirements and specification workflow skills for clarifying scope, assumptions, and edge cases.
 
 ## Marketplace
 
-The repository marketplace manifest lives at [.github/plugin/marketplace.json](.github/plugin/marketplace.json).
+The GitHub Copilot marketplace manifest lives at [.github/plugin/marketplace.json](.github/plugin/marketplace.json). The Codex repo marketplace manifest lives at [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json).
+
+The catalogs target different hosts and list different package sets. Root `plugin.json` files use Agent Plugins 1.0 metadata; shared `skills/` are the portable components. Custom `agents/*.agent.md` workflows require a host or adapter that supports their agent format and tools. A valid manifest alone does not register those agents or certify runtime compatibility.

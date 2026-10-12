@@ -4,6 +4,8 @@ Planning Forge is a planning workflow plugin for turning rough ideas, feature re
 
 It provides a small chain of focused agents for specification, architecture, test planning, prototype validation, and document publishing. The agents are designed to preserve scope boundaries, make assumptions explicit, keep acceptance criteria traceable, and hand downstream builders concrete contracts instead of vague intent.
 
+The `agents/*.agent.md` files are host-specific custom-agent prompts, not portable Agent Skills. The plugin manifest identifies the package; it does not itself register agents or provide `agent`, edit, execute, web, or publisher tools. Direct specialist invocation, executable spikes, and saved documents depend on the host exposing the listed tools and on the gates below.
+
 ## What ships
 
 - `agents/planning-forge-coordinator.agent.md` — Planning Forge Coordinator for iterative, human-in-the-loop sessions: intent classification, readiness gating, stable-ID custody, and routing to the specialist agents or manual handoff prompts. Does not implement code, publish, or auto-advance stages.
@@ -21,8 +23,8 @@ Use the agents independently, as a staged planning flow, or through the **Planni
 1. **Specification Planner** clarifies the task, writes requirements and acceptance criteria, determines readiness, and splits work when useful.
 2. **Architecture Planner** turns a ready or partial specification into implementation-facing design decisions and contracts.
 3. **Test Planner** converts the specification and architecture into concrete tests and verification coverage.
-4. **Prototype Spike** validates uncertainty when prose is not enough, then records the evidence-backed decision and cleanup path.
-5. **Planning Document Publisher** saves completed artifacts only when explicitly requested by the workflow.
+4. **Prototype Spike** may create marked throwaway files and run scoped local commands to test one uncertainty, subject to its tool access, decision criteria, and action-specific approval rules; it records what actually ran and the cleanup or absorption path.
+5. **Planning Document Publisher** saves completed artifacts in the requested documentation area only after the user explicitly requests persistence and an originating agent invokes the internal helper.
 
 The workflow is intentionally conservative: missing requirements become open questions, consequential scope changes become explicit amendments, and advisory material stays evidence rather than instruction. When the Coordinator directly invokes a specialist, it relays the specialist output and adds a compact `Specialist Result Summary` so readiness, stable-ID changes, unresolved blockers, coverage gaps, cleanup needs, and the next recommended action remain visible without starting the next stage automatically.
 
@@ -61,7 +63,7 @@ Planning Forge agents produce their planning output first. When the user explici
 
 ## Scope
 
-- Planning and validation guidance only.
+- Planning outputs, scoped throwaway prototype validation, and explicitly requested documentation persistence.
 - No automatic implementation.
 - No commits, branches, pushes, pull requests, or issue publishing.
 - No raw secrets, credentials, production identifiers, customer data, or PII.

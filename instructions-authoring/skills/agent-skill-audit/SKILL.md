@@ -1,20 +1,21 @@
 ---
 name: agent-skill-audit
 description: >-
-  Use when assessing whether a supplied Agent Skill, custom-agent prompt, or
-  instruction package is ready for its intended task, target models, and
-  runtime. Audits discovery or delegation, instruction architecture,
-  operational completeness, model and runtime portability, maintainability,
-  and evaluability; returns ratings and a readiness verdict. Do not use for an
-  exhaustive line-by-line diagnostic or for rewrite-only requests that do not
-  include a readiness audit.
+  Use to assess whether an Agent Skill, custom-agent prompt, or instruction
+  package is ready for its task, target models, and runtime. Covers discovery,
+  architecture, completeness, portability, maintainability, and evaluability;
+  returns ratings, findings, priorities, and a verdict. Do not use for
+  exhaustive line-level diagnosis or rewrite-only requests.
 argument-hint: >-
   Agent or skill text, a file or package path, optional execution-path name,
   target models, target runtimes, and acceptance constraints.
-user-invocable: true
 ---
 
 # Agent/Skill Readiness Audit
+
+**UTILITY SKILL.** INVOKES: read-only artifact inspection, static profile checks,
+and a structured readiness report. FOR SINGLE OPERATIONS: assess one supplied
+artifact or package across the five readiness areas.
 
 Perform a holistic, read-only readiness audit of the supplied Agent Skill, custom-agent prompt, or instruction package.
 
@@ -32,12 +33,14 @@ Use this skill when the user's primary goal is to assess whether an Agent Skill,
 * likely to activate or delegate correctly;
 * in need of a holistic readiness verdict and prioritized corrective actions.
 
+## DO NOT USE FOR:
+
 Do not use this skill when the request is solely for:
 
 * an exhaustive diagnostic of exact contradictions, precedence gaps, ambiguity, terminology, authority conflicts, decision closure, harmful duplication, failure handling, output-contract defects, or custom diagnostic rules;
 * a direct rewrite, implementation, repair, or creation task without a readiness audit;
 * ordinary code review or product critique;
-* execution of an evaluation suite rather than a static readiness audit.
+* running an instruction artifact as though a static package review established model behavior.
 
 For a combined audit-and-fix request, use this skill and produce the readiness audit only. Put recommended corrections under `## Priority Changes`, but do not modify files, implement changes, or return a rewritten artifact.
 
@@ -73,21 +76,25 @@ Use the user's target-model list when supplied.
 
 Otherwise assess this default set:
 
-- GPT-5.4 mini
-- GPT-5.4
-- GPT-5.5
-- GPT-5.6 Luna
-- GPT-5.6 Terra
-- GPT-5.6 Sol
-- Claude Haiku 4.6
+- GPT-6 Luna
+- GPT-6 Sol
+- GPT-6.1 Sol
+- GPT-6 Astra
+- Claude Haiku 5.5
 - Claude Sonnet 5
+- Claude Sonnet 5.5
 - Claude Opus 4.8
 - Claude Opus 5
+- Claude Opus 5.5
 - Claude Fable 5
+- Claude Fable 5.1
+- Claude Mythos 5.1
 
-Use `references/model-portability.md` for static model-profile checks. Treat those profiles as heuristics, not proof of compatibility.
+The default compatibility floor is GPT-6 Luna and Claude Haiku 5.5. If the user supplies target models, assess that list instead. For a selected target without a profile in this package, apply generic cross-provider checks without inventing model-specific traits. Emit a `Not assessed` compatibility row and record the missing profile under `Limitations`. This alone does not block a readable artifact; an otherwise Ready audit becomes `Ready with limitations`, while stronger revision/blocking verdicts retain precedence.
 
-## Missing or Blocked Input
+Use `references/model-portability.md` for static model-profile checks. Treat those profiles as heuristics, not proof of compatibility. Read [Haiku 5.5 runtime checks](references/haiku-5-5-runtime.md) only when auditing a Haiku 5.5 API integration or harness; it covers thinking, tool/output interactions, user-message delivery and failure handling. A static assessment does not establish runtime access, including to restricted models.
+
+## Error Handling: Missing or Blocked Input
 
 If no auditable artifact is supplied, ask exactly:
 
@@ -113,19 +120,23 @@ Rate these areas in this exact order:
 4. Model and runtime portability
 5. Maintainability and evaluability
 
-Read `references/readiness-rubric.md` before assigning ratings.
+Read the [readiness rubric](references/readiness-rubric.md) before assigning ratings; it defines the rating anchors and verdict criteria.
 
 ## Procedure
 
 1. Identify the target, artifact type, audit mode, target models, and target runtimes.
-2. In package or path mode, classify files and build the reachable load graph using `references/package-analysis.md`.
+2. In package or path mode, classify files and build the reachable load graph using the [package analysis guide](references/package-analysis.md), which defines load-graph inspection.
 3. Determine which files are co-loaded and which paths are mutually exclusive.
-4. Audit all five areas using `references/readiness-rubric.md`.
-5. Assess every target model using `references/model-portability.md`.
+4. Audit all five areas using the [readiness rubric](references/readiness-rubric.md).
+5. Assess every target model using [model portability profiles](references/model-portability.md), treated as heuristics rather than proof.
 6. Record only findings with a concrete behavioral, portability, maintainability, or evaluability consequence. Do not report optional polish.
 7. Rank no more than five corrective tasks by expected behavior impact.
 8. Select the verdict using the rules below.
-9. Validate the report against `references/report-contract.md`.
+9. Validate the report against the [report contract](references/report-contract.md), which defines required markers and ordering.
+
+## Example
+
+For a supplied skill directory, select `package` mode, inspect its reachable references, rate all five areas, and finish with one permitted verdict on the final report line.
 
 ## Evidence Standard
 

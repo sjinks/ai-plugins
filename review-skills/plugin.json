@@ -1,4 +1,5 @@
 {
+    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
     "name": "review-skills",
     "description": "Review workflow skills for scoping pull requests, improving review findings, planning root-cause fixes, managing review disagreements, and gatekeeping merge readiness.",
     "author": {

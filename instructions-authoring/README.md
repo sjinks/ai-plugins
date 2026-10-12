@@ -1,21 +1,23 @@
 # instructions-authoring
 
-A plugin that ships instruction-authoring skills for AI agents. It focuses on building, auditing, and adapting instruction packages so they stay portable across models, internally consistent, and ready for reuse.
+A plugin that ships instruction-authoring skills for AI agents. It covers cross-model authoring, controlled-English instruction writing, readiness assessment, and detailed instruction diagnostics.
 
 ## What ships
 
-- `skills/cross-model-instruction-authoring/` — create or revise Agent Skills, custom agent prompts, subagent instructions, and other instruction packages so they work across multiple models and runtimes.
+- `skills/cross-model-instruction-authoring/` — create or revise Agent Skills, custom agent prompts, subagent instructions, and other instruction packages for use across selected models and runtimes, separating portable behavior from runtime-specific adapters.
 - `skills/agent-skill-audit/` — assess whether an agent instruction or skill package is ready for its target models and runtime, with a focus on discovery, completeness, portability, and maintainability.
 - `skills/instruction-quality-audit/` — diagnose exact defects in AI instruction artifacts, including contradictions, ambiguity, authority conflicts, closure gaps, duplicated rules, and output-contract problems.
+- `skills/controlled-agent-instruction-english/` — write, rewrite, or audit model-facing operational prose for consistent terminology, explicit modality and scope, conditions, precedence, and failure behavior.
 
-## Slash commands
+## Skill names
 
-After installation, each skill is invocable on demand:
+Use these names to select a skill where the host supports explicit invocation:
 
 ```
-/cross-model-instruction-authoring
-/agent-skill-audit
-/instruction-quality-audit
+cross-model-instruction-authoring
+agent-skill-audit
+instruction-quality-audit
+controlled-agent-instruction-english
 ```
 
 ## Where each skill fits
@@ -25,8 +27,9 @@ After installation, each skill is invocable on demand:
 | Designing a reusable instruction package | `cross-model-instruction-authoring` |
 | Auditing a skill package for readiness | `agent-skill-audit` |
 | Finding exact instruction defects | `instruction-quality-audit` |
+| Writing or auditing precise operational prose | `controlled-agent-instruction-english` |
 
 ## Scope
 
-- Documentation + checklist skills only. No hooks.
-- Skills load by description-trigger matching and can also be invoked explicitly as slash commands.
+- Skill instructions and references only. No hooks.
+- Skill descriptions state when they apply. Actual discovery and explicit invocation syntax depend on the host.

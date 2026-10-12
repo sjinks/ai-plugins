@@ -1,8 +1,10 @@
 # model-panel
 
-Model Panel is a multi-model agent orchestration plugin. It runs the same target agent task through multiple model routes, preserves every raw output, checks whether the outputs share a compatible format, and returns either a format-preserving synthesis or an evidence-preserving summary.
+Model Panel ships custom agents for multi-model orchestration. When the host can invoke the same read-only target agent under distinct, verifiable model routes, it preserves raw outputs, checks format compatibility, and returns a format-preserving synthesis or an evidence-preserving summary. Otherwise it reports the routing limitation and can provide manual run packets.
 
 The core design treats the target agent as a black box. The runner keeps the target agent, task, context, and output instructions identical for every run; only the model route changes.
+
+The `agents/*.agent.md` files are host-specific custom-agent prompts, not portable Agent Skills. The plugin manifest identifies the package; it does not itself register agents, provide model routing, or grant tool permissions. Confirm the host's agent invocation, model selection, and read-only enforcement before expecting an executed panel.
 
 ## What ships
 
@@ -34,7 +36,7 @@ If a host cannot invoke the arbitrary target agent with an explicit model route,
 3. Block recursive Model Panel wrapper targets and require read-only capability evidence for the target invocation.
 4. Check whether the current host can invoke the target agent with the requested model routes.
 5. Build one canonical run packet, assign one input packet id, and reuse it for every model.
-6. Invoke each route without passing one model's output into another model's run.
+6. Invoke each supported, read-only-enforced route without passing one model's output into another model's run; otherwise provide manual packets or report the blocked route.
 7. Collect status, diagnostics, input packet id, actual model identity when exposed, and raw output for every model.
 8. Check output format compatibility.
 9. Produce a format-preserving synthesis when safe, otherwise produce an evidence-preserving summary.

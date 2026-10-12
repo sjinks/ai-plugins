@@ -1,6 +1,6 @@
 {
     "name": "review-forge",
-    "description": "Read-only multi-lens review workflow agents for evidence-grounded code review, security review, performance review, adversarial review, independent review, and test adequacy review.",
+    "description": "Custom agents for report-only multi-lens code review, including contextual, independent, security, performance, adversarial, and test adequacy lenses.",
     "author": {
         "name": "Volodymyr Kolesnykov",
         "email": "volodymyr@wildwolf.name",

@@ -1,0 +1,37 @@
+{
+  "name": "ai-plugins",
+  "owner": {
+    "name": "Volodymyr Kolesnykov",
+    "email": "volodymyr@wildwolf.name"
+  },
+  "metadata": {
+    "description": "Portable skills-only plugins for architecture, implementation discipline, instruction authoring, code review, and requirements."
+  },
+  "plugins": [
+    {
+      "name": "architecture-skills",
+      "description": "Architecture and design workflow skills for AI agents: recording decisions, comparing tradeoffs, designing interface contracts, reviewing dependency choices, designing failure behavior, building type-safe designs, and planning development containers.",
+      "source": "./architecture-skills"
+    },
+    {
+      "name": "commit-discipline-skills",
+      "description": "Commit and pull request discipline skills for AI agents: cleaning branch history, drafting and auditing commit messages, and writing reviewer-ready pull request descriptions without rewriting history or posting live updates.",
+      "source": "./commit-discipline-skills"
+    },
+    {
+      "name": "instructions-authoring",
+      "description": "Instruction-authoring workflow skills for AI agents: creating portable instruction packages, writing and auditing controlled-English agent instructions, assessing agent skills for readiness, and diagnosing instruction defects.",
+      "source": "./instructions-authoring"
+    },
+    {
+      "name": "review-skills",
+      "description": "Review workflow skills for scoping pull requests, improving review findings, planning root-cause fixes, managing review disagreements, and gatekeeping merge readiness.",
+      "source": "./review-skills"
+    },
+    {
+      "name": "specification-skills",
+      "description": "Requirements and specification workflow skills for AI agents: auditing acceptance criteria, finding requirement ambiguity, sharpening requirements, defining scope boundaries, surfacing assumptions, enumerating edge cases, consolidating same-kind artifacts, and reconciling docs against the live source tree.",
+      "source": "./specification-skills"
+    }
+  ]
+}

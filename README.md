@@ -17,6 +17,28 @@ A collection of AI plugins for different agent workflows. Each plugin is self-co
 
 ## Marketplace
 
-The GitHub Copilot marketplace manifest lives at [.github/plugin/marketplace.json](.github/plugin/marketplace.json). The Codex repo marketplace manifest lives at [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json).
+Marketplace catalogs:
+
+- GitHub Copilot: [.github/plugin/marketplace.json](.github/plugin/marketplace.json).
+- Codex: [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json).
+- Cursor: [.cursor-plugin/marketplace.json](.cursor-plugin/marketplace.json).
+- Claude Code: [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json).
 
 The catalogs target different hosts and list different package sets. Root `plugin.json` files use Agent Plugins 1.0 metadata; shared `skills/` are the portable components. Custom `agents/*.agent.md` workflows require a host or adapter that supports their agent format and tools. A valid manifest alone does not register those agents or certify runtime compatibility.
+
+The Codex, Cursor, and Claude Code catalogs list the five skills-only packages: `architecture-skills`, `commit-discipline-skills`, `instructions-authoring`, `review-skills`, and `specification-skills`.
+
+### Cursor
+
+Import `https://github.com/sjinks/ai-plugins` in Cursor's Customize view using **From GitHub Repository**, then install the desired plugins. The repository catalog supplies the package paths; the skills remain in each package's `skills/` directory. See the [Cursor skills documentation](https://cursor.com/docs/skills).
+
+### Claude Code
+
+Register the repository marketplace and install a package, for example:
+
+```bash
+claude plugin marketplace add sjinks/ai-plugins
+claude plugin install architecture-skills@ai-plugins
+```
+
+Claude Code discovers the default `skills/` layout using the marketplace entries, so these packages do not need duplicate `.claude-plugin/plugin.json` manifests. See the [Claude Code marketplace guide](https://code.claude.com/docs/en/plugin-marketplaces) and [manifest reference](https://code.claude.com/docs/en/plugins-reference). Host loading and model behavior require validation in the target client.
